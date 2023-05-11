@@ -2,27 +2,46 @@ import { useEffect, useState } from 'react';
 
 import CinemaAxios from '../../apis/CinemaAxios';
 import { Link } from 'react-router-dom';
+import { CircleLoader } from 'react-spinners';
 import styles from './Movies.module.css';
 
 const Movies = () => {
-	const [users, setUsers] = useState([]);
+	const [movies, setMovies] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		getUsers();
+		getMovies();
 	}, []);
 
-	const getUsers = async () => {
-		const res = await CinemaAxios.get('/users');
-		setUsers(res.data);
+	const getMovies = async () => {
+		try {
+			const res = await CinemaAxios.get(`/movies`);
+			setMovies(res.data);
+			setLoading(false);
+		} catch (error) {
+			setError(true);
+			setLoading(false);
+		}
 	};
 
-	const getUserUrl = (userId) => {
-		return `${CinemaAxios.defaults.baseURL}/users/${userId}`;
+	const getMovieUrl = (movieId) => {
+		const url = `/movies/${movieId}`;
+		console.log('getMovieUrl', url);
+		return url;
 	};
 
-	const clickHandler = () => {
-		console.log('s');
-	};
+	if (loading) {
+		return (
+			<div className='loader-container'>
+				<CircleLoader size={75} />
+			</div>
+		);
+	}
+
+	if (error) {
+		return <p>Oops! Something went wrong. Please try again later</p>;
+	}
 
 	return (
 		<div>
@@ -34,15 +53,14 @@ const Movies = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{users.map((user) => (
-						<tr key={user.id}>
+					{movies.map((movie) => (
+						<tr key={movie.id}>
 							<td>
 								<Link
 									className={styles.link}
-									to={getUserUrl(user.id)}
-									onClick={clickHandler}
+									to={getMovieUrl(movie.id)}
 								>
-									{user.name}
+									{movie.name}
 								</Link>
 							</td>
 						</tr>

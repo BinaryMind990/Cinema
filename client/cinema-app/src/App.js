@@ -5,6 +5,7 @@ import Header from './components/Layout/Header';
 import Movies from './components/Movies/Movies';
 import Projections from './components/Projections/Projections';
 import Tikets from './components/Tikets/Tikets';
+import Movie from './components/Movies/Movie';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/movies' element={<Movies />} />
+					<Route path='/movies/:id' element={<Movie />} />
 					<Route path='/projections' element={<Projections />} />
 					<Route path='/tikets' element={<Tikets />} />
 				</Routes>

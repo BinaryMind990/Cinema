@@ -6,6 +6,8 @@ import Movies from './components/Movies/Movies';
 import Projections from './components/Projections/Projections';
 import Tikets from './components/Tikets/Tikets';
 import Movie from './components/Movies/Movie';
+import CreateMovie from './components/Movies/CreateMovie';
+import EditMovie from './components/Movies/EditMovie';
 
 function App() {
 	return (
@@ -16,6 +18,8 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/movies' element={<Movies />} />
 					<Route path='/movies/:id' element={<Movie />} />
+					<Route path='/movies/add' element={<CreateMovie />} />
+					<Route path='/movies/edit/:id' element={<EditMovie />} />
 					<Route path='/projections' element={<Projections />} />
 					<Route path='/tikets' element={<Tikets />} />
 				</Routes>

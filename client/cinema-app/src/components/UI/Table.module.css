@@ -51,11 +51,3 @@ td {
 .buttonWrapper+.buttonWrapper {
     margin-left: 10px;
 }
-
-
-.addButton {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    margin-top: 15px;
-}

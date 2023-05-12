@@ -33,9 +33,6 @@ public class TicketToTicketDTO implements Converter<Ticket, TicketDTO> {
         for(Ticket t: tickets){
             dtos.add(convert(t));
         }
-
             return dtos;
-
     }
-
 }

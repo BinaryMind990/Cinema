@@ -65,7 +65,7 @@ public class MovieController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDTO> update(@PathVariable Long id, @Valid @RequestBody MovieDTO movieDTO){
-        if(id.equals(movieDTO.getId())){
+        if(!id.equals(movieDTO.getId())){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if(movieService.findById(id) == null){

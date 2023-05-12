@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class ProjectionToProjectionDTO implements Converter<Projection, ProjectionDTO> {
 
-
     @Override
     public ProjectionDTO convert(Projection projection) {
     	ProjectionDTO dto = new ProjectionDTO();
@@ -24,7 +23,7 @@ public class ProjectionToProjectionDTO implements Converter<Projection, Projecti
     	dto.setTicketPrice(projection.getTicketPrice());
     	dto.setTypeId(projection.getType().getId());
     	dto.setTypeName(projection.getType().getName());
-    	
+    	dto.setFreeSeats(projection.freeSeats());
     	
         return dto;
     }

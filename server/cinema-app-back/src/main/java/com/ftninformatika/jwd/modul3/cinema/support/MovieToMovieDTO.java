@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class MovieToMovieDTO implements Converter<Movie, MovieDTO> {
 
-
     @Override
     public MovieDTO convert(Movie movie) {
     	
@@ -23,7 +22,7 @@ public class MovieToMovieDTO implements Converter<Movie, MovieDTO> {
     	dto.setDescription(movie.getDescription());
     	dto.setDistributor(movie.getDistributor());
     	dto.setYear(movie.getYear());
-    	
+    	dto.setPosterLink(movie.getPosterLink());
 
         return dto;
     }
@@ -34,7 +33,6 @@ public class MovieToMovieDTO implements Converter<Movie, MovieDTO> {
         for(Movie m: movies){
             dtos.add(convert(m));
         }
-
         return dtos;
     }
 }

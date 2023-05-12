@@ -24,7 +24,7 @@ public class ProjectionDTO {
     
     private double ticketPrice;
     
-    
+    private int freeSeats;
 
 	public ProjectionDTO(Long id, String movieName, Long movieId, String typeName, Long typeId, String hall,
 			Long hallId, String dateTimeStr, double ticketPrice) {
@@ -130,7 +130,15 @@ public class ProjectionDTO {
 	public void setTicketPrice(double ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
+	
+	
+	public int getFreeSeats() {
+		return freeSeats;
+	}
 
+	public void setFreeSeats(int freeSeats) {
+		this.freeSeats = freeSeats;
+	}
 
 	@Override
 	public int hashCode() {

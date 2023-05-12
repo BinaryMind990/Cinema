@@ -27,13 +27,27 @@ public class MovieDTO {
     private int year;
     
     private String description;
+    
+    private String posterLink;
 
 	public MovieDTO() {
 		super();
 	}
 
-	public MovieDTO(@Positive Long id, @NotBlank String name, @Positive int duration, String distributor,
-			String country, @Positive int year, String description) {
+	public MovieDTO(@NotBlank String name, @Positive int duration, String distributor, String country,
+			@Positive int year, String description, String posterLink) {
+		super();
+		this.name = name;
+		this.duration = duration;
+		this.distributor = distributor;
+		this.country = country;
+		this.year = year;
+		this.description = description;
+		this.posterLink = posterLink;
+	}
+
+	public MovieDTO(Long id, @NotBlank String name, @Positive int duration, String distributor, String country,
+			@Positive int year, String description, String posterLink) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -42,18 +56,9 @@ public class MovieDTO {
 		this.country = country;
 		this.year = year;
 		this.description = description;
+		this.posterLink = posterLink;
 	}
 
-	public MovieDTO(@NotBlank String name, @Positive int duration, String distributor, String country,
-			@Positive int year, String description) {
-		super();
-		this.name = name;
-		this.duration = duration;
-		this.distributor = distributor;
-		this.country = country;
-		this.year = year;
-		this.description = description;
-	}
 
 	@Override
 	public int hashCode() {
@@ -128,6 +133,15 @@ public class MovieDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+
+	public String getPosterLink() {
+		return posterLink;
+	}
+
+	public void setPosterLink(String posterLink) {
+		this.posterLink = posterLink;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class MovieDtoToMovieUpdate implements Converter<MovieDTO, Movie>{
 		movie.setDescription(dto.getDescription());
 		movie.setDistributor(dto.getDistributor());
 		movie.setYear(dto.getYear());
+		movie.setPosterLink(dto.getPosterLink());
 		
 		
 		return movie;

@@ -6,7 +6,7 @@ import CinemaAxios from '../../apis/CinemaAxios';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});
-	const [genres, setGenres] = useState([]);
+	// const [genres, setGenres] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const { id } = useParams();
@@ -16,7 +16,6 @@ const Movie = () => {
 			try {
 				const res = await CinemaAxios.get(`/movies/${id}`);
 				setMovie(res.data);
-				console.log('DATA', res.data);
 				// setGenres(res.data.zanrovi);
 				setLoading(false);
 			} catch (error) {

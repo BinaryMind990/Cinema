@@ -32,35 +32,42 @@ public class Movie {
     @Column
     private String description;
     
+    @Column
+    private String posterLink;
+    
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Projection> projections = new ArrayList<Projection>();
     
 	public Movie() {
 		super();
 	}
-
-	public Movie(String name, int duration, String distributor, String contry, int year, String description) {
+	public Movie(String name, int duration, String distributor, String country, int year, String description,
+			String posterLink, List<Projection> projections) {
 		super();
 		this.name = name;
 		this.duration = duration;
 		this.distributor = distributor;
-		this.country = contry;
+		this.country = country;
 		this.year = year;
 		this.description = description;
+		this.posterLink = posterLink;
+		this.projections = projections;
 	}
 
-	public Movie(Long id, String name, int duration, String distributor, String contry, int year, String description) {
+
+	public Movie(Long id, String name, int duration, String distributor, String country, int year, String description,
+			String posterLink, List<Projection> projections) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.duration = duration;
 		this.distributor = distributor;
-		this.country = contry;
+		this.country = country;
 		this.year = year;
 		this.description = description;
+		this.posterLink = posterLink;
+		this.projections = projections;
 	}
-	
-	
 
 	public Long getId() {
 		return id;
@@ -127,7 +134,15 @@ public class Movie {
 	public void setProjections(List<Projection> projections) {
 		this.projections = projections;
 	}
+	
+	
 
+	public String getPosterLink() {
+		return posterLink;
+	}
+	public void setPosterLink(String posterLink) {
+		this.posterLink = posterLink;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(country, description, distributor, duration, id, name, year);

@@ -110,17 +110,21 @@ public class Projection {
    public void setTicketPrice(double ticketPrice) {
 	   this.ticketPrice = ticketPrice;
    }
-   
+
 
    public List<Ticket> getTickets() {
-	return tickets;
-}
+	   return tickets;
+   }
 
-public void setTickets(List<Ticket> tickets) {
-	this.tickets = tickets;
-}
+   public void setTickets(List<Ticket> tickets) {
+	   this.tickets = tickets;
+   }
+   
+   public int freeSeats() {
+	   return this.hall.getSeats().size() - this.tickets.size();
+   }
 
-@Override
+   @Override
    public int hashCode() {
 	   return Objects.hash(dateAndTime, hall, id, movie, ticketPrice, type);
    }

@@ -30,7 +30,7 @@ public class JpaMovieService implements MovieService {
     }
 
     @Override
-    public List<Movie> findAll() {
+    public List<Movie> findAll() {;
         return movieRep.findAll();
     }
 
@@ -41,7 +41,7 @@ public class JpaMovieService implements MovieService {
 
     @Override
     public Movie update(Movie movie) {
-        return null;
+        return movieRep.save(movie);
     }
 
     @Override

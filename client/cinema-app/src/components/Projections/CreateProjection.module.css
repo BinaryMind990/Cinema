@@ -1,0 +1,31 @@
+.create-projection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.create-projection-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    width: 50%;
+    max-width: 800px;
+}
+
+.create-projection-form label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.create-projection-form select,
+.create-projection-form input[type="datetime-local"],
+.create-projection-form input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}

@@ -3,7 +3,6 @@ import Button from '../UI/Button';
 import CinemaAxios from '../../apis/CinemaAxios';
 import { withNavigation } from '../../routeconf';
 import styles from './CreateMovie.module.css';
-import { CircleLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 const CreateMovie = (props) => {
@@ -15,7 +14,6 @@ const CreateMovie = (props) => {
 		year: '',
 		description: '',
 	});
-	const [loading, setLoading] = useState(true);
 
 	const addMovieHandleSubmit = async (e) => {
 		e.preventDefault();
@@ -24,23 +22,13 @@ const CreateMovie = (props) => {
 			toast.success('Movie was added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			setLoading(false);
 			props.navigate('/movies');
 		} catch (error) {
 			toast.error('Error occured please try again!', {
-				position: toast.POSITION.TOP_CENTER,
+				position: toast.POSITION.TOP_RIGHT,
 			});
-			setLoading(false);
 		}
 	};
-
-	if (loading) {
-		return (
-			<div className='loader-container'>
-				<CircleLoader size={75} />
-			</div>
-		);
-	}
 
 	return (
 		<div className={styles['create-movie-container']}>
@@ -66,6 +54,7 @@ const CreateMovie = (props) => {
 					type='number'
 					name='duration'
 					id='duration'
+					min={0}
 					className={styles['create-movie-input']}
 					value={movieData.duration}
 					onChange={(e) =>
@@ -102,6 +91,7 @@ const CreateMovie = (props) => {
 					type='number'
 					name='year'
 					id='year'
+					min={0}
 					className={styles['create-movie-input']}
 					value={movieData.year}
 					onChange={(e) =>
@@ -120,7 +110,7 @@ const CreateMovie = (props) => {
 					}
 				/>
 				<br />
-				<Button type='submit' className={styles['create-movie-submit']}>
+				<Button type='submit' className='blue'>
 					Add
 				</Button>
 			</form>

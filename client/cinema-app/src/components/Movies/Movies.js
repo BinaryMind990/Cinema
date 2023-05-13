@@ -50,7 +50,7 @@ const Movies = (props) => {
 			});
 		} catch (error) {
 			toast.error('Error occured please try again!', {
-				position: toast.POSITION.TOP_CENTER,
+				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
 	};
@@ -73,13 +73,19 @@ const Movies = (props) => {
 			<table>
 				<thead>
 					<tr>
-						<th>{props.title}</th>
+						<th>Title</th>
 					</tr>
 				</thead>
 				<tbody>
 					{movies.map((movie) => (
 						<tr key={movie.id}>
 							<td className={styles.cell}>
+								<div className={styles.moviePoster}>
+									<img
+										src={movie.posterLink}
+										alt={`Movie poster for ${movie.name}`}
+									/>
+								</div>
 								<Link
 									className={styles.link}
 									to={getMovieUrl(movie.id)}

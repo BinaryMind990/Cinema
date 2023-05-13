@@ -8,6 +8,7 @@
 
 .movie-image {
     width: 40%;
+    max-width: 500px;
     height: auto;
     object-fit: cover;
 }

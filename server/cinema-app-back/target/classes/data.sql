@@ -18,7 +18,7 @@ INSERT INTO type_hall (hall_id, type_id) VALUES (1, 1), (1,2), (2, 1), (3, 1), (
 INSERT INTO movie (country, distributor, description, duration, name, year, poster_link) 
 VALUES('Serbia','ART VISTA d.o.o', 'Description for 1. movie', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg'),
 	  ('Serbia', 'unknown', 'Description for 2. movie', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg'),
-      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://en.wikipedia.org/wiki/When_I_Grow_Up,_I%27ll_Be_a_Kangaroo#/media/File:When_I_Grow_Up,_I''ll_Be_a_Kangaroo.jpg'),
+      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://pics.filmaffinity.com/kad_porastem_bicu_kengur_when_i_grow_up_i_ll_be_a_kangaroo-683737456-large.jpg'),
       ('Serbia', 'Vans','Description for 4. movie', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg'),
 	  ('Serbia', 'unknown', 'Description for 5. movie', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg');
 	  

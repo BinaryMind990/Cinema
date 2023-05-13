@@ -8,6 +8,7 @@ import Tikets from './components/Tikets/Tikets';
 import Movie from './components/Movies/Movie';
 import CreateMovie from './components/Movies/CreateMovie';
 import EditMovie from './components/Movies/EditMovie';
+import CreateProjection from './components/Projections/CreateProjection';
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 					<Route path='/movies/add' element={<CreateMovie />} />
 					<Route path='/movies/edit/:id' element={<EditMovie />} />
 					<Route path='/projections' element={<Projections />} />
+					<Route path='/projections/add' element={<CreateProjection />} />
 					<Route path='/tikets' element={<Tikets />} />
 				</Routes>
 			</Fragment>

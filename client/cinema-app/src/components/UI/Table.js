@@ -42,14 +42,6 @@ const Table = (props) => {
 									<div className={styles.actions}>
 										<div className={styles.buttonWrapper}>
 											<Button
-												className='orange'
-												onClick={() => props.edit(item.id)}
-											>
-												Edit
-											</Button>
-										</div>
-										<div className={styles.buttonWrapper}>
-											<Button
 												className='red'
 												onClick={() => props.delete(item.id)}
 											>

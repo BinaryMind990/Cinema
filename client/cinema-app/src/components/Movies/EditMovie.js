@@ -44,7 +44,7 @@ const EditMovie = (props) => {
 			props.navigate('/movies');
 		} catch (error) {
 			toast.error('Error occured please try again!', {
-				position: toast.POSITION.TOP_CENTER,
+				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
 	};
@@ -147,7 +147,7 @@ const EditMovie = (props) => {
 					}
 				/>
 				<br />
-				<Button type='submit' className={styles.editButton}>
+				<Button type='submit' className='orange'>
 					Edit
 				</Button>
 			</form>

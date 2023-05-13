@@ -6,7 +6,7 @@ import CinemaAxios from '../../apis/CinemaAxios';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});
-	// const [genres, setGenres] = useState([]);
+	// const [genres, setGenres] = useState([]); // TODO
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const { id } = useParams();
@@ -16,7 +16,7 @@ const Movie = () => {
 			try {
 				const res = await CinemaAxios.get(`/movies/${id}`);
 				setMovie(res.data);
-				// setGenres(res.data.zanrovi);
+				// setGenres(res.data.zanrovi); //TODO
 				setLoading(false);
 			} catch (error) {
 				setError(true);
@@ -40,13 +40,18 @@ const Movie = () => {
 
 	return (
 		<div className={styles['movie-container']}>
-			{/* <img className={styles['movie-image']} src='#' alt={movie.naziv} /> */}
+			<img
+				className={styles['movie-image']}
+				src={movie.posterLink}
+				alt={`Movie poster for ${movie.name}`}
+			/>
 			<div className={styles['movie-details']}>
 				<div className={styles['movie-info']}>
 					<h1>{movie.name}</h1>
 					<p>Duration: {movie.duration} min</p>
 				</div>
-				{/* <ul className={styles['genres-list']}>
+				{/* TODO */}
+				{/* <ul className={styles['genres-list']}> 
 					{genres.map((zanr) => (
 						<li key={zanr.id}>{zanr.naziv}</li>
 					))}

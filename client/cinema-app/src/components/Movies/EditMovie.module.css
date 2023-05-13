@@ -40,21 +40,3 @@
     border: 1px solid #ccc;
     border-radius: 0.25rem;
 }
-
-.editButton {
-    padding: 0.5rem 1rem;
-    margin-right: 10px;
-    border: 1px solid #ffa500;
-    background-color: #ffa500;
-    color: #fff;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-
-.editButton:hover,
-.editButton:active {
-    background-color: #cc6600;
-}

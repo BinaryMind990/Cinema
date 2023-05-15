@@ -1,5 +1,7 @@
 package com.ftninformatika.jwd.modul3.cinema.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,13 @@ public class JpaHallService implements HallService {
 	@Override
 	public Hall findOne(Long id) {
 		Hall hall = hallRep.getOne(id);
-		
-		
 		return hall;
+	}
+
+	@Override
+	public List<Hall> findAll() {
+		
+		return hallRep.findAll();
 	}
 
 }

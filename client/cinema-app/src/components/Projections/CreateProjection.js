@@ -7,7 +7,9 @@ import styles from './CreateProjection.module.css';
 import { toast } from 'react-toastify';
 
 const CreateProjection = (props) => {
-	const [projections, setProjections] = useState([]);
+	const [movies, setMovies] = useState([]);
+	const [types, setTypes] = useState([]);
+	const [halls, setHalls] = useState([]);
 	const [projectionData, setProjectionData] = useState({
 		movieId: '',
 		typeId: '',
@@ -18,16 +20,38 @@ const CreateProjection = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getProjections();
+		getMovies();
+		getTypes();
+		getHalls();
 	}, []);
 
-	const getProjections = async () => {
+	const getMovies = async () => {
 		try {
-			const res = await CinemaAxios.get('/projections');
-			setProjections(res.data);
+			const res = await CinemaAxios.get(`/movies`);
+			setMovies(res.data);
 			setLoading(false);
 		} catch (error) {
-			console.log(error);
+			setLoading(false);
+		}
+	};
+
+	const getTypes = async () => {
+		try {
+			const res = await CinemaAxios.get(`/types`);
+			setTypes(res.data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+		}
+	};
+
+	const getHalls = async () => {
+		try {
+			const res = await CinemaAxios.get(`/halls`);
+			setHalls(res.data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
 		}
 	};
 
@@ -35,7 +59,7 @@ const CreateProjection = (props) => {
 		e.preventDefault();
 		try {
 			await CinemaAxios.post('/projections', projectionData);
-			toast.success('Movie was added successfully!', {
+			toast.success('Projection was added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 			props.navigate('/projections');
@@ -74,13 +98,10 @@ const CreateProjection = (props) => {
 					}
 				>
 					<option>Choose movie</option>
-					{projections.map((projection) => {
+					{movies.map((movie) => {
 						return (
-							<option
-								key={projection.movieId}
-								value={projection.movieId}
-							>
-								{projection.movieName}
+							<option key={movie.id} value={movie.id}>
+								{movie.name}
 							</option>
 						);
 					})}
@@ -99,10 +120,10 @@ const CreateProjection = (props) => {
 					}
 				>
 					<option>Chose type</option>
-					{projections.map((projection) => {
+					{types.map((type) => {
 						return (
-							<option key={projection.typeId} value={projection.typeId}>
-								{projection.typeName}
+							<option key={type.id} value={type.id}>
+								{type.name}
 							</option>
 						);
 					})}
@@ -121,10 +142,10 @@ const CreateProjection = (props) => {
 					}
 				>
 					<option>Chose hall</option>
-					{projections.map((projection) => {
+					{halls.map((hall) => {
 						return (
-							<option key={projection.hallId} value={projection.hallId}>
-								{projection.hall}
+							<option key={hall.id} value={hall.id}>
+								{hall.name}
 							</option>
 						);
 					})}

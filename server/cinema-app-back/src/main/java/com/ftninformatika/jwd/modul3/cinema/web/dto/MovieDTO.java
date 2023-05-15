@@ -1,10 +1,9 @@
 package com.ftninformatika.jwd.modul3.cinema.web.dto;
 
 import java.util.Objects;
-
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,16 +12,23 @@ public class MovieDTO {
 	
     private Long id;
 
+    @NotNull
 	@NotBlank
     private String name;
     
+	@NotNull
 	@Positive
     private int duration;
     
+	@NotNull
+	@NotBlank
     private String distributor;
     
+    @NotNull
+    @NotBlank
     private String country;
     
+    @NotNull
     @Positive
     private int year;
     

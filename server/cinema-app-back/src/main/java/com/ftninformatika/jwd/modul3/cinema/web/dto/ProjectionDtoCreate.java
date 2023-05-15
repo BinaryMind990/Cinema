@@ -1,19 +1,39 @@
 package com.ftninformatika.jwd.modul3.cinema.web.dto;
 
 import java.util.Objects;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProjectionDtoCreate {
 	
+	@NotNull
+	@Positive
 	private Long movieId;
 	
+	@NotNull
+	@Min(value = 1)
+	@Max(value = 3)
 	private Long typeId;
 	
+	@NotNull
+	@Min(value = 1)
+	@Max(value = 5)
 	private Long hallId;
 	
+	
+	@NotBlank(message = "Date and time are not added.")
+    @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]$", message = "Date and time are not valid.")
 	private String dateTimeStr;
 	
+	@Positive
 	private double ticketPrice;
 
 	public ProjectionDtoCreate(Long movieId, Long typeId, Long hallId, String dateTimeStr, double ticketPrice) {

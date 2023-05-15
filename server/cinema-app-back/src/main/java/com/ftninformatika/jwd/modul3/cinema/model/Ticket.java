@@ -90,7 +90,6 @@ public class Ticket {
 		return Objects.hash(id, projection, seat);
 	}
 	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,8 +105,7 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", projection=" + projection + ", seat=" + seat + "]";
+		return "Ticket [id=" + id + ", projection=" + projection.getId() + ", seat=" + seat.getSeatNumber() + " hall " + seat.getHall().getName() + "]";
 	}
-    
-    
+       
 }

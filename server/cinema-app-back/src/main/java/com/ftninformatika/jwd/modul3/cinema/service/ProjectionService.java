@@ -3,6 +3,8 @@ package com.ftninformatika.jwd.modul3.cinema.service;
 import com.ftninformatika.jwd.modul3.cinema.model.Movie;
 import com.ftninformatika.jwd.modul3.cinema.model.Projection;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProjectionService {
@@ -16,6 +18,6 @@ public interface ProjectionService {
     
     Projection delete(Long id);
 
-
+    List<Projection> search(LocalDateTime date);
 
 }

@@ -146,7 +146,7 @@ public class Projection {
 
    @Override
    public String toString() {
-	   return "Projection [id=" + id + ", movie=" + movie + ", type=" + type + ", hall=" + hall + ", dateAndTime="
+	   return "Projection [id=" + id + ", movie=" + movie.getName()+ ", type=" + type.getName() + ", hall=" + hall.getName() + ", dateAndTime="
 			   + dateAndTime + ", ticketPrice=" + ticketPrice + "]";
    }
 

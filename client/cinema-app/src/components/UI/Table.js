@@ -1,6 +1,6 @@
 import Button from './Button';
 import { Link } from 'react-router-dom';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaTicketAlt } from 'react-icons/fa';
 import styles from './Table.module.css';
 
 const Table = (props) => {
@@ -37,9 +37,21 @@ const Table = (props) => {
 										<p>{item.typeName}</p>
 										<p>{item.hall}</p>
 										<p>{item.ticketPrice}</p>
+										<p>{item.freeSeats}</p>
 									</div>
-
 									<div className={styles.actions}>
+										<div className={styles.buttonWrapper}>
+											{item.freeSeats > 0 && (
+												<Link
+													className={`${styles.link} ${styles.buy}`}
+													to={props.buy(item.id)}
+												>
+													<FaTicketAlt
+														className={`${styles.trashIcon} orange`}
+													/>
+												</Link>
+											)}
+										</div>
 										<div className={styles.buttonWrapper}>
 											<Button
 												className='red'

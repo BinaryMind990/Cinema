@@ -1,6 +1,7 @@
 package com.ftninformatika.jwd.modul3.cinema.web.dto;
 
 import java.util.Objects;
+import java.util.Set;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,6 +26,8 @@ public class ProjectionDTO {
     private double ticketPrice;
     
     private int freeSeats;
+    
+    private Set<Long> seats;
 
 	public ProjectionDTO(Long id, String movieName, Long movieId, String typeName, Long typeId, String hall,
 			Long hallId, String dateTimeStr, double ticketPrice) {
@@ -131,7 +134,6 @@ public class ProjectionDTO {
 		this.ticketPrice = ticketPrice;
 	}
 	
-	
 	public int getFreeSeats() {
 		return freeSeats;
 	}
@@ -139,14 +141,20 @@ public class ProjectionDTO {
 	public void setFreeSeats(int freeSeats) {
 		this.freeSeats = freeSeats;
 	}
+	
+	public Set<Long> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(Set<Long> seats) {
+		this.seats = seats;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateTimeStr, hall, hallId, id, movieId, movieName, ticketPrice, typeId, typeName);
 	}
 
-	
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

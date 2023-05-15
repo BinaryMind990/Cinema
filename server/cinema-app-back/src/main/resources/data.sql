@@ -18,7 +18,7 @@ INSERT INTO type_hall (hall_id, type_id) VALUES (1, 1), (1,2), (2, 1), (3, 1), (
 INSERT INTO movie (country, distributor, description, duration, name, year, poster_link) 
 VALUES('Serbia','ART VISTA d.o.o', 'Description for 1. movie', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg'),
 	  ('Serbia', 'unknown', 'Description for 2. movie', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg'),
-      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://pics.filmaffinity.com/kad_porastem_bicu_kengur_when_i_grow_up_i_ll_be_a_kangaroo-683737456-large.jpg'),
+      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg'),
       ('Serbia', 'Vans','Description for 4. movie', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg'),
 	  ('Serbia', 'unknown', 'Description for 5. movie', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg');
 	  
@@ -34,7 +34,7 @@ INSERT INTO projection (date_and_time, ticket_price, hall_id, movie_id, type_id)
 ('2023-06-25 20:00', 450, 3, 4, 1),
 ('2023-06-12 18:00', 550, 2, 4, 1),
 ('2023-06-18 20:00', 600, 5, 5, 3),
-('2023-06-14 20:00', 600, 4, 5, 3);	  
+('2023-04-14 20:00', 600, 4, 5, 3);	  
 
 INSERT INTO seat (seat_number, hall_id) VALUES 
 (1, 1),
@@ -65,6 +65,10 @@ INSERT INTO ticket (date_and_time, projection_id, seat_seat_number, seat_hall_id
 ('2023-04-28 20:00:00', 3, 1, 2, 2),
 ('2023-04-15 20:00:00', 1, 2, 1, 3),
 ('2023-04-22 20:00:00', 1, 3, 1, 1),
+('2023-04-22 20:00:00', 1, 4, 1, 1),
+('2023-04-22 20:00:00', 1, 5, 1, 1),
+('2023-04-22 20:00:00', 1, 6, 1, 1),
+('2023-04-22 20:00:00', 11, 1, 1, 1),
 ('2023-04-25 20:00:00', 3, 2, 2, 3);
 
 								

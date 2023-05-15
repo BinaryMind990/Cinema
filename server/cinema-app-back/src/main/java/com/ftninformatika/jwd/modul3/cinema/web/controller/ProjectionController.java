@@ -21,22 +21,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/projections", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class ProjectionController {
-	
-	@Autowired
-	private ProjectionRep projectionRep;
 
     @Autowired
     private ProjectionService projectionService;
@@ -54,6 +49,19 @@ public class ProjectionController {
 
         return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
     }
+   /*
+    
+    @GetMapping
+    public ResponseEntity<List<ProjectionDTO>> search(@RequestParam(required = false) String date){
+    	
+    	
+    	LocalDateTime localDateTime = getLocalDateTime("2023-06-15 15:15");
+    	
+    	List<Projection> projections = projectionService.search(localDateTime);
+    	
+    	return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
+    }
+    */
     
     @GetMapping("/{id}")
     public ResponseEntity<ProjectionDTO> getOne(@PathVariable Long id){
@@ -90,7 +98,7 @@ public class ProjectionController {
     }
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectionDTO> create(@RequestBody ProjectionDtoCreate dto){
+    public ResponseEntity<ProjectionDTO> create( @Valid @RequestBody ProjectionDtoCreate dto){
     	
     	
     	Projection newProjection = toProjectionNew.convert(dto);
@@ -103,5 +111,11 @@ public class ProjectionController {
     private LocalDateTime getLocalDateTime(String dateTime) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateTime, formatter);
-    }   
+    }
+    
+    private LocalDate getLocalDate (String date) throws DateTimeParseException{
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	System.out.println(LocalDate.parse(date, dtf));
+    	return LocalDate.parse(date, dtf);
+    }
 }

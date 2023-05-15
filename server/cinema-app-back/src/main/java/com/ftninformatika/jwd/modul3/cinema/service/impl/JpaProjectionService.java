@@ -6,6 +6,7 @@ import com.ftninformatika.jwd.modul3.cinema.service.ProjectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,16 +28,17 @@ public class JpaProjectionService implements ProjectionService {
 
     @Override
     public Projection save(Projection projection) {
+    	
+    	if(!projection.getHall().getTypes().contains(projection.getType())) {
+    		return null;
+    	}
+    	
     	if(projection.getDateAndTime().isBefore(LocalDateTime.now())) {
     		return null;
     	}
     	List<Projection> projections = projectionRep.findList(projection.getHall().getId(), projection.getDateAndTime());
     	boolean occupiedTime = false;
     	
-    	for(Projection p : projections) {
-    		System.out.println(p.getDateAndTime().plusMinutes(p.getMovie().getDuration()));
-    		System.out.println(projection.getDateAndTime());
-    	}
     	if(projections.stream().anyMatch(p -> p.getDateAndTime().equals(projection.getDateAndTime())))
     		return null;
     
@@ -57,7 +59,7 @@ public class JpaProjectionService implements ProjectionService {
 
     @Override
     public Projection update(Projection projection) {
-        return null;
+        return projectionRep.save(projection);
     }
 
 	@Override
@@ -69,5 +71,11 @@ public class JpaProjectionService implements ProjectionService {
 			return projection;
 		}
 		return null;
+	}
+
+	@Override
+	public List<Projection> search(LocalDateTime date) {
+		System.out.println("datum u servisu radi"+ date);
+		return projectionRep.search(date);
 	}
 }

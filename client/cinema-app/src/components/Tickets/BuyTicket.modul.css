@@ -1,0 +1,25 @@
+.buy-ticket-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.buy-ticket-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+    width: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.ticket-button {
+    margin-top: 10px;
+}

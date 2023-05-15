@@ -13,7 +13,7 @@ public class TicketToTicketDTO implements Converter<Ticket, TicketDTO> {
     @Override
     public TicketDTO convert(Ticket source) {
         TicketDTO dto = new TicketDTO();
-        
+        System.out.println(source);
         String [] dateTime = source.getProjection().getDateAndTime().toString().split("T");
         dto.setId(source.getId());
         dto.setMovieName(source.getProjection().getMovie().getName());

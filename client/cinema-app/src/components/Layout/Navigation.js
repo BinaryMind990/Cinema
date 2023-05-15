@@ -26,7 +26,7 @@ const Navigation = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to='/tikets' className={styles.link}>
+						<Link to='/tickets' className={styles.link}>
 							Tikets
 						</Link>
 					</li>

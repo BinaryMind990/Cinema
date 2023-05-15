@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class ProjectionToProjectionDTO implements Converter<Projection, ProjectionDTO> {
@@ -24,6 +26,11 @@ public class ProjectionToProjectionDTO implements Converter<Projection, Projecti
     	dto.setTypeId(projection.getType().getId());
     	dto.setTypeName(projection.getType().getName());
     	dto.setFreeSeats(projection.freeSeats());
+    	Set<Long> seats = projection.getHall().getSeats().stream().map(s -> s.getSeatNumber()).collect(Collectors.toSet());
+    	for(Long l : projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList())) {
+    		seats.remove(l);
+    	}
+    	dto.setSeats(seats);
     	
         return dto;
     }

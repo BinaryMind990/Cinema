@@ -43,6 +43,26 @@ td {
     box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.5);
 }
 
+.link.buy {
+    background-color: #ffa500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.link.buy:hover {
+    background-color: #cc6600;
+}
+
+.link.buy:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5);
+}
+
+
 .actions {
     display: flex;
     align-items: center;

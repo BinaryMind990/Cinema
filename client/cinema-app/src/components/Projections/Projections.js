@@ -31,6 +31,11 @@ const Projections = (props) => {
 		return url;
 	};
 
+	const buyTicket = (projectionId) => {
+		const buyUrl = `/tickets/buy/projections/${projectionId}`;
+		return buyUrl;
+	};
+
 	const goToAddHandler = () => {
 		props.navigate('/projections/add');
 	};
@@ -69,6 +74,7 @@ const Projections = (props) => {
 				items={projections}
 				title={`Projections`}
 				url={getMovieUrl}
+				buy={buyTicket}
 				delete={deleteHandler}
 			/>
 			<div className={styles.addButton}>

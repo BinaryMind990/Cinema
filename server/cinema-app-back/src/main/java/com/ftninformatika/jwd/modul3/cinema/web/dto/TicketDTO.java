@@ -1,17 +1,14 @@
 package com.ftninformatika.jwd.modul3.cinema.web.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class TicketDTO {
 
     private Long id;
     
     private Long seat;
     
-    private String date;
+    private String projectionDate;
     
-    private String time;
+    private String projectionTime;
     
     private String movieName;
     
@@ -21,15 +18,14 @@ public class TicketDTO {
 
 	private double price;
 
-	
 
 	public TicketDTO(Long id, Long seat, String date, String time, String movieName, String type, String hall,
 			double price) {
 		super();
 		this.id = id;
 		this.seat = seat;
-		this.date = date;
-		this.time = time;
+		this.projectionDate = date;
+		this.projectionTime = time;
 		this.movieName = movieName;
 		this.type = type;
 		this.hall = hall;
@@ -57,19 +53,19 @@ public class TicketDTO {
 	}
 
 	public String getDate() {
-		return date;
+		return projectionDate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.projectionDate = date;
 	}
 
 	public String getTime() {
-		return time;
+		return projectionTime;
 	}
 
 	public void setTime(String time) {
-		this.time = time;
+		this.projectionTime = time;
 	}
 
 	public String getMovieName() {
@@ -107,7 +103,7 @@ public class TicketDTO {
 
 	@Override
 	public String toString() {
-		return "TicketDTO [id=" + id + ", seat=" + seat + ", date=" + date + ", time=" + time + ", movieName="
+		return "TicketDTO [id=" + id + ", seat=" + seat + ", date=" + projectionDate + ", time=" + projectionTime + ", movieName="
 				+ movieName + ", type=" + type + ", hall=" + hall + "]";
 	}
 

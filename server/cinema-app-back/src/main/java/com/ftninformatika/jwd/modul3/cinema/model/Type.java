@@ -100,7 +100,7 @@ public class Type {
 
 	@Override
 	public String toString() {
-		return "Type [id=" + id + ", name=" + name + ", halls=" + halls + "]";
+		return "Type [id=" + id + ", name=" + name;
 	}
 	
 	

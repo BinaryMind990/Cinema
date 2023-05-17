@@ -15,22 +15,22 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 public class Ticket {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    private Projection projection;
-    
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Seat seat;
-    
-    @Column
-    private LocalDateTime dateAndTime;
-    
-    @ManyToOne
-    private Korisnik user;
+	@ManyToOne
+	private Projection projection;
+
+	@ManyToOne
+	@PrimaryKeyJoinColumn
+	private Seat seat;
+
+	@Column
+	private LocalDateTime dateAndTime;
+
+	@ManyToOne
+	private Users user;
 
 	public Ticket(Long id, Projection projection, Seat seat) {
 		super();
@@ -42,7 +42,7 @@ public class Ticket {
 	public Ticket() {
 		super();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -66,7 +66,6 @@ public class Ticket {
 	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
-	
 
 	public LocalDateTime getDateAndTime() {
 		return dateAndTime;
@@ -75,13 +74,12 @@ public class Ticket {
 	public void setDateAndTime(LocalDateTime dateAndTime) {
 		this.dateAndTime = dateAndTime;
 	}
-	
 
-	public Korisnik getKorisnik() {
+	public Users getKorisnik() {
 		return user;
 	}
 
-	public void setKorisnik(Korisnik korisnik) {
+	public void setKorisnik(Users korisnik) {
 		this.user = korisnik;
 	}
 
@@ -89,7 +87,7 @@ public class Ticket {
 	public int hashCode() {
 		return Objects.hash(id, projection, seat);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -105,7 +103,8 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", projection=" + projection.getId() + ", seat=" + seat.getSeatNumber() + " hall " + seat.getHall().getName() + "]";
+		return "Ticket [id=" + id + ", projection=" + projection.getId() + ", seat=" + seat.getSeatNumber() + " hall "
+				+ seat.getHall().getName() + "]";
 	}
-       
+
 }

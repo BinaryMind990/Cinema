@@ -1,3 +1,27 @@
+.date-picker-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.date-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.date-item.active {
+    background-color: #dabd1e;
+}
+
+.calendar-icon {
+    margin-right: 5px;
+}
+
+
 table {
     width: 100%;
     max-width: 80%;

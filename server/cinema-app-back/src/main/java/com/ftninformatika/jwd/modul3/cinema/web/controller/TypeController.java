@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ftninformatika.jwd.modul3.cinema.model.Type;
 import com.ftninformatika.jwd.modul3.cinema.service.TypeService;
-import com.ftninformatika.jwd.modul3.cinema.support.TypeToTypeDto;
-import com.ftninformatika.jwd.modul3.cinema.web.dto.TypeDto;
+import com.ftninformatika.jwd.modul3.cinema.support.TypeToTypeDTO;
+import com.ftninformatika.jwd.modul3.cinema.web.dto.TypeDTO;
 
 @RestController
 @RequestMapping(value = "api/types", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TypeController {
-	
+
 	@Autowired
 	private TypeService typeService;
-	
+
 	@Autowired
-	private TypeToTypeDto toDto;
-	
+	private TypeToTypeDTO toDto;
+
 	@GetMapping
-	public ResponseEntity<List<TypeDto>> getAll(){
+	public ResponseEntity<List<TypeDTO>> getAll() {
 		List<Type> allTypes = typeService.findAll();
 		return new ResponseEntity<>(toDto.convertAll(allTypes), HttpStatus.OK);
 	}
-	
+
 }

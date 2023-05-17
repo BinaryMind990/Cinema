@@ -1,12 +1,9 @@
-INSERT INTO adresa (id, ulica, broj) VALUES (1,'Bulevar Cara Lazara', 5);
-INSERT INTO adresa (id, ulica, broj) VALUES (2, 'Dalmatinska', 7);
-
-INSERT INTO korisnik (id, e_mail, korisnicko_ime, lozinka, ime, prezime, uloga, adresa_id)
-              VALUES (1,'miroslav@maildrop.cc','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','KORISNIK',1),
-					 (2,'tamara@maildrop.cc','tamara','$2y$12$DRhCpltZygkA7EZ2WeWIbewWBjLE0KYiUO.tHDUaJNMpsHxXEw9Ky','Tamara','Milosavljevic','KORISNIK',2),
- 					 (3,'petar@maildrop.cc','petar','$2y$12$i6/mU4w0HhG8RQRXHjNCa.tG2OwGSVXb0GYUnf8MZUdeadE4voHbC','Petar','Jovic','KORISNIK',2),
-			  		 (4, 'goranb17@gmail.com', 'goran', '$2a$10$gCwpthXLMhSqmom7Mn5FYORquNNt9rK78yYDZf5SJXbE8Aiyq3Tsu', 'Goran', 'Bjelica', 'ADMIN', 1),
-			  		 (5, 'stefan@gmail.com', 'stefan', '$2a$10$3A4zsQ8g83kaTMmt7aeSou5lcQEJ2i7Y4Ziu0VwHSCWt7KcZiuitG', 'Stefan', 'Jevtovic', 'ADMIN', 2);
+INSERT INTO users (id, e_mail, user_name, password, name, last_name, role)
+              VALUES (1,'miroslav@maildrop.cc','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','USER'),
+					 (2,'tamara@maildrop.cc','tamara','$2y$12$DRhCpltZygkA7EZ2WeWIbewWBjLE0KYiUO.tHDUaJNMpsHxXEw9Ky','Tamara','Milosavljevic','USER'),
+ 					 (3,'petar@maildrop.cc','petar','$2y$12$i6/mU4w0HhG8RQRXHjNCa.tG2OwGSVXb0GYUnf8MZUdeadE4voHbC','Petar','Jovic','USER'),
+			  		 (4, 'goranb17@gmail.com', 'goran', '$2a$10$gCwpthXLMhSqmom7Mn5FYORquNNt9rK78yYDZf5SJXbE8Aiyq3Tsu', 'Goran', 'Bjelica', 'ADMIN'),
+			  		 (5, 'stefan@gmail.com', 'stefan', '$2a$10$3A4zsQ8g83kaTMmt7aeSou5lcQEJ2i7Y4Ziu0VwHSCWt7KcZiuitG', 'Stefan', 'Jevtovic', 'ADMIN');
 			  		 
 
 INSERT INTO type(name) VALUES ('2D'), ('3D'), ('4D');

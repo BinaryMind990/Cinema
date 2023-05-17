@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ftninformatika.jwd.modul3.cinema.model.Hall;
 import com.ftninformatika.jwd.modul3.cinema.service.HallService;
-import com.ftninformatika.jwd.modul3.cinema.support.HallToHallDto;
-import com.ftninformatika.jwd.modul3.cinema.web.dto.HallDto;
+import com.ftninformatika.jwd.modul3.cinema.support.HallToHallDTO;
+import com.ftninformatika.jwd.modul3.cinema.web.dto.HallDTO;
 
 @RestController
 @RequestMapping(value = "api/halls", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HallController {
-	
+
 	@Autowired
 	private HallService hallService;
-	
+
 	@Autowired
-	private HallToHallDto toDto;
-	
+	private HallToHallDTO toDto;
+
 	@GetMapping
-	public ResponseEntity<List<HallDto>> getAll(){
+	public ResponseEntity<List<HallDTO>> getAll() {
 		List<Hall> allHalls = hallService.findAll();
-		
+
 		return new ResponseEntity<>(toDto.convertAll(allHalls), HttpStatus.OK);
 	}
 

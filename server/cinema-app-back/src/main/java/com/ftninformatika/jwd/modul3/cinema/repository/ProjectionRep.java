@@ -24,8 +24,9 @@ public interface ProjectionRep extends JpaRepository<Projection, Long> {
 
 
     @Query("SELECT p FROM Projection p\n"
-    		+ "WHERE date(p.dateAndTime) = date(:dateTime)")
-	List<Projection> search(@Param("dateTime") LocalDateTime dateTime); 
+    		+ "WHERE date(p.dateAndTime) = date(:date)\n"
+    		+ "ORDER BY p.movie, p.dateAndTime")
+	List<Projection> search(@Param("date") LocalDate date); 
     
     
 }

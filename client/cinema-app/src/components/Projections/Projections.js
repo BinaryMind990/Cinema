@@ -4,28 +4,55 @@ import Table from '../UI/Table';
 import Button from '../UI/Button';
 import styles from './Projections.module.css';
 import { CircleLoader } from 'react-spinners';
+import { FaCalendarAlt } from 'react-icons/fa';
 import { withNavigation } from '../../routeconf';
 import { toast } from 'react-toastify';
 
 const Projections = (props) => {
 	const [projections, setProjections] = useState([]);
+	const [searchQuery, setSearchQuery] = useState({ date: '' });
+	const [selectedDate, setSelectedDate] = useState('');
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		getProjections();
-	}, []);
+		const getProjections = async () => {
+			try {
+				let res;
+				if (searchQuery.date) {
+					res = await CinemaAxios.get('/projections', {
+						params: {
+							date: searchQuery.date,
+						},
+					});
+				} else {
+					res = await CinemaAxios.get('/projections');
+				}
 
-	const getProjections = async () => {
-		try {
-			const res = await CinemaAxios.get('/projections');
-			setProjections(res.data);
-			setLoading(false);
-		} catch (error) {
-			setError(true);
-			setLoading(false);
-		}
-	};
+				const today = new Date(); // Dobijanje trenutnog datuma
+
+				const sortedProjections = res.data
+					.filter(
+						(projection) => new Date(projection.dateTimeStr) >= today
+					) // Filtriranje projekcija koje su u ili posle današnjeg datuma
+					.sort((projection1, projection2) => {
+						const date1 = new Date(projection1.dateTimeStr);
+						const date2 = new Date(projection2.dateTimeStr);
+						return date1 - date2;
+					});
+
+				setProjections(sortedProjections);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
+		getProjections();
+	}, [searchQuery]);
+
+	const projectionDates = projections.map(
+		(projection) => projection.dateTimeStr.split('T')[0]
+	);
+
 	const getMovieUrl = (movieId) => {
 		const url = `/movies/${movieId}`;
 		return url;
@@ -46,13 +73,22 @@ const Projections = (props) => {
 			setProjections(
 				projections.filter((movie) => movie.id !== projectionId)
 			);
-			toast.success('Movie was deleted successfully!', {
+			toast.success('Projection was deleted successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error(`Projection wasn't deleted successfully!`, {
 				position: toast.POSITION.TOP_RIGHT,
 			});
+		}
+	};
+	const handleSearchDate = (date) => {
+		if (selectedDate === date) {
+			setSelectedDate('');
+			setSearchQuery({ date: '' });
+		} else {
+			setSelectedDate(date);
+			setSearchQuery({ date });
 		}
 	};
 
@@ -64,12 +100,22 @@ const Projections = (props) => {
 		);
 	}
 
-	if (error) {
-		return <p>Oops! Something went wrong. Please try again later</p>;
-	}
-
 	return (
 		<div>
+			<div className={styles['date-picker-container']}>
+				{projectionDates.map((date, index) => (
+					<div
+						key={index}
+						className={`${styles['date-item']} ${
+							selectedDate === date ? styles['active'] : ''
+						}`}
+						onClick={() => handleSearchDate(date)}
+					>
+						<FaCalendarAlt className={styles['calendar-icon']} />
+						{date}
+					</div>
+				))}
+			</div>
 			<Table
 				items={projections}
 				title={`Projections`}

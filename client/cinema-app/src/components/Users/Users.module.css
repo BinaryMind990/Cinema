@@ -1,6 +1,6 @@
-table {
+.users-table {
     width: 100%;
-    max-width: 80%;
+    max-width: 50%;
     margin: 0 auto;
     border-collapse: collapse;
     margin-top: 20px;
@@ -17,17 +17,6 @@ td {
     padding: 10px;
     border-bottom: 1px solid #e6e6e6;
 }
-
-.moviePoster {
-    width: 80px;
-    height: auto;
-}
-
-.moviePoster img {
-    width: 100%;
-    display: block;
-}
-
 
 .cell {
     display: flex;
@@ -58,12 +47,4 @@ td {
 
 .buttonWrapper+.buttonWrapper {
     margin-left: 10px;
-}
-
-
-.addButton {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    margin-top: 15px;
 }

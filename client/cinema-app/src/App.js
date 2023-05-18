@@ -10,6 +10,10 @@ import CreateMovie from './components/Movies/CreateMovie';
 import EditMovie from './components/Movies/EditMovie';
 import CreateProjection from './components/Projections/CreateProjection';
 import BuyTicket from './components/Tickets/BuyTicket';
+import Users from './components/Users/Users';
+import User from './components/Users/User';
+import EditUser from './components/Users/EditUser';
+import RegisterUser from './components/Users/RegisterUser';
 
 function App() {
 	return (
@@ -29,6 +33,10 @@ function App() {
 						path='/tickets/buy/projections/:id'
 						element={<BuyTicket />}
 					/>
+					<Route path='/users' element={<Users />} />
+					<Route path='/users/:id' element={<User />} />
+					<Route path='/users/registration' element={<RegisterUser />} />
+					<Route path='/users/edit/:id' element={<EditUser />} />
 				</Routes>
 			</Fragment>
 		</Router>

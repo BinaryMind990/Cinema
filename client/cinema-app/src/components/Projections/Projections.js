@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 const Projections = (props) => {
 	const [projections, setProjections] = useState([]);
-	const [searchQuery, setSearchQuery] = useState({ date: '' });
+	const [searchQuery] = useState({ date: '' });
 	const [selectedDate, setSelectedDate] = useState('');
 	const [loading, setLoading] = useState(true);
 
@@ -47,11 +47,13 @@ const Projections = (props) => {
 			}
 		};
 		getProjections();
-	}, [searchQuery]);
+	}, [searchQuery, selectedDate]);
 
-	const projectionDates = projections.map(
-		(projection) => projection.dateTimeStr.split('T')[0]
-	);
+	const projectionDates = [
+		...new Set(
+			projections.map((projection) => projection.dateTimeStr.split('T')[0])
+		),
+	];
 
 	const getMovieUrl = (movieId) => {
 		const url = `/movies/${movieId}`;
@@ -85,10 +87,8 @@ const Projections = (props) => {
 	const handleSearchDate = (date) => {
 		if (selectedDate === date) {
 			setSelectedDate('');
-			setSearchQuery({ date: '' });
 		} else {
 			setSelectedDate(date);
-			setSearchQuery({ date });
 		}
 	};
 
@@ -117,7 +117,14 @@ const Projections = (props) => {
 				))}
 			</div>
 			<Table
-				items={projections}
+				items={
+					selectedDate
+						? projections.filter(
+								(projection) =>
+									projection.dateTimeStr.split('T')[0] === selectedDate
+						  )
+						: projections
+				}
 				title={`Projections`}
 				url={getMovieUrl}
 				buy={buyTicket}

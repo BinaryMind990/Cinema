@@ -72,7 +72,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-input']}
 					value={editMovieData.name}
 					onChange={(e) =>
-						setEditMovieData({ ...editMovieData, name: e.target.value })
+						setEditMovieData((prevData) => ({
+							...prevData,
+							name: e.target.value,
+						}))
 					}
 				/>
 				<br />
@@ -84,10 +87,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-input']}
 					value={editMovieData.duration}
 					onChange={(e) =>
-						setEditMovieData({
-							...editMovieData,
+						setEditMovieData((prevData) => ({
+							...prevData,
 							duration: e.target.value,
-						})
+						}))
 					}
 				/>
 				<br />
@@ -99,10 +102,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-input']}
 					value={editMovieData.distributor}
 					onChange={(e) =>
-						setEditMovieData({
-							...editMovieData,
+						setEditMovieData((prevData) => ({
+							...prevData,
 							distributor: e.target.value,
-						})
+						}))
 					}
 				/>
 				<br />
@@ -114,10 +117,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-input']}
 					value={editMovieData.country}
 					onChange={(e) =>
-						setEditMovieData({
-							...editMovieData,
+						setEditMovieData((prevData) => ({
+							...prevData,
 							country: e.target.value,
-						})
+						}))
 					}
 				/>
 				<br />
@@ -129,7 +132,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-input']}
 					value={editMovieData.year}
 					onChange={(e) =>
-						setEditMovieData({ ...editMovieData, year: e.target.value })
+						setEditMovieData((prevData) => ({
+							...prevData,
+							year: e.target.value,
+						}))
 					}
 				/>
 				<br />
@@ -140,10 +146,10 @@ const EditMovie = (props) => {
 					className={styles['create-movie-textarea']}
 					value={editMovieData.description}
 					onChange={(e) =>
-						setEditMovieData({
-							...editMovieData,
+						setEditMovieData((prevData) => ({
+							...prevData,
 							description: e.target.value,
-						})
+						}))
 					}
 				/>
 				<br />

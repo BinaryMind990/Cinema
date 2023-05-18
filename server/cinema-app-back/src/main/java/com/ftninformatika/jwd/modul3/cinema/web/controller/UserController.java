@@ -97,7 +97,7 @@ public class UserController {
         return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> get(@PathVariable Long id) {
         Optional<Users> user = userService.findOne(id);
@@ -116,7 +116,7 @@ public class UserController {
         return new ResponseEntity<>(toUserDTO.convert(users.getContent()), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    // @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "changePassword")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody UserChangePasswordDTO dto) {
         // ova metoda se "okida" kada se primi PUT /korisnici?promenaLozinke

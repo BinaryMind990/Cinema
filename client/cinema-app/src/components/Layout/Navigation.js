@@ -30,6 +30,11 @@ const Navigation = () => {
 							Tikets
 						</Link>
 					</li>
+					<li>
+						<Link to='/users' className={styles.link}>
+							Users
+						</Link>
+					</li>
 				</ul>
 			</nav>
 		</Fragment>

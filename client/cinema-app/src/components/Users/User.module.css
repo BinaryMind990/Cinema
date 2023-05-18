@@ -1,0 +1,8 @@
+.user-info p {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.user-info span {
+    margin-left: 10px;
+}

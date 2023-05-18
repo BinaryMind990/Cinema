@@ -1,0 +1,23 @@
+.register-user-form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: grid;
+    gap: 10px;
+}
+
+.register-user-form label {
+    font-weight: bold;
+}
+
+.register-user-form input {
+    width: 100%;
+    padding: 5px;
+}
+
+.register-user-form button {
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

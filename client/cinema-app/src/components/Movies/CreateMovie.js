@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Button from '../UI/Button';
 import CinemaAxios from '../../apis/CinemaAxios';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import styles from './CreateMovie.module.css';
 import { toast } from 'react-toastify';
 
-const CreateMovie = (props) => {
+const CreateMovie = () => {
 	const [movieData, setMovieData] = useState({
 		name: '',
 		duration: '',
@@ -13,7 +13,9 @@ const CreateMovie = (props) => {
 		country: '',
 		year: '',
 		description: '',
+		posterLink: '',
 	});
+	const navigate = useNavigate();
 
 	const addMovieHandleSubmit = async (e) => {
 		e.preventDefault();
@@ -22,9 +24,9 @@ const CreateMovie = (props) => {
 			toast.success('Movie was added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			props.navigate('/movies');
+			navigate('/movies');
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error('Failed to add the movie. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -37,6 +39,17 @@ const CreateMovie = (props) => {
 				className={styles['create-movie-form']}
 				onSubmit={addMovieHandleSubmit}
 			>
+				<label htmlFor='poster'>Poster</label>
+				<input
+					type='text'
+					name='poster'
+					id='poster'
+					className={styles['create-movie-input']}
+					value={movieData.posterLink}
+					onChange={(e) =>
+						setMovieData({ ...movieData, posterLink: e.target.value })
+					}
+				/>
 				<label htmlFor='movieName'>Title</label>
 				<input
 					type='text'
@@ -117,4 +130,4 @@ const CreateMovie = (props) => {
 		</div>
 	);
 };
-export default withNavigation(CreateMovie);
+export default CreateMovie;

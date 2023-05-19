@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import CinemaAxios from '../../apis/CinemaAxios';
-import { withNavigation } from '../../routeconf';
 import { CircleLoader } from 'react-spinners';
 
-const TicketsList = (props) => {
+const TicketsList = () => {
 	const [ticketsList, setTicketsList] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
@@ -54,4 +53,4 @@ const TicketsList = (props) => {
 		</div>
 	);
 };
-export default withNavigation(TicketsList);
+export default TicketsList;

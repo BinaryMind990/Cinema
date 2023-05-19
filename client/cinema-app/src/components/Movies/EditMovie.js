@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { useParams } from 'react-router-dom';
 import styles from './EditMovie.module.css';
@@ -7,7 +7,7 @@ import CinemaAxios from '../../apis/CinemaAxios';
 import { toast } from 'react-toastify';
 import { CircleLoader } from 'react-spinners';
 
-const EditMovie = (props) => {
+const EditMovie = () => {
 	const [editMovieData, setEditMovieData] = useState({
 		name: '',
 		duration: '',
@@ -15,9 +15,11 @@ const EditMovie = (props) => {
 		country: '',
 		year: '',
 		description: '',
+		posterLink: '',
 	});
 	const [loading, setLoading] = useState(true);
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getMovie = async () => {
@@ -37,13 +39,16 @@ const EditMovie = (props) => {
 		e.preventDefault();
 		try {
 			await CinemaAxios.put(`/movies/${id}`, editMovieData);
-			toast.success(`Movie ${editMovieData.name} was edited successfully!`, {
-				position: toast.POSITION.TOP_RIGHT,
-			});
+			toast.success(
+				`Movie ${editMovieData.name} was updated successfully!`,
+				{
+					position: toast.POSITION.TOP_RIGHT,
+				}
+			);
 
-			props.navigate('/movies');
+			navigate('/movies');
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error('Failed to update the movie. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -58,18 +63,31 @@ const EditMovie = (props) => {
 	}
 
 	return (
-		<div className={styles['create-movie-container']}>
-			<h1 className={styles['create-movie-title']}>Create movie</h1>
+		<div className={styles['edit-movie-container']}>
+			<h1 className={styles['edit-movie-title']}>Edit movie</h1>
 			<form
-				className={styles['create-movie-form']}
+				className={styles['edit-movie-form']}
 				onSubmit={editMovieHandleSubmit}
 			>
+				<label htmlFor='poster'>Poster</label>
+				<input
+					type='text'
+					name='poster'
+					id='poster'
+					className={styles['edit-movie-input']}
+					onChange={(e) =>
+						setEditMovieData((prevData) => ({
+							...prevData,
+							posterLink: e.target.value,
+						}))
+					}
+				/>
 				<label htmlFor='movieName'>Title</label>
 				<input
 					type='text'
 					name='movieName'
 					id='movieName'
-					className={styles['create-movie-input']}
+					className={styles['edit-movie-input']}
 					value={editMovieData.name}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -84,7 +102,7 @@ const EditMovie = (props) => {
 					type='number'
 					name='duration'
 					id='duration'
-					className={styles['create-movie-input']}
+					className={styles['edit-movie-input']}
 					value={editMovieData.duration}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -99,7 +117,7 @@ const EditMovie = (props) => {
 					type='text'
 					name='distributor'
 					id='distributor'
-					className={styles['create-movie-input']}
+					className={styles['edit-movie-input']}
 					value={editMovieData.distributor}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -114,7 +132,7 @@ const EditMovie = (props) => {
 					type='text'
 					name='country'
 					id='country'
-					className={styles['create-movie-input']}
+					className={styles['edit-movie-input']}
 					value={editMovieData.country}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -129,7 +147,7 @@ const EditMovie = (props) => {
 					type='number'
 					name='year'
 					id='year'
-					className={styles['create-movie-input']}
+					className={styles['edit-movie-input']}
 					value={editMovieData.year}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -143,7 +161,7 @@ const EditMovie = (props) => {
 				<textarea
 					name='description'
 					id='description'
-					className={styles['create-movie-textarea']}
+					className={styles['edit-movie-textarea']}
 					value={editMovieData.description}
 					onChange={(e) =>
 						setEditMovieData((prevData) => ({
@@ -160,4 +178,4 @@ const EditMovie = (props) => {
 		</div>
 	);
 };
-export default withNavigation(EditMovie);
+export default EditMovie;

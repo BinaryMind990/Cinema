@@ -5,7 +5,6 @@ const Header = (props) => {
 	return (
 		<Fragment>
 			<header>
-				<h1>Sutjeska</h1>
 				<Navigation />
 			</header>
 		</Fragment>

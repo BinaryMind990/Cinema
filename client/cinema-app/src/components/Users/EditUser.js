@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import CinemaAxios from '../../apis/CinemaAxios';
 import styles from './EditUser.module.css';
 import { CircleLoader } from 'react-spinners';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { toast } from 'react-toastify';
 
@@ -15,10 +15,12 @@ const EditUser = (props) => {
 		eMail: '',
 		password: '',
 		confirmPassword: '',
+		role: 'user',
 	});
 	const [loading, setLoading] = useState(true);
 
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -39,15 +41,15 @@ const EditUser = (props) => {
 		try {
 			await CinemaAxios.put(`/users/${id}`, editUserData);
 			toast.success(
-				`User ${editUserData.userName} was edited successfully!`,
+				`User ${editUserData.userName} has been updated successfully!`,
 				{
 					position: toast.POSITION.TOP_RIGHT,
 				}
 			);
 
-			props.navigate('/users');
+			navigate('/users');
 		} catch (error) {
-			toast.error('An error occurred. Please try again!', {
+			toast.error('Failed to update user. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -127,6 +129,21 @@ const EditUser = (props) => {
 						}
 					/>
 				</div>
+				<div>
+					<label htmlFor='role'>Role:</label>
+					<input
+						type='role'
+						name='role'
+						id='role'
+						value={editUserData.role}
+						onChange={(e) =>
+							setEditUserData((prevData) => ({
+								...prevData,
+								role: e.target.value,
+							}))
+						}
+					/>
+				</div>
 				{/* TODO */}
 				{/* <div>
 					<label htmlFor='password'>Password:</label>
@@ -165,4 +182,4 @@ const EditUser = (props) => {
 		</div>
 	);
 };
-export default withNavigation(EditUser);
+export default EditUser;

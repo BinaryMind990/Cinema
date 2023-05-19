@@ -5,12 +5,14 @@ import styles from './Users.module.css';
 import Button from '../UI/Button';
 import { CircleLoader } from 'react-spinners';
 import { FaTrash } from 'react-icons/fa';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Users = (props) => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getUsers();
@@ -28,14 +30,14 @@ const Users = (props) => {
 	};
 
 	const goToEditHandler = (userId) => {
-		props.navigate(`/users/edit/${userId}`);
+		navigate(`/users/edit/${userId}`);
 	};
 
 	const deleteHandler = async (userId) => {
 		try {
 			await CinemaAxios.delete(`/users/${userId}`);
 			setUsers(users.filter((user) => user.id !== userId));
-			toast.success('User was deleted successfully!', {
+			toast.success('User has been deleted successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		} catch (error) {
@@ -104,4 +106,4 @@ const Users = (props) => {
 		</div>
 	);
 };
-export default withNavigation(Users);
+export default Users;

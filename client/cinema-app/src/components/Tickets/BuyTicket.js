@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import CinemaAxios from '../../apis/CinemaAxios';
 import { useParams } from 'react-router-dom';
 import Button from '../UI/Button';
@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import styles from './BuyTicket.modul.css';
 import { CircleLoader } from 'react-spinners';
 
-const BuyTicket = (props) => {
+const BuyTicket = () => {
 	const [projections, setProjection] = useState({});
 	const [ticketData, setTicketData] = useState({
 		projectionId: '',
@@ -17,6 +17,7 @@ const BuyTicket = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getProjection = async () => {
@@ -36,12 +37,12 @@ const BuyTicket = (props) => {
 		e.preventDefault();
 		try {
 			await CinemaAxios.post(`/tickets`, ticketData);
-			toast.success('You buy ticket successfully!', {
+			toast.success('You have successfully purchased a ticket!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			props.navigate('/tickets');
+			navigate('/tickets');
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error('Failed to purchase ticket. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -103,4 +104,4 @@ const BuyTicket = (props) => {
 		</div>
 	);
 };
-export default withNavigation(BuyTicket);
+export default BuyTicket;

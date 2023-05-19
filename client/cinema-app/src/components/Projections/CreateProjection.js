@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import CinemaAxios from '../../apis/CinemaAxios';
 import Button from '../UI/Button';
 import styles from './CreateProjection.module.css';
 import { toast } from 'react-toastify';
 
-const CreateProjection = (props) => {
+const CreateProjection = () => {
 	const [movies, setMovies] = useState([]);
 	const [types, setTypes] = useState([]);
 	const [halls, setHalls] = useState([]);
@@ -18,6 +18,7 @@ const CreateProjection = (props) => {
 		ticketPrice: '',
 	});
 	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getMovies();
@@ -62,9 +63,9 @@ const CreateProjection = (props) => {
 			toast.success('Projection was added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			props.navigate('/projections');
+			navigate('/projections');
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error('Failed to add projection. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 			setLoading(false);
@@ -190,4 +191,4 @@ const CreateProjection = (props) => {
 		</div>
 	);
 };
-export default withNavigation(CreateProjection);
+export default CreateProjection;

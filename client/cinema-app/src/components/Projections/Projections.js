@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CinemaAxios from '../../apis/CinemaAxios';
 import Table from '../UI/Table';
 import Button from '../UI/Button';
 import styles from './Projections.module.css';
 import { CircleLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { UserContext } from '../../contexts/UserContext';
 
-const Projections = (props) => {
+const Projections = () => {
+	const { user, role } = useContext(UserContext);
 	const [projections, setProjections] = useState([]);
 	const [searchQuery] = useState({ date: '' });
 	const [selectedDate, setSelectedDate] = useState('');
 	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getProjections = async () => {
@@ -28,12 +31,12 @@ const Projections = (props) => {
 					res = await CinemaAxios.get('/projections');
 				}
 
-				const today = new Date(); // Dobijanje trenutnog datuma
+				const today = new Date();
 
 				const sortedProjections = res.data
 					.filter(
 						(projection) => new Date(projection.dateTimeStr) >= today
-					) // Filtriranje projekcija koje su u ili posle današnjeg datuma
+					)
 					.sort((projection1, projection2) => {
 						const date1 = new Date(projection1.dateTimeStr);
 						const date2 = new Date(projection2.dateTimeStr);
@@ -56,17 +59,15 @@ const Projections = (props) => {
 	];
 
 	const getMovieUrl = (movieId) => {
-		const url = `/movies/${movieId}`;
-		return url;
+		return `/movies/${movieId}`;
 	};
 
 	const buyTicket = (projectionId) => {
-		const buyUrl = `/tickets/buy/projections/${projectionId}`;
-		return buyUrl;
+		return `/tickets/buy/projections/${projectionId}`;
 	};
 
 	const goToAddHandler = () => {
-		props.navigate('/projections/add');
+		navigate('/projections/add');
 	};
 
 	const deleteHandler = async (projectionId) => {
@@ -79,7 +80,7 @@ const Projections = (props) => {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		} catch (error) {
-			toast.error(`Projection wasn't deleted successfully!`, {
+			toast.error(`Failed to delete the projection. Please try again!`, {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -129,13 +130,17 @@ const Projections = (props) => {
 				url={getMovieUrl}
 				buy={buyTicket}
 				delete={deleteHandler}
+				user={user}
+				role={role}
 			/>
-			<div className={styles.addButton}>
-				<Button className='blue' onClick={goToAddHandler}>
-					Add
-				</Button>
-			</div>
+			{role === 'ROLE_ADMIN' && (
+				<div className={styles.addButton}>
+					<Button className='blue' onClick={goToAddHandler}>
+						Add
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 };
-export default withNavigation(Projections);
+export default Projections;

@@ -29,7 +29,7 @@ const Table = (props) => {
 									<div className={styles.projectionInfo}>
 										<Link
 											className={styles.link}
-											to={props.url(item.id)}
+											to={props.url(item.movieId)}
 										>
 											{item.movieName}
 										</Link>
@@ -41,7 +41,7 @@ const Table = (props) => {
 									</div>
 									<div className={styles.actions}>
 										<div className={styles.buttonWrapper}>
-											{item.freeSeats > 0 && (
+											{item.freeSeats > 0 && props.user && (
 												<Link
 													className={`${styles.link} ${styles.buy}`}
 													to={props.buy(item.id)}
@@ -53,12 +53,14 @@ const Table = (props) => {
 											)}
 										</div>
 										<div className={styles.buttonWrapper}>
-											<Button
-												className='red'
-												onClick={() => props.delete(item.id)}
-											>
-												<FaTrash className={styles.trashIcon} />
-											</Button>
+											{props.role === 'ROLE_ADMIN' && (
+												<Button
+													className='red'
+													onClick={() => props.delete(item.id)}
+												>
+													<FaTrash className={styles.trashIcon} />
+												</Button>
+											)}
 										</div>
 									</div>
 								</td>

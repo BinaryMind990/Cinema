@@ -1,4 +1,4 @@
-.create-movie-container {
+.edit-movie-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     height: 100vh;
 }
 
-.create-movie-form {
+.edit-movie-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,11 +20,11 @@
     margin-right: 10%;
 }
 
-.create-movie-title {
+.edit-movie-title {
     margin-bottom: 5rem;
 }
 
-.create-movie-input {
+.edit-movie-input {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
@@ -32,7 +32,7 @@
     border-radius: 0.25rem;
 }
 
-.create-movie-textarea {
+.edit-movie-textarea {
     width: 100%;
     height: 5rem;
     padding: 0.5rem;

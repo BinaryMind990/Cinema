@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CinemaAxios from '../../apis/CinemaAxios';
 import Button from '../UI/Button';
-import { withNavigation } from '../../routeconf';
+import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import styles from './Movies.module.css';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { UserContext } from '../../contexts/UserContext';
 
-const Movies = (props) => {
+const Movies = () => {
+	const { role } = useContext(UserContext);
+
 	const [movies, setMovies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getMovies();
@@ -30,15 +35,15 @@ const Movies = (props) => {
 	};
 
 	const getMovieUrl = (movieId) => {
-		const url = `/movies/${movieId}`;
-		return url;
+		return `/movies/${movieId}`;
 	};
+
 	const goToAddHandler = () => {
-		props.navigate('/movies/add');
+		navigate('/movies/add');
 	};
 
 	const goToEditHandler = (movieId) => {
-		props.navigate(`/movies/edit/${movieId}`);
+		navigate(`/movies/edit/${movieId}`);
 	};
 
 	const deleteHandler = async (movieId) => {
@@ -49,7 +54,7 @@ const Movies = (props) => {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		} catch (error) {
-			toast.error('Error occured please try again!', {
+			toast.error('Failed to delete the movie. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		}
@@ -92,35 +97,40 @@ const Movies = (props) => {
 								>
 									{movie.name}
 								</Link>
-								<div className={styles.actions}>
-									<div className={styles.buttonWrapper}>
-										<Button
-											className='orange'
-											onClick={() => goToEditHandler(movie.id)}
-										>
-											Edit
-										</Button>
+
+								{role === 'ROLE_ADMIN' && (
+									<div className={styles.actions}>
+										<div className={styles.buttonWrapper}>
+											<Button
+												className='orange'
+												onClick={() => goToEditHandler(movie.id)}
+											>
+												Edit
+											</Button>
+										</div>
+										<div className={styles.buttonWrapper}>
+											<Button
+												className='red'
+												onClick={() => deleteHandler(movie.id)}
+											>
+												<FaTrash className={styles.trashIcon} />
+											</Button>
+										</div>
 									</div>
-									<div className={styles.buttonWrapper}>
-										<Button
-											className='red'
-											onClick={() => deleteHandler(movie.id)}
-										>
-											<FaTrash className={styles.trashIcon} />
-										</Button>
-									</div>
-								</div>
+								)}
 							</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
-			<div className={styles.addButton}>
-				<Button className='blue' onClick={goToAddHandler}>
-					Add
-				</Button>
-			</div>
+			{role === 'ROLE_ADMIN' && (
+				<div className={styles.addButton}>
+					<Button className='blue' onClick={goToAddHandler}>
+						Add
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 };
-export default withNavigation(Movies);
+export default Movies;

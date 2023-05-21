@@ -1,52 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CinemaAxios from '../../apis/CinemaAxios';
 import styles from './EditUser.module.css';
 import { CircleLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { toast } from 'react-toastify';
+import { UserContext } from 'contexts/UserContext';
 
-const EditUser = (props) => {
+const EditUser = () => {
+	const { editUserSubmitHandle, loading, fetchUserById, user } =
+		useContext(UserContext);
 	const [editUserData, setEditUserData] = useState({
 		userName: '',
 		name: '',
 		lastName: '',
 		eMail: '',
-		password: '',
-		confirmPassword: '',
-		role: 'user',
 	});
-	const [loading, setLoading] = useState(true);
 
 	const { id } = useParams();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const res = await CinemaAxios.get(`/users/${id}`);
-				setEditUserData(res.data);
-				setLoading(false);
-			} catch (error) {
-				setLoading(false);
-				console.log(error);
-			}
-		};
-		getUser();
+		fetchUserById(id);
 	}, [id]);
 
-	const editUserSubmitHandle = async (e) => {
+	useEffect(() => {
+		if (user) {
+			setEditUserData(user);
+		}
+	}, [user]);
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			await CinemaAxios.put(`/users/${id}`, editUserData);
-			toast.success(
-				`User ${editUserData.userName} has been updated successfully!`,
-				{
-					position: toast.POSITION.TOP_RIGHT,
-				}
-			);
-
+			await editUserSubmitHandle(id, editUserData);
 			navigate('/users');
 		} catch (error) {
 			toast.error('Failed to update user. Please try again!', {
@@ -65,10 +52,8 @@ const EditUser = (props) => {
 
 	return (
 		<div>
-			<form
-				className={styles['edit-user-form']}
-				onSubmit={editUserSubmitHandle}
-			>
+			<h1>Edit user</h1>
+			<form className={styles['edit-user-form']} onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor='userName'>Username:</label>
 					<input
@@ -100,7 +85,7 @@ const EditUser = (props) => {
 					/>
 				</div>
 				<div>
-					<label htmlFor='lastName'>Name:</label>
+					<label htmlFor='lastName'>Last name:</label>
 					<input
 						type='text'
 						name='lastName'
@@ -129,52 +114,6 @@ const EditUser = (props) => {
 						}
 					/>
 				</div>
-				<div>
-					<label htmlFor='role'>Role:</label>
-					<input
-						type='role'
-						name='role'
-						id='role'
-						value={editUserData.role}
-						onChange={(e) =>
-							setEditUserData((prevData) => ({
-								...prevData,
-								role: e.target.value,
-							}))
-						}
-					/>
-				</div>
-				{/* TODO */}
-				{/* <div>
-					<label htmlFor='password'>Password:</label>
-					<input
-						type='password'
-						name='password'
-						id='password'
-						value={editUserData.password}
-						onChange={(e) =>
-							setEditUserData((prevData) => ({
-								...prevData,
-								password: e.target.value,
-							}))
-						}
-					/>
-				</div>
-				<div>
-					<label htmlFor='confirmPassword'>Confirm Password:</label>
-					<input
-						type='confirmPassword'
-						name='confirmPassword'
-						id='confirmPassword'
-						value={editUserData.confirmPassword}
-						onChange={(e) =>
-							setEditUserData((prevData) => ({
-								...prevData,
-								confirmPassword: e.target.value,
-							}))
-						}
-					/>
-				</div> */}
 				<Button className={`blue`} type='submit'>
 					Save Changes
 				</Button>

@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CinemaAxios from '../../apis/CinemaAxios';
 import styles from './User.module.css';
 import { CircleLoader } from 'react-spinners';
+import { UserContext } from '../../contexts/UserContext';
 
 const User = () => {
-	const [user, setUser] = useState({});
-	const [loading, setLoading] = useState(true);
+	const { fetchUserById, user, loading } = useContext(UserContext);
 	const { id } = useParams();
 
 	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const res = await CinemaAxios.get(`/users/${id}`);
-				setUser(res.data);
-				setLoading(false);
-			} catch (error) {
-				setLoading(false);
-			}
-		};
-		getUser();
+		fetchUserById(id);
 	}, [id]);
 
 	if (loading) {
@@ -29,8 +19,10 @@ const User = () => {
 			</div>
 		);
 	}
+
 	return (
 		<div className={styles['user-info']}>
+			<h1>User</h1>
 			<p>
 				<span className={styles.label}>Name:</span>
 				<span>{user.name}</span>

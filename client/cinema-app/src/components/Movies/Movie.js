@@ -6,7 +6,6 @@ import CinemaAxios from '../../apis/CinemaAxios';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});
-	// const [genres, setGenres] = useState([]); // TODO
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const { id } = useParams();
@@ -16,7 +15,6 @@ const Movie = () => {
 			try {
 				const res = await CinemaAxios.get(`/movies/${id}`);
 				setMovie(res.data);
-				// setGenres(res.data.zanrovi); //TODO
 				setLoading(false);
 			} catch (error) {
 				setError(true);
@@ -50,12 +48,6 @@ const Movie = () => {
 					<h1>{movie.name}</h1>
 					<p>Duration: {movie.duration} min</p>
 				</div>
-				{/* TODO */}
-				{/* <ul className={styles['genres-list']}> 
-					{genres.map((zanr) => (
-						<li key={zanr.id}>{zanr.naziv}</li>
-					))}
-				</ul> */}
 				<p>Country: {movie.country}</p>
 				<p>Distributor: {movie.distributor}</p>
 				<p>Year: {movie.year}</p>

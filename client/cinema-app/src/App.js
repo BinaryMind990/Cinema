@@ -8,7 +8,9 @@ function App() {
 		<Router>
 			<UserProvider>
 				<Header />
-				<main>{AppRoutes}</main>
+				<main>
+					<AppRoutes />
+				</main>
 			</UserProvider>
 		</Router>
 	);

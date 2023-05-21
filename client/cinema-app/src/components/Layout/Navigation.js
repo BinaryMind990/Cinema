@@ -1,72 +1,41 @@
 import { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
 import logo from '../../assets/movieLogo.png';
 import { UserContext } from '../../contexts/UserContext';
 import Button from '../UI/Button';
+import { guestLinks, navLinks } from 'components/Layout/NavLinks';
+import { NavItem } from 'components/Layout/NavItem';
 
 const Navigation = () => {
 	const { user, role, logout } = useContext(UserContext);
 
-	const handleLogout = () => {
-		logout();
-	};
+	const handleLogout = () => logout();
+
+	const publicLinks = navLinks.filter((route) => route.public);
+
+	const guestRoutes = guestLinks.map(({ to, title }) => (
+		<NavItem key={to} url={to} title={title} styleName={styles.link} />
+	));
+
+	const publicRoutes = publicLinks.map(({ to, title }) => (
+		<NavItem key={to} url={to} title={title} styleName={styles.link} />
+	));
+
+	const allRoutes = navLinks.map(({ to, title }) => (
+		<NavItem key={to} url={to} title={title} styleName={styles.link} />
+	));
+
 	return (
 		<Fragment>
 			<nav className={styles.navigation}>
 				<img src={logo} alt='Movie clap' className={styles.logo} />
 				<ul className={styles.navLinks}>
-					{!user && (
-						<>
-							<li>
-								<Link to='/' className={styles.link}>
-									Home
-								</Link>
-							</li>
-							<li>
-								<Link to='/projections' className={styles.link}>
-									Projections
-								</Link>
-							</li>
-						</>
-					)}
+					{!user && guestRoutes}
+					{user && (role === 'ROLE_ADMIN' ? allRoutes : publicRoutes)}
 					{user && (
-						<Fragment>
-							<li>
-								<Link to='/' className={styles.link}>
-									Home
-								</Link>
-							</li>
-							<li>
-								<Link to='/movies' className={styles.link}>
-									Movies
-								</Link>
-							</li>
-							<li>
-								<Link to='/projections' className={styles.link}>
-									Projections
-								</Link>
-							</li>
-							<li>
-								<Link to='/tickets' className={styles.link}>
-									Tikets
-								</Link>
-							</li>
-							{role === 'ROLE_ADMIN' && (
-								<li>
-									<Link to='/users' className={styles.link}>
-										Users
-									</Link>
-								</li>
-							)}
-							<Button
-								className='red'
-								hidden={!user}
-								onClick={handleLogout}
-							>
-								Logout
-							</Button>
-						</Fragment>
+						<Button className='red' hidden={!user} onClick={handleLogout}>
+							Logout
+						</Button>
 					)}
 				</ul>
 			</nav>

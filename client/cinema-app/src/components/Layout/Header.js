@@ -1,13 +1,10 @@
-import { Fragment } from 'react';
 import Navigation from './Navigation';
 
-const Header = (props) => {
+const Header = () => {
 	return (
-		<Fragment>
-			<header>
-				<Navigation />
-			</header>
-		</Fragment>
+		<header>
+			<Navigation />
+		</header>
 	);
 };
 export default Header;

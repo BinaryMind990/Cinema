@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styles from './RegisterUser.module.css';
-import CinemaAxios from '../../apis/CinemaAxios';
 import Button from '../UI/Button';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { userClient } from 'apis/CinemaClient';
 
-const RegisterUser = (props) => {
+const RegisterUser = () => {
 	const [userRegData, setUserRegData] = useState({
 		userName: '',
 		name: '',
@@ -20,14 +20,7 @@ const RegisterUser = (props) => {
 		e.preventDefault();
 
 		try {
-			await CinemaAxios.post('/users', userRegData);
-			toast.success(
-				`User ${userRegData.userName} has been registered successfully!`,
-				{
-					position: toast.POSITION.TOP_RIGHT,
-				}
-			);
-
+			userClient.register(userRegData);
 			navigate('/login');
 		} catch (error) {
 			toast.error('Failed to register user. Please try again!', {
@@ -38,6 +31,7 @@ const RegisterUser = (props) => {
 
 	return (
 		<div>
+			<h1>Registration</h1>
 			<form
 				className={styles['register-user-form']}
 				onSubmit={registrationSubmitHandle}

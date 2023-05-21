@@ -1,54 +1,19 @@
-import { useEffect, useState } from 'react';
-import CinemaAxios from '../../apis/CinemaAxios';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Users.module.css';
 import Button from '../UI/Button';
 import { CircleLoader } from 'react-spinners';
 import { FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { UserContext } from '../../contexts/UserContext';
 
-const Users = (props) => {
-	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(true);
+const Users = () => {
+	const { users, loading, deleteUser, getUserUrl } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		getUsers();
-	}, []);
-
-	const getUsers = async () => {
-		try {
-			const res = await CinemaAxios.get('/users');
-			setUsers(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-		}
-	};
-
 	const goToEditHandler = (userId) => {
 		navigate(`/users/edit/${userId}`);
-	};
-
-	const deleteHandler = async (userId) => {
-		try {
-			await CinemaAxios.delete(`/users/${userId}`);
-			setUsers(users.filter((user) => user.id !== userId));
-			toast.success('User has been deleted successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to delete user. Please try again.', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
-	};
-
-	const getUserUrl = (userId) => {
-		return `/users/${userId}`;
 	};
 
 	if (loading) {
@@ -91,7 +56,7 @@ const Users = (props) => {
 										<div className={styles.buttonWrapper}>
 											<Button
 												className='red'
-												onClick={() => deleteHandler(user.id)}
+												onClick={() => deleteUser(user.id)}
 											>
 												<FaTrash className={styles.trashIcon} />
 											</Button>

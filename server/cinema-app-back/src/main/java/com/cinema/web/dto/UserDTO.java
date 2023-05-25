@@ -24,8 +24,20 @@ public class UserDTO {
 
     // @Size(min=3, max=50)
     private String lastName;
+    
+    private String role;
+    
+    
 
-    public Long getId() {
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public Long getId() {
         return id;
     }
 

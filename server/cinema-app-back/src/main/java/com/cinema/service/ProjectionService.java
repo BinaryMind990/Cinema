@@ -1,8 +1,6 @@
 package com.cinema.service;
 
-import com.cinema.model.Movie;
 import com.cinema.model.Projection;
-
 import java.time.LocalDate;
 import java.util.List;
 

@@ -47,11 +47,15 @@ public class JpaUserService implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
+    public Users delete(Long id) {
         Optional<Users> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent() && userOptional.get().getRole().equals(UserRole.USER)) {
+        	
             userRepository.deleteById(id);
+           
+            return userOptional.get();
         }
+      return null;
     }
 
     @Override
@@ -85,4 +89,15 @@ public class JpaUserService implements UserService {
 
         return true;
     }
+
+	@Override
+	public Users changeRole(Users user, String role) {
+		if(role.equals("USER") || role.equals("ADMIN")) {
+			user.setRole(UserRole.valueOf(role));
+			Users changedUser = userRepository.save(user);
+			return changedUser;
+		}
+	
+		return null;
+	}
 }

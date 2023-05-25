@@ -1,5 +1,6 @@
 package com.cinema.web.controller;
 
+import com.cinema.enumeration.UserRole;
 import com.cinema.model.Users;
 import com.cinema.service.security.TokenUtils;
 import com.cinema.service.UserService;
@@ -11,6 +12,7 @@ import com.cinema.web.dto.UserChangePasswordDTO;
 import com.cinema.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
@@ -93,6 +94,16 @@ public class UserController {
 
         return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
     }
+    
+    @PutMapping(value = "/changeRole/{id}/{role}")
+    public ResponseEntity<UserDTO> changeRole(@PathVariable Long id, @PathVariable String role){
+    	Users user = userService.findOne(id).get();
+    	if(user == null) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+    	Users userChangedRole = userService.changeRole(user, role);
+    	return new ResponseEntity<UserDTO>(toUserDTO.convert(userChangedRole), HttpStatus.OK);
+    }
 
     // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
@@ -113,16 +124,20 @@ public class UserController {
         return new ResponseEntity<>(toUserDTO.convert(users.getContent()), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
+    	System.out.println(id);
+        Users deletedUser = userService.delete(id);
 
+        if(deletedUser == null) {
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "changePassword")
+    @PutMapping(value = "/changePassword/{id}")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody UserChangePasswordDTO dto) {
 
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
@@ -143,10 +158,11 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("permitAll()")
+  //  @PreAuthorize("permitAll()")
     @RequestMapping(path = "/auth", method = RequestMethod.POST)
     public ResponseEntity authenticateUser(@RequestBody AuthUserDTO dto) {
         // Perform the authentication
+    	
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 dto.getUsername(), dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);

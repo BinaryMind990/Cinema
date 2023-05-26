@@ -32,7 +32,7 @@ public class JpaUserService implements UserService {
 
     @Override
     public List<Users> findAll() {
-        return userRepository.findAll();
+        return userRepository.findByDeleted(false);
     }
 
     @Override
@@ -49,12 +49,15 @@ public class JpaUserService implements UserService {
     @Override
     public Users delete(Long id) {
         Optional<Users> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent() && userOptional.get().getRole().equals(UserRole.USER)) {
-        	
+        if (userOptional.isPresent() && userOptional.get().getTickets().isEmpty()) {
             userRepository.deleteById(id);
-           
             return userOptional.get();
         }
+        if(userOptional.isPresent() && !userOptional.get().getTickets().isEmpty()) {
+        	userOptional.get().setDeleted(true);
+        	return userRepository.save(userOptional.get());
+        }
+        
       return null;
     }
 

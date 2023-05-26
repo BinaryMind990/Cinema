@@ -19,4 +19,7 @@ public interface MovieService {
     Movie delete(Long id);
 
     Page<Movie> search();
+
+	List<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country, String distributor,
+			Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc);
 }

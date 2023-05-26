@@ -1,10 +1,8 @@
 package com.cinema.model;
 
 import com.cinema.enumeration.UserRole;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -33,6 +31,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets = new ArrayList<Ticket>();
+    
+    @Column
+    private Boolean deleted = false;
 
     public Users() {
 
@@ -111,8 +112,17 @@ public class Users {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+    
 
-    @Override
+    public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

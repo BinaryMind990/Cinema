@@ -4,6 +4,7 @@ import com.cinema.model.Projection;
 import com.cinema.repository.ProjectionRep;
 import com.cinema.service.ProjectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ public class JpaProjectionService implements ProjectionService {
 
 	@Override
 	public List<Projection> findAll() {
-		return projectionRep.findAll();
+		return projectionRep.findByDeleted(false);
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class JpaProjectionService implements ProjectionService {
 		if (occupiedTime) {
 			return null;
 		}
-
+		if(projection.getMovie().isDeleted())
+			return null;
 		Projection savedProjection = projectionRep.save(projection);
 		return savedProjection;
 	}
@@ -69,10 +71,14 @@ public class JpaProjectionService implements ProjectionService {
 	@Override
 	public Projection delete(Long id) {
 		Projection projection = findOne(id);
-		if (projection != null) {
+		if (projection != null  && projection.getTickets().isEmpty()) {
 			projection.getMovie().getProjections().remove(projection);
 			projectionRep.delete(projection);
 			return projection;
+		}
+		if(projection != null && !projection.getTickets().isEmpty()) {
+			projection.setDeleted(true);
+			return projectionRep.save(projection);
 		}
 		return null;
 	}
@@ -82,4 +88,23 @@ public class JpaProjectionService implements ProjectionService {
 		System.out.println("datum u servisu radi" + date);
 		return projectionRep.search(date);
 	}
+
+	@Override
+	public List<Projection> findList(Long movieId, LocalDate localDate, Long typeId, Long hallId, Double minPrice,
+			Double maxPrice, String sortBy, String sortAscOrDesc) {
+			if(minPrice == null || minPrice < 0)
+				minPrice = 0.0;
+			if(maxPrice == null || maxPrice < minPrice)
+				maxPrice =Double.MAX_VALUE;
+			if(sortBy == null)
+				sortBy = "dateAndTime";
+			if(!sortBy.equals("movie") && !sortBy.equals("ticketPrice") && !sortBy.equals("type") && !sortBy.equals("hall"))
+			sortBy = "dateAndTime";
+			if(sortAscOrDesc == null || !sortAscOrDesc.equals("desc")) {
+		return projectionRep.findByParameters(movieId, localDate, typeId, hallId, minPrice, maxPrice, Sort.by(sortBy).ascending());
+			} else {
+				return projectionRep.findByParameters(movieId, localDate, typeId, hallId, minPrice, maxPrice, Sort.by(sortBy).descending());
+			}
+			
+		}
 }

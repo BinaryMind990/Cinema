@@ -54,7 +54,7 @@ public class TicketController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TicketDTO> create(@Valid @RequestBody TicketDTOCreate dto) {
-
+    
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		String userName = auth.getName();
     		System.out.println(userName);
@@ -65,7 +65,7 @@ public class TicketController {
 
         return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.OK);
     }
-
+    
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         System.out.println(id);

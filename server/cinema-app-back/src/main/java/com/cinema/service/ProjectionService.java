@@ -17,4 +17,7 @@ public interface ProjectionService {
 
     List<Projection> search(LocalDate date);
 
+	List<Projection> findList(Long movieId, LocalDate localDate, Long typeId, Long hallId, Double minPrice,
+			Double maxPrice, String sortBy, String sortAscOrDesc);
+
 }

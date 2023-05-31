@@ -3,7 +3,7 @@ package com.cinema.web.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -12,17 +12,18 @@ public class UserDTO {
     @Positive(message = "Id mora biti pozitivan broj.")
     private Long id;
 
-    // @NotBlank
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     private String userName;
 
-    // @NotEmpty
-    // @Email
+    @NotEmpty
+    @Email
     private String eMail;
 
-    // @Size(min=3, max=50)
+    @Size(min=3, max=50)
     private String name;
 
-    // @Size(min=3, max=50)
+    @Size(min=3, max=50)
     private String lastName;
     
     private String role;
@@ -76,5 +77,11 @@ public class UserDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", userName=" + userName + ", eMail=" + eMail + ", name=" + name + ", lastName="
+				+ lastName + ", role=" + role + "]";
+	}
 
 }

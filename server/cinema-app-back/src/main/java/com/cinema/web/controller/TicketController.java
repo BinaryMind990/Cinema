@@ -1,10 +1,17 @@
 package com.cinema.web.controller;
 
+import com.cinema.model.Projection;
 import com.cinema.model.Ticket;
+import com.cinema.model.Users;
+import com.cinema.service.ProjectionService;
 import com.cinema.service.TicketService;
+import com.cinema.service.UserService;
 import com.cinema.support.TicketToTicketDTO;
+import com.cinema.support.TicketToTicketDtoForDispay;
 import com.cinema.web.dto.TicketDTO;
 import com.cinema.web.dto.TicketDTOCreate;
+import com.cinema.web.dto.TicketDtoForDisplay;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 @RestController
@@ -33,12 +42,26 @@ public class TicketController {
 
     @Autowired
     private TicketToTicketDTO toDto;
+    
+    @Autowired
+    private ProjectionService projectionService;
+    
+    @Autowired
+    private TicketToTicketDtoForDispay toDtoForDisplay;
 
-    @GetMapping
-    public ResponseEntity<List<TicketDTO>> getAll() {
-
-        List<Ticket> tickets = ticketService.findAll();
-        return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);
+    @Autowired
+    private UserService userService;
+    
+    @GetMapping(value = "/projection/{id}") //metoda vraca prodate karte za odabranu projekciju koje moze da vidi samo admin
+    public ResponseEntity<List<TicketDtoForDisplay>> getByProjection(@PathVariable Long id) {
+    	Projection projection = projectionService.findOne(id);
+    	if(projection == null) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+    	List<Ticket> tickets = projection.getTickets();
+    	
+    //    List<Ticket> tickets = ticketService.findAll();
+        return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
@@ -49,6 +72,17 @@ public class TicketController {
         } else {
             return new ResponseEntity<TicketDTO>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping(value = "/user/{id}")   //ova metoda vraca karte za korisnika
+    public ResponseEntity<List<TicketDtoForDisplay>> getByUser(@PathVariable Long id){
+    	Optional<Users> user = userService.findOne(id);
+    	if(!user.isPresent()) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+    	
+    	List<Ticket> tickets = user.get().getTickets();
+    	return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
+    	
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -65,7 +99,7 @@ public class TicketController {
 
         return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.OK);
     }
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         System.out.println(id);

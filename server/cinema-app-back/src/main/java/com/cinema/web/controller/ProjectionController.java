@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -116,12 +115,12 @@ public class ProjectionController {
 
         return new ResponseEntity<>(toDto.convert(savedProjection), HttpStatus.CREATED);
     }
-
+/*
     private LocalDateTime getLocalDateTime(String dateTime) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateTime, formatter);
     }
-
+*/
     private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

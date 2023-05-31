@@ -25,4 +25,10 @@ public class UserRegistrationDTO extends UserDTO {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+	@Override
+	public String toString() {
+		return "UserRegistrationDTO [password=" + password + ", confirmPassword=" + confirmPassword + "]";
+	}
+    
 }

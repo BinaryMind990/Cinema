@@ -4,16 +4,16 @@ import javax.validation.constraints.NotBlank;
 
 public class UserChangePasswordDTO {
 
-    // @NotBlank(message = "Korisnicko ime nije zadato.")
+    @NotBlank(message = "Korisnicko ime nije zadato.")
     private String userName;
 
-    // @NotBlank(message = "Stara lozinka nije zadata.")
+    @NotBlank(message = "Stara lozinka nije zadata.")
     private String oldPassword;
 
-    // @NotBlank(message = "Lozinka nije zadata.")
+    @NotBlank(message = "Lozinka nije zadata.")
     private String password;
 
-    // @NotBlank(message = "Ponovljena lozinka nije zadata.")
+    @NotBlank(message = "Ponovljena lozinka nije zadata.")
     private String confirmPassword;
 
     public String getUserName() {

@@ -33,9 +33,14 @@ public interface ProjectionRep extends JpaRepository<Projection, Long> {
 			+ "(:localDate = NULL OR date(p.dateAndTime) = date(:localDate)) AND "
 			+ "(:typeId = NULL OR p.type.id = :typeId) AND "
 			+ "(:hallId = NULL OR p.hall.id = :hallId) AND "
-			+ "(p.ticketPrice BETWEEN :minPrice AND :maxPrice)")
+			+ "(p.ticketPrice BETWEEN :minPrice AND :maxPrice) AND "
+			+ "p.deleted = false")
 	List<Projection> findByParameters(@Param("movieId")Long movieId,@Param("localDate") LocalDate localDate,@Param("typeId") Long typeId,@Param("hallId") Long hallId,@Param("minPrice") Double minPrice,
 		@Param("maxPrice")	Double maxPrice, Sort sort);
+
+	@Query("SELECT p FROM Projection p WHERE "
+			+ " date(p.dateAndTime) BETWEEN date(:dateFrom) and date(:dateTo)")
+	List<Projection> findByDateAndTimeBetween(@Param("dateFrom") LocalDate dateFrom,@Param("dateTo") LocalDate dateTo);
 	
 
 }

@@ -5,7 +5,7 @@ import com.cinema.service.MovieService;
 import com.cinema.support.MovieDTOtoMovieNew;
 import com.cinema.support.MovieDTOToMovieUpdate;
 import com.cinema.support.MovieToMovieDTO;
-import com.cinema.web.dto.MovieDTO;import org.hibernate.criterion.Distinct;
+import com.cinema.web.dto.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

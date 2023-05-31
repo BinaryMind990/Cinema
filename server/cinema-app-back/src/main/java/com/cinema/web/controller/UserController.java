@@ -12,7 +12,6 @@ import com.cinema.web.dto.UserChangePasswordDTO;
 import com.cinema.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -69,8 +68,8 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody @Validated UserRegistrationDTO dto) {
-
-        if (dto.getId() != null || !dto.getPassword().equals(dto.getConfirmPassword())) {
+    	
+        if (dto.getId() != null || !dto.getPassword().equals(dto.getConfirmPassword()) || !userService.findbyUserName(dto.getUserName()).isEmpty()) {	
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

@@ -132,6 +132,10 @@ public class Projection {
 	public int freeSeats() {
 		return this.hall.getSeats().size() - this.tickets.size();
 	}
+	
+	public double earningFromProjection() {
+		return this.tickets.size()*ticketPrice;
+	}
 
 	@Override
 	public int hashCode() {

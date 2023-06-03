@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieRep extends JpaRepository<Movie, Long> {
 
-    Movie findOneById(Long id);
+	Movie findOneById(Long id);
 
-    Movie save(Movie movie);
+	// Movie save(Movie movie);
+	<S extends Movie> S save(S movie);
 
 	List<Movie> findByDeleted(Boolean deleted);
 
-	
 	@Query("SELECT m FROM Movie m WHERE "
 			+ "(:name = NULL OR m.name LIKE :name) AND "
 			+ "(m.duration BETWEEN :durationMin AND :durationMax) AND "
@@ -27,8 +27,10 @@ public interface MovieRep extends JpaRepository<Movie, Long> {
 			+ "(:distributor = NULL OR m.distributor LIKE :distributor%) AND "
 			+ "(m.year BETWEEN :yearMin AND :yearMax) AND "
 			+ "m.deleted = false")
-			
-	List<Movie> search(@Param("name") String name,@Param("durationMin") int durationMin,@Param("durationMax") int durationMax,@Param("country") String country,@Param("distributor") String distributor,@Param("yearMin") int yearMin,
-			@Param ("yearMax") int yearMax, Sort sort);
+
+	List<Movie> search(@Param("name") String name, @Param("durationMin") int durationMin,
+			@Param("durationMax") int durationMax, @Param("country") String country, @Param("distributor") String distributor,
+			@Param("yearMin") int yearMin,
+			@Param("yearMax") int yearMax, Sort sort);
 
 }

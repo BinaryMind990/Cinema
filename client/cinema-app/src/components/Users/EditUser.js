@@ -22,7 +22,7 @@ const EditUser = () => {
 
 	useEffect(() => {
 		fetchUserById(id);
-	}, [id]);
+	}, [id, fetchUserById]);
 
 	useEffect(() => {
 		if (user) {

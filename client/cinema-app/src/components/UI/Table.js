@@ -41,16 +41,17 @@ const Table = (props) => {
 									</div>
 									<div className={styles.actions}>
 										<div className={styles.buttonWrapper}>
-											{item.freeSeats > 0 && props.user && (
-												<Link
-													className={`${styles.link} ${styles.buy}`}
-													to={props.buy(item.id)}
-												>
-													<FaTicketAlt
-														className={`${styles.trashIcon} orange`}
-													/>
-												</Link>
-											)}
+											{item.freeSeats > 0 &&
+												props.role === 'ROLE_USER' && (
+													<Link
+														className={`${styles.link} ${styles.buy}`}
+														to={props.buy(item.id)}
+													>
+														<FaTicketAlt
+															className={`${styles.trashIcon} orange`}
+														/>
+													</Link>
+												)}
 										</div>
 										<div className={styles.buttonWrapper}>
 											{props.role === 'ROLE_ADMIN' && (

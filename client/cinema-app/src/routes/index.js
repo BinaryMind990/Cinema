@@ -12,9 +12,28 @@ import User from 'components/Users/User';
 import EditUser from 'components/Users/EditUser';
 import RegisterUser from 'components/Users/RegisterUser';
 import Login from 'components/Authorization/Login';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from 'contexts/UserContext';
 
 export const AppRoutes = () => {
+	const { role } = useContext(UserContext);
+
+	const navigate = useNavigate();
+
+	const protectedPaths = ['/users', '/movies', '/tickets'];
+
+	if (
+		!role &&
+		protectedPaths.some((path) => window.location.pathname.startsWith(path))
+	) {
+		return navigate('/', { replace: true });
+	}
+
+	if (role !== 'ROLE_ADMIN' && window.location.pathname.startsWith('/users')) {
+		return navigate('/movies', { replace: true });
+	}
+
 	return (
 		<Routes>
 			<Route path='/' element={<HomePage />} />

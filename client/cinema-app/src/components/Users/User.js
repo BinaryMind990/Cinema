@@ -10,7 +10,7 @@ const User = () => {
 
 	useEffect(() => {
 		fetchUserById(id);
-	}, [id]);
+	}, [id, fetchUserById]);
 
 	if (loading) {
 		return (

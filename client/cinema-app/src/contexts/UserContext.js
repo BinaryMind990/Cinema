@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-import CinemaAxios from '../apis/CinemaAxios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { userClient } from 'apis/CinemaClient';
@@ -12,26 +11,9 @@ export const UserProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [role, setRole] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [isLoggedOut, setIsLoggedOut] = useState(false);
 
 	const navigate = useNavigate();
-
-	const fetchUsers = async () => {
-		try {
-			const res = await userClient.get();
-			setUsers(res);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-		}
-	};
-	useEffect(() => {
-		fetchUsers();
-	}, []);
-
-	const getUserUrl = (userId) => {
-		return `/users/${userId}`;
-	};
 
 	const login = async (username, password) => {
 		const credentials = {
@@ -57,7 +39,26 @@ export const UserProvider = ({ children }) => {
 		window.localStorage.removeItem('role');
 		setUser(null);
 		setRole(null);
+		setIsLoggedOut(true);
 		navigate('/');
+	};
+
+	const fetchUsers = async () => {
+		try {
+			const res = await userClient.get();
+			setUsers(res);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			console.log(error);
+		}
+	};
+	useEffect(() => {
+		fetchUsers();
+	}, []);
+
+	const getUserUrl = (userId) => {
+		return `/users/${userId}`;
 	};
 
 	const fetchUserById = async (id) => {
@@ -93,21 +94,33 @@ export const UserProvider = ({ children }) => {
 		}
 	};
 
+	useEffect(() => {
+		const jwt = window.localStorage.getItem('jwt');
+		const storedRole = window.localStorage.getItem('role');
+
+		if (jwt && storedRole && !isLoggedOut) {
+			const jwtDecoded = jwt_decode(jwt);
+			setUser(jwtDecoded);
+			setRole(storedRole);
+		}
+		setLoading(false);
+	}, [isLoggedOut]);
+
+	const contextValue = {
+		user,
+		role,
+		users,
+		loading,
+		login,
+		logout,
+		deleteUser,
+		fetchUserById,
+		getUserUrl,
+		editUserSubmitHandle,
+	};
+
 	return (
-		<UserContext.Provider
-			value={{
-				user,
-				role,
-				users,
-				loading,
-				login,
-				logout,
-				deleteUser,
-				fetchUserById,
-				getUserUrl,
-				editUserSubmitHandle,
-			}}
-		>
+		<UserContext.Provider value={contextValue}>
 			{children}
 		</UserContext.Provider>
 	);

@@ -140,10 +140,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-<!--				<configuration>-->
-<!--					<mainClass>com.ftninformatika.jwd.modul3.cinema.WafepaApplication</mainClass>-->
-<!--					<excludeDevtools>false</excludeDevtools>-->
-<!--				</configuration>-->
 			</plugin>
 		</plugins>
 	</build>

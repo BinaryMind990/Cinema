@@ -17,13 +17,15 @@ const Navigation = () => {
 		<NavItem key={to} url={to} title={title} styleName={styles.link} />
 	));
 
-	const publicRoutes = publicLinks.map(({ to, title }) => (
+	const userRoutes = publicLinks.map(({ to, title }) => (
 		<NavItem key={to} url={to} title={title} styleName={styles.link} />
 	));
 
-	const allRoutes = navLinks.map(({ to, title }) => (
-		<NavItem key={to} url={to} title={title} styleName={styles.link} />
-	));
+	const adminRoutes = navLinks
+		.filter((route) => !route.public)
+		.map(({ to, title }) => (
+			<NavItem key={to} url={to} title={title} styleName={styles.link} />
+		));
 
 	return (
 		<Fragment>
@@ -31,7 +33,7 @@ const Navigation = () => {
 				<img src={logo} alt='Movie clap' className={styles.logo} />
 				<ul className={styles.navLinks}>
 					{!user && guestRoutes}
-					{user && (role === 'ROLE_ADMIN' ? allRoutes : publicRoutes)}
+					{user && (role === 'ROLE_ADMIN' ? adminRoutes : userRoutes)}
 					{user && (
 						<Button className='red' hidden={!user} onClick={handleLogout}>
 							Logout

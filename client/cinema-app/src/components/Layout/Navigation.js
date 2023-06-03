@@ -21,11 +21,9 @@ const Navigation = () => {
 		<NavItem key={to} url={to} title={title} styleName={styles.link} />
 	));
 
-	const adminRoutes = navLinks
-		.filter((route) => !route.public)
-		.map(({ to, title }) => (
-			<NavItem key={to} url={to} title={title} styleName={styles.link} />
-		));
+	const adminRoutes = navLinks.map(({ to, title }) => (
+		<NavItem key={to} url={to} title={title} styleName={styles.link} />
+	));
 
 	return (
 		<Fragment>

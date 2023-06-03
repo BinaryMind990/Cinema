@@ -2,7 +2,6 @@ package com.cinema.service;
 
 import com.cinema.model.Movie;
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +19,7 @@ public interface MovieService {
     Movie delete(Long id);
 
     Page<Movie> search();
+
+	List<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country, String distributor,
+			Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc);
 }

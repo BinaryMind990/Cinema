@@ -1,13 +1,11 @@
 package com.cinema.web.controller;
 
 import com.cinema.model.Projection;
-import com.cinema.repository.ProjectionRep;
 import com.cinema.service.ProjectionService;
 import com.cinema.support.ProjectionDTOtoProjectionNew;
 import com.cinema.support.ProjectionToProjectionDTO;
 import com.cinema.web.dto.ProjectionDTO;
 import com.cinema.web.dto.ProjectionDTOCreate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -67,24 +64,36 @@ public class ProjectionController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
-    /*
-     * ovom metodom sam proveravao query u ProjectionRep
-     * 
-     * @GetMapping("/search")
-     * public ResponseEntity<List<ProjectionDTO>> getList(
-     * 
-     * @RequestParam Long hallId, @RequestParam String dateTime){
-     * LocalDateTime dt = getLocalDateTime(dateTime);
-     * 
-     * List<Projection> projections = projectionRep.findList(hallId, dt);
-     * return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
-     * 
-     * 
-     * }
-     */
+      @GetMapping("/search")
+      public ResponseEntity<List<ProjectionDTO>> getList(
+      @RequestParam(required = false) Long movieId,
+      @RequestParam(required = false) String date,
+      @RequestParam(required = false) Long typeId,
+      @RequestParam(required = false) Long hallId,
+      @RequestParam(required = false) Double minPrice,
+      @RequestParam(required = false) Double maxPrice,
+      @RequestParam(required = false) String sortBy,
+      @RequestParam(required = false) String sortAscOrDesc
+      ){
+    	  LocalDate localDate;
+    	  if(date == null) {
+    		 localDate = null;
+    	  }else {
+    	  try {
+    		  localDate = getLocalDate(date);
+		} catch (DateTimeParseException e) {
+			localDate = LocalDate.now();
+		}
+    	}
+           
+      List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice, sortBy, sortAscOrDesc);
+      return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
+      
+      
+      }
+     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Projection deletedProjection = projectionService.delete(id);
@@ -106,12 +115,12 @@ public class ProjectionController {
 
         return new ResponseEntity<>(toDto.convert(savedProjection), HttpStatus.CREATED);
     }
-
+/*
     private LocalDateTime getLocalDateTime(String dateTime) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateTime, formatter);
     }
-
+*/
     private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

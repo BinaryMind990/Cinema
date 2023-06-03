@@ -1,13 +1,11 @@
 package com.cinema.support;
 
 import com.cinema.model.Users;
-
 import com.cinema.service.UserService;
 import com.cinema.web.dto.UserDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Optional;
 
 @Component

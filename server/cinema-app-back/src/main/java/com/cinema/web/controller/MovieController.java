@@ -1,7 +1,6 @@
 package com.cinema.web.controller;
 
 import com.cinema.model.Movie;
-import com.cinema.model.Projection;
 import com.cinema.service.MovieService;
 import com.cinema.support.MovieDTOtoMovieNew;
 import com.cinema.support.MovieDTOToMovieUpdate;
@@ -12,13 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -36,13 +29,31 @@ public class MovieController {
 
     @Autowired
     private MovieDTOToMovieUpdate toMovieUpdate;
-
+/*
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAll() {
 
         List<Movie> movies = movieService.findAll();
 
         return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
+    }
+   */ 
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getList(
+    		@RequestParam(required = false) String name,
+    		@RequestParam(required = false) Integer durationMin,
+    		@RequestParam(required = false) Integer durationMax, 
+    		@RequestParam(required = false) String country, 
+    		@RequestParam(required = false) String distributor,
+    		@RequestParam(required = false) Integer yearMin,
+    		@RequestParam(required = false) Integer yearMax,
+    		@RequestParam(required = false) String sortBy,
+    		@RequestParam(required = false) String sortAscOrDesc
+    		){
+        	
+    	List<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor,yearMin, yearMax, sortBy, sortAscOrDesc);
+    	return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
+    
     }
 
     @GetMapping(value = "/{id}")

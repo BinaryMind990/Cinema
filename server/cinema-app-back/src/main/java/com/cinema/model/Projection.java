@@ -35,6 +35,9 @@ public class Projection {
 
 	@Column
 	private double ticketPrice;
+	
+	@Column
+	private Boolean deleted = false;
 
 	@OneToMany(mappedBy = "projection", cascade = CascadeType.ALL)
 	private List<Ticket> tickets = new ArrayList<Ticket>();
@@ -102,6 +105,14 @@ public class Projection {
 		this.dateAndTime = dateAndTime;
 	}
 
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public double getTicketPrice() {
 		return ticketPrice;
 	}
@@ -120,6 +131,10 @@ public class Projection {
 
 	public int freeSeats() {
 		return this.hall.getSeats().size() - this.tickets.size();
+	}
+	
+	public double earningFromProjection() {
+		return this.tickets.size()*ticketPrice;
 	}
 
 	@Override

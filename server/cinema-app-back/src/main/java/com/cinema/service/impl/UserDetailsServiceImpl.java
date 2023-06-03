@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
     Users user = userService.findbyUserName(userName).orElse(null);
 
-    if (user == null) {
+    if (user == null || user.getDeleted()) {   // user.getDeleted() - onemogucava korisniku koji je logicki obrisan da se uloguje
       throw new UsernameNotFoundException(String.format("No user found with username '%s'.", userName));
     } else {
       List<GrantedAuthority> grantedAuthorities = new ArrayList<>();

@@ -31,4 +31,10 @@ public class TicketDTOCreate {
 		this.seatNumber = seatNumber;
 	}
 
+	@Override
+	public String toString() {
+		return "TicketDTOCreate [projectionId=" + projectionId + ", seatNumber=" + seatNumber + "]";
+	}
+	
+	
 }

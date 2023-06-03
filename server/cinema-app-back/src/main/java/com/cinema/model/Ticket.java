@@ -75,12 +75,14 @@ public class Ticket {
 		this.dateAndTime = dateAndTime;
 	}
 
-	public Users getKorisnik() {
+	
+
+	public Users getUser() {
 		return user;
 	}
 
-	public void setKorisnik(Users korisnik) {
-		this.user = korisnik;
+	public void setUser(Users user) {
+		this.user = user;
 	}
 
 	@Override

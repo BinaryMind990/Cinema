@@ -24,15 +24,15 @@ public class ReportController {
 	
 	@Autowired
 	private ReportService reportService;
-	
-		//metoda za uzimanje izvestaja direktno iz baze
+
+	//metoda za uzimanje izvestaja direktno iz baze
 	@GetMapping
 	public ResponseEntity<List<ReportDtoInterface>> getReport(
 			@RequestParam(required = false) String dateFrom, 
 			@RequestParam(required = false) String dateTo,
 			@RequestParam(required = false, defaultValue = "numberOfProjections") String sortBy,
 			@RequestParam(required = false, defaultValue = "desc") String sort){
-		
+
 		LocalDate localDateFrom = LocalDate.of(1900, 01, 01);
 		LocalDate localDateTo = LocalDate.of(2300,01,01);
 		if(dateFrom != null) {
@@ -47,12 +47,12 @@ public class ReportController {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		List<ReportDtoInterface> reportList = reportService.reportList(localDateFrom, localDateTo, sortBy, sort);
 		return new ResponseEntity<>(reportList, HttpStatus.OK);
-	
+
 	}
-	
+
 	@GetMapping (value = "/1")  // metoda za uzimanje izvestaja preko servisnog sloja
 	public ResponseEntity<List<ReportDto>> getProjectionsBetween(@RequestParam(required = false) String dateFrom, 
 			@RequestParam(required = false) String dateTo,

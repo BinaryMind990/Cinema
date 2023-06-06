@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Projection {
 
 	@Column
 	private double ticketPrice;
-
+	
 	@Column
 	private Boolean deleted = false;
 
@@ -131,9 +132,9 @@ public class Projection {
 	public int freeSeats() {
 		return this.hall.getSeats().size() - this.tickets.size();
 	}
-
+	
 	public double earningFromProjection() {
-		return this.tickets.size() * ticketPrice;
+		return this.tickets.size()*ticketPrice;
 	}
 
 	@Override

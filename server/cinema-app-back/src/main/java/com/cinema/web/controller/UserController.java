@@ -1,12 +1,15 @@
 package com.cinema.web.controller;
 
+import com.cinema.enumeration.UserRole;
 import com.cinema.model.Users;
 import com.cinema.service.security.TokenUtils;
 import com.cinema.service.UserService;
 import com.cinema.support.UserDTOToUser;
 import com.cinema.support.UserToUserDTO;
+import com.cinema.support.UserToUserDtoForView;
 import com.cinema.web.dto.AuthUserDTO;
 import com.cinema.web.dto.UserDTO;
+import com.cinema.web.dto.UserDtoForAdminView;
 import com.cinema.web.dto.UserChangePasswordDTO;
 import com.cinema.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,9 @@ public class UserController {
 
     @Autowired
     private UserToUserDTO toUserDTO;
+    
+    @Autowired
+    private UserToUserDtoForView toDtoForView;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -67,9 +73,8 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody @Validated UserRegistrationDTO dto) {
-
-        if (dto.getId() != null || !dto.getPassword().equals(dto.getConfirmPassword())
-                || !userService.findbyUserName(dto.getUserName()).isEmpty()) {
+    	
+        if (dto.getId() != null || !dto.getPassword().equals(dto.getConfirmPassword()) || !userService.findbyUserName(dto.getUserName()).isEmpty()) {	
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -93,15 +98,15 @@ public class UserController {
 
         return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
     }
-
+    
     @PutMapping(value = "/changeRole/{id}/{role}")
-    public ResponseEntity<UserDTO> changeRole(@PathVariable Long id, @PathVariable String role) {
-        Users user = userService.findOne(id).get();
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Users userChangedRole = userService.changeRole(user, role);
-        return new ResponseEntity<UserDTO>(toUserDTO.convert(userChangedRole), HttpStatus.OK);
+    public ResponseEntity<UserDTO> changeRole(@PathVariable Long id, @PathVariable String role){
+    	Users user = userService.findOne(id).get();
+    	if(user == null) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+    	Users userChangedRole = userService.changeRole(user, role);
+    	return new ResponseEntity<UserDTO>(toUserDTO.convert(userChangedRole), HttpStatus.OK);
     }
 
     // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -115,22 +120,35 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+/*
     // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> get(@RequestParam(defaultValue = "0") int page) {
         Page<Users> users = userService.findAll(page);
         return new ResponseEntity<>(toUserDTO.convert(users.getContent()), HttpStatus.OK);
     }
+   */ 
+    @GetMapping
+    public ResponseEntity<List<UserDtoForAdminView>> getUsers(
+    		@RequestParam(required = false) String userName,
+    		@RequestParam(required = false) String role,
+    		@RequestParam(required = false) String sortBy,
+    		@RequestParam(required = false) String sort
+    		){
+    	List<Users> users2 = userService.searchUsers(userName, role, sortBy, sort);
+    	
+    	List<Users> users = userService.findAll();
+    	return new ResponseEntity<>(toDtoForView.convertAll(users2), HttpStatus.OK);
+    }
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        System.out.println(id);
+    	System.out.println(id);
         Users deletedUser = userService.delete(id);
 
-        if (deletedUser == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(deletedUser == null) {
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -157,11 +175,11 @@ public class UserController {
         }
     }
 
-    // @PreAuthorize("permitAll()")
+  //  @PreAuthorize("permitAll()")
     @RequestMapping(path = "/auth", method = RequestMethod.POST)
-    public ResponseEntity<String> authenticateUser(@RequestBody AuthUserDTO dto) {
+    public ResponseEntity authenticateUser(@RequestBody AuthUserDTO dto) {
         // Perform the authentication
-
+    	
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 dto.getUsername(), dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);

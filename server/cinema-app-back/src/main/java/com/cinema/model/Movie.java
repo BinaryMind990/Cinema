@@ -6,11 +6,16 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
-// @SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
-// @FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name =
-// "isDeleted", type = "boolean"))
-// @Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
+//@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
+//@FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+//@Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
 public class Movie {
 
 	@Id
@@ -37,7 +42,7 @@ public class Movie {
 
 	@Column
 	private String posterLink;
-
+	
 	@Column
 	private boolean deleted = Boolean.FALSE;
 
@@ -146,6 +151,7 @@ public class Movie {
 	public void setPosterLink(String posterLink) {
 		this.posterLink = posterLink;
 	}
+	
 
 	public boolean isDeleted() {
 		return deleted;

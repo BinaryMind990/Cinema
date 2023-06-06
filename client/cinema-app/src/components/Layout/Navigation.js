@@ -7,7 +7,8 @@ import { guestLinks, navLinks } from 'components/Layout/NavLinks';
 import { NavItem } from 'components/Layout/NavItem';
 
 const Navigation = () => {
-	const { user, role, logout } = useContext(UserContext);
+	const { user, role, logout, getUserUrl, selectedUser } =
+		useContext(UserContext);
 
 	const handleLogout = () => logout();
 
@@ -17,9 +18,13 @@ const Navigation = () => {
 		<NavItem key={to} url={to} title={title} styleName={styles.link} />
 	));
 
-	const userRoutes = publicLinks.map(({ to, title }) => (
-		<NavItem key={to} url={to} title={title} styleName={styles.link} />
-	));
+	const userRoutes = publicLinks.map(({ to, title }) => {
+		// const url = getUserUrl(selectedUser?.id);
+
+		return (
+			<NavItem key={to} url={to} title={title} styleName={styles.link} />
+		);
+	});
 
 	const adminRoutes = navLinks.map(({ to, title }) => (
 		<NavItem key={to} url={to} title={title} styleName={styles.link} />

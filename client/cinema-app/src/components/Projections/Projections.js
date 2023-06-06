@@ -103,6 +103,7 @@ const Projections = () => {
 
 	return (
 		<div>
+			<h1>Projections</h1>
 			<div className={styles['date-picker-container']}>
 				{projectionDates.map((date, index) => (
 					<div

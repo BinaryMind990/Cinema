@@ -30,10 +30,9 @@ export const AppRoutes = () => {
 		return navigate('/', { replace: true });
 	}
 
-	if (role !== 'ROLE_ADMIN' && window.location.pathname.startsWith('/users')) {
-		return navigate('/movies', { replace: true });
-	}
-
+	// if (role !== 'ROLE_ADMIN' && window.location.pathname.startsWith('/users')) {
+	// 	return navigate('/movies', { replace: true });
+	// }
 	return (
 		<Routes>
 			<Route path='/' element={<HomePage />} />

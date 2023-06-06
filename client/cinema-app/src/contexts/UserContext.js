@@ -12,6 +12,7 @@ export const UserProvider = ({ children }) => {
 	const [role, setRole] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [isLoggedOut, setIsLoggedOut] = useState(false);
+	const [selectedUser, setSelectedUser] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -64,10 +65,10 @@ export const UserProvider = ({ children }) => {
 	const fetchUserById = async (id) => {
 		try {
 			const res = await userClient.getById(id);
-			setUser(res);
+			setSelectedUser(res);
 			setLoading(false);
 		} catch (error) {
-			setUser(null);
+			setSelectedUser(null);
 			setLoading(false);
 		}
 	};
@@ -111,6 +112,7 @@ export const UserProvider = ({ children }) => {
 		role,
 		users,
 		loading,
+		selectedUser,
 		login,
 		logout,
 		deleteUser,

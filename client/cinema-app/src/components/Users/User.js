@@ -5,12 +5,12 @@ import { CircleLoader } from 'react-spinners';
 import { UserContext } from '../../contexts/UserContext';
 
 const User = () => {
-	const { fetchUserById, user, loading } = useContext(UserContext);
+	const { fetchUserById, selectedUser, loading } = useContext(UserContext);
 	const { id } = useParams();
 
 	useEffect(() => {
 		fetchUserById(id);
-	}, [id, fetchUserById]);
+	}, [id]);
 
 	if (loading) {
 		return (
@@ -20,24 +20,27 @@ const User = () => {
 		);
 	}
 
+	console.log('USER', id);
+	console.log('USER', selectedUser);
+
 	return (
 		<div className={styles['user-info']}>
 			<h1>User</h1>
 			<p>
 				<span className={styles.label}>Name:</span>
-				<span>{user.name}</span>
+				<span>{selectedUser?.name}</span>
 			</p>
 			<p>
 				<span className={styles.label}>Last Name:</span>
-				<span>{user.lastName}</span>
+				<span>{selectedUser?.lastName}</span>
 			</p>
 			<p>
 				<span className={styles.label}>Email:</span>
-				<span>{user.eMail}</span>
+				<span>{selectedUser?.eMail}</span>
 			</p>
 			<p>
 				<span className={styles.label}>Username:</span>
-				<span>{user.userName}</span>
+				<span>{selectedUser?.userName}</span>
 			</p>
 		</div>
 	);

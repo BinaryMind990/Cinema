@@ -15,6 +15,11 @@ export const navLinks = [
 		public: true,
 	},
 	{
+		title: 'User',
+		to: '/users/:id',
+		public: true,
+	},
+	{
 		title: 'Tickets',
 		to: '/tickets',
 		public: false,
@@ -22,7 +27,7 @@ export const navLinks = [
 	{
 		title: 'Users',
 		to: '/users',
-		public: false,
+		public: true,
 	},
 ];
 

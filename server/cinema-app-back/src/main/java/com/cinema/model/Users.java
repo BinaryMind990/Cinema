@@ -1,6 +1,8 @@
 package com.cinema.model;
 
 import com.cinema.enumeration.UserRole;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -31,6 +33,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets = new ArrayList<Ticket>();
+    
+    @Column
+    private LocalDateTime registrationDateTime;
     
     @Column
     private Boolean deleted = false;
@@ -120,6 +125,16 @@ public class Users {
 
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	
+
+	public LocalDateTime getRegistrationDateTime() {
+		return registrationDateTime;
+	}
+
+	public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
+		this.registrationDateTime = registrationDateTime;
 	}
 
 	@Override

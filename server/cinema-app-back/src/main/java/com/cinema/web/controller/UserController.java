@@ -6,8 +6,10 @@ import com.cinema.service.security.TokenUtils;
 import com.cinema.service.UserService;
 import com.cinema.support.UserDTOToUser;
 import com.cinema.support.UserToUserDTO;
+import com.cinema.support.UserToUserDtoForView;
 import com.cinema.web.dto.AuthUserDTO;
 import com.cinema.web.dto.UserDTO;
+import com.cinema.web.dto.UserDtoForAdminView;
 import com.cinema.web.dto.UserChangePasswordDTO;
 import com.cinema.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,9 @@ public class UserController {
 
     @Autowired
     private UserToUserDTO toUserDTO;
+    
+    @Autowired
+    private UserToUserDtoForView toDtoForView;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -115,12 +120,25 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+/*
     // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> get(@RequestParam(defaultValue = "0") int page) {
         Page<Users> users = userService.findAll(page);
         return new ResponseEntity<>(toUserDTO.convert(users.getContent()), HttpStatus.OK);
+    }
+   */ 
+    @GetMapping
+    public ResponseEntity<List<UserDtoForAdminView>> getUsers(
+    		@RequestParam(required = false) String userName,
+    		@RequestParam(required = false) String role,
+    		@RequestParam(required = false) String sortBy,
+    		@RequestParam(required = false) String sort
+    		){
+    	List<Users> users2 = userService.searchUsers(userName, role, sortBy, sort);
+    	
+    	List<Users> users = userService.findAll();
+    	return new ResponseEntity<>(toDtoForView.convertAll(users2), HttpStatus.OK);
     }
 
   //  @PreAuthorize("hasRole('ROLE_ADMIN')")

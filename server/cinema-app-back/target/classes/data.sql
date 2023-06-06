@@ -1,9 +1,9 @@
-INSERT INTO users (id, e_mail, user_name, password, name, last_name, role, deleted)
-              VALUES (1,'miroslav@maildrop.cc','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','USER', 0),
-					 (2,'tamara@maildrop.cc','tamara','$2y$12$DRhCpltZygkA7EZ2WeWIbewWBjLE0KYiUO.tHDUaJNMpsHxXEw9Ky','Tamara','Milosavljevic','USER', 0),
- 					 (3,'petar@maildrop.cc','petar','$2y$12$i6/mU4w0HhG8RQRXHjNCa.tG2OwGSVXb0GYUnf8MZUdeadE4voHbC','Petar','Jovic','USER', 0),
-			  		 (4, 'goranb17@gmail.com', 'goran', '$2a$10$gCwpthXLMhSqmom7Mn5FYORquNNt9rK78yYDZf5SJXbE8Aiyq3Tsu', 'Goran', 'Bjelica', 'ADMIN', 0),
-			  		 (5, 'stefan@gmail.com', 'stefan', '$2a$10$3A4zsQ8g83kaTMmt7aeSou5lcQEJ2i7Y4Ziu0VwHSCWt7KcZiuitG', 'Stefan', 'Jevtovic', 'ADMIN', 0);
+INSERT INTO users (id, e_mail, user_name, password, name, last_name, role, registration_date_time, deleted)
+              VALUES (1,'miroslav@maildrop.cc','miroslav','$2y$12$NH2KM2BJaBl.ik90Z1YqAOjoPgSd0ns/bF.7WedMxZ54OhWQNNnh6','Miroslav','Simic','USER', '2023-03-11 20:00', 0),
+					 (2,'tamara@maildrop.cc','tamara','$2y$12$DRhCpltZygkA7EZ2WeWIbewWBjLE0KYiUO.tHDUaJNMpsHxXEw9Ky','Tamara','Milosavljevic','USER','2023-03-12 20:00', 0),
+ 					 (3,'petar@maildrop.cc','petar','$2y$12$i6/mU4w0HhG8RQRXHjNCa.tG2OwGSVXb0GYUnf8MZUdeadE4voHbC','Petar','Jovic','USER','2023-03-09 20:00', 0),
+			  		 (4, 'goranb17@gmail.com', 'goran', '$2a$10$gCwpthXLMhSqmom7Mn5FYORquNNt9rK78yYDZf5SJXbE8Aiyq3Tsu', 'Goran', 'Bjelica', 'ADMIN','2023-03-08 20:00', 0),
+			  		 (5, 'stefan@gmail.com', 'stefan', '$2a$10$3A4zsQ8g83kaTMmt7aeSou5lcQEJ2i7Y4Ziu0VwHSCWt7KcZiuitG', 'Stefan', 'Jevtovic', 'ADMIN', '2023-03-15 20:00', 0);
 			  		 
 
 INSERT INTO type(name) VALUES ('2D'), ('3D'), ('4D');

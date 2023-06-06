@@ -53,7 +53,8 @@ public class JpaMovieService implements MovieService {
         }
         if(movie.isPresent() && !movie.get().getProjections().isEmpty()) {
         	movie.get().setDeleted(true);
-        	save(movie.get());
+        	
+        	movieRep.save(movie.get());
         	return movie.get();
         }
         return null;

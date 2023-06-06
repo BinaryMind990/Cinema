@@ -8,11 +8,15 @@ import com.cinema.web.dto.UserChangePasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +47,7 @@ public class JpaUserService implements UserService {
     @Override
     public Users save(Users user) {
         user.setRole(UserRole.USER);
+        user.setRegistrationDateTime(LocalDateTime.now());
         return userRepository.save(user);
     }
 
@@ -102,5 +107,38 @@ public class JpaUserService implements UserService {
 		}
 	
 		return null;
+	}
+
+	@Override
+	public List<Users> searchUsers(String userName, String role, String sortBy, String sort) {
+		List<Users> users = new ArrayList<Users>();
+		UserRole userRole = null;
+		if (role != null) {
+		switch (role.toUpperCase()) {
+		case "ADMIN":
+			userRole = UserRole.ADMIN;
+			break;
+		case "USER":
+			userRole = UserRole.USER;
+			break;
+		default:
+			break;
+		}
+		}
+		if(sortBy == null) {
+			sortBy = "userName";
+		}
+		if(!sortBy.equals("userName") && !sortBy.equals("role")) {
+			sortBy = "userName";
+		}
+		if(sort == null || (!sort.equalsIgnoreCase("asc")) && !sort.equalsIgnoreCase("desc")) {
+			sort = "asc";
+		}
+		if (sort.equalsIgnoreCase("asc"))
+		 users = userRepository.search(userName, userRole, Sort.by(sortBy ).ascending());
+		else {
+			users = userRepository.search(userName, userRole, Sort.by(sortBy).descending());
+		}
+		return users;
 	}
 }

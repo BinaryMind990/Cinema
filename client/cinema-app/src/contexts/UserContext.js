@@ -1,18 +1,16 @@
 import { createContext, useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { userClient } from 'apis/CinemaClient';
+import { CircleLoader } from 'react-spinners';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-	const [users, setUsers] = useState([]);
 	const [user, setUser] = useState(null);
 	const [role, setRole] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [isLoggedOut, setIsLoggedOut] = useState(false);
-	const [selectedUser, setSelectedUser] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -44,57 +42,6 @@ export const UserProvider = ({ children }) => {
 		navigate('/');
 	};
 
-	const fetchUsers = async () => {
-		try {
-			const res = await userClient.get();
-			setUsers(res);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-		}
-	};
-	useEffect(() => {
-		fetchUsers();
-	}, []);
-
-	const getUserUrl = (userId) => {
-		return `/users/${userId}`;
-	};
-
-	const fetchUserById = async (id) => {
-		try {
-			const res = await userClient.getById(id);
-			setSelectedUser(res);
-			setLoading(false);
-		} catch (error) {
-			setSelectedUser(null);
-			setLoading(false);
-		}
-	};
-	const editUserSubmitHandle = async (id, editUserData) => {
-		try {
-			await userClient.edit(id, editUserData);
-			await fetchUsers();
-			navigate('/users');
-		} catch (error) {
-			toast.error('Failed to update user. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
-	};
-
-	const deleteUser = async (userId) => {
-		try {
-			await userClient.delete(userId);
-			setUsers(users.filter((user) => user.id !== userId));
-		} catch (error) {
-			toast.error('Failed to delete user. Please try again.', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
-	};
-
 	useEffect(() => {
 		const jwt = window.localStorage.getItem('jwt');
 		const storedRole = window.localStorage.getItem('role');
@@ -110,16 +57,17 @@ export const UserProvider = ({ children }) => {
 	const contextValue = {
 		user,
 		role,
-		users,
-		loading,
-		selectedUser,
 		login,
 		logout,
-		deleteUser,
-		fetchUserById,
-		getUserUrl,
-		editUserSubmitHandle,
 	};
+
+	if (loading) {
+		return (
+			<div className='loader-container'>
+				<CircleLoader size={75} />
+			</div>
+		);
+	}
 
 	return (
 		<UserContext.Provider value={contextValue}>

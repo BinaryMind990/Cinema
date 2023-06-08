@@ -7,10 +7,22 @@ import { guestLinks, navLinks } from 'components/Layout/NavLinks';
 import { NavItem } from 'components/Layout/NavItem';
 
 const Navigation = () => {
-	const { user, role, logout, getUserUrl, selectedUser } =
-		useContext(UserContext);
+	const { user, role, logout } = useContext(UserContext);
+	const userId = user ? user.id : undefined; // Pristupamo ID-u korisnika
 
 	const handleLogout = () => logout();
+
+	const generateUserNavItem = (to, title, userId, styles) => {
+		const userUrl = to.replace(':id', userId || '');
+		return (
+			<NavItem
+				key={userUrl}
+				url={userUrl}
+				title={title}
+				styleName={styles}
+			/>
+		);
+	};
 
 	const publicLinks = navLinks.filter((route) => route.public);
 
@@ -19,16 +31,22 @@ const Navigation = () => {
 	));
 
 	const userRoutes = publicLinks.map(({ to, title }) => {
-		// const url = getUserUrl(selectedUser?.id);
-
+		if (to === '/account/:id') {
+			return generateUserNavItem(to, title, userId, styles.link);
+		}
 		return (
 			<NavItem key={to} url={to} title={title} styleName={styles.link} />
 		);
 	});
 
-	const adminRoutes = navLinks.map(({ to, title }) => (
-		<NavItem key={to} url={to} title={title} styleName={styles.link} />
-	));
+	const adminRoutes = navLinks.map(({ to, title }) => {
+		if (to === '/account/:id') {
+			return generateUserNavItem(to, title, userId, styles.link);
+		}
+		return (
+			<NavItem key={to} url={to} title={title} styleName={styles.link} />
+		);
+	});
 
 	return (
 		<Fragment>
@@ -47,4 +65,5 @@ const Navigation = () => {
 		</Fragment>
 	);
 };
+
 export default Navigation;

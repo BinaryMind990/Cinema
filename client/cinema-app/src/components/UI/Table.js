@@ -37,7 +37,6 @@ const Table = (props) => {
 										<p>{item.typeName}</p>
 										<p>{item.hall}</p>
 										<p>{item.ticketPrice}</p>
-										<p>{item.freeSeats}</p>
 									</div>
 									<div className={styles.actions}>
 										<div className={styles.buttonWrapper}>
@@ -55,12 +54,26 @@ const Table = (props) => {
 										</div>
 										<div className={styles.buttonWrapper}>
 											{props.role === 'ROLE_ADMIN' && (
-												<Button
-													className='red'
-													onClick={() => props.delete(item.id)}
-												>
-													<FaTrash className={styles.trashIcon} />
-												</Button>
+												<>
+													<Button
+														className='red'
+														onClick={() => props.delete(item.id)}
+													>
+														<FaTrash
+															className={styles.trashIcon}
+														/>
+													</Button>
+													<Button
+														className={`${styles.link} ${styles.buy}`}
+														onClick={() =>
+															props.ticketLists(item.id)
+														}
+													>
+														<FaTicketAlt
+															className={`${styles.trashIcon} orange`}
+														/>
+													</Button>
+												</>
 											)}
 										</div>
 									</div>

@@ -10,24 +10,24 @@ export const navLinks = [
 		public: true,
 	},
 	{
-		title: 'Projections',
+		title: 'Repertoar',
 		to: '/projections',
 		public: true,
 	},
 	{
-		title: 'User',
-		to: '/users/:id',
-		public: true,
+		title: 'Reports',
+		to: '/reports',
+		public: false,
 	},
 	{
-		title: 'Tickets',
-		to: '/tickets',
-		public: false,
+		title: 'My Account',
+		to: '/account/:id',
+		public: true,
 	},
 	{
 		title: 'Users',
 		to: '/users',
-		public: true,
+		public: false,
 	},
 ];
 

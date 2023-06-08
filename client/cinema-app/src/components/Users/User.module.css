@@ -6,3 +6,8 @@
 .user-info span {
     margin-left: 10px;
 }
+
+.separator {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}

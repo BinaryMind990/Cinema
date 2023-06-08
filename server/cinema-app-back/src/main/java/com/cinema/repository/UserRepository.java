@@ -15,14 +15,15 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
 
-    Optional<Users> findFirstByUserName(String userName);
+	Optional<Users> findFirstByUserName(String userName);
 
-    Optional<Users> findFirstByUserNameAndPassword(String userName, String password);
+	Optional<Users> findFirstByUserNameAndPassword(String userName, String password);
 
 	List<Users> findByDeleted(boolean deleted);
 
 	@Query("SELECT u from Users u WHERE "
 			+ "(:userName = NULL OR u.userName LIKE :userName%) AND "
-			+ "(:role = NULL OR u.role = :role)")
-	List<Users> search(@Param("userName") String userName,@Param("role") UserRole role, Sort sort);
+			+ "(:role = NULL OR u.role = :role) AND"
+			+ " DELETED = 0")
+	List<Users> search(@Param("userName") String userName, @Param("role") UserRole role, Sort sort);
 }

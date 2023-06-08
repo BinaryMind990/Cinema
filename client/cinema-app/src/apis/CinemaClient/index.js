@@ -1,5 +1,5 @@
+import CinemaAxios from '../../apis/CinemaAxios';
 import { toast } from 'react-toastify';
-import CinemaAxios from 'apis/CinemaAxios';
 
 export const userClient = {
 	register: async (userRegData) => {

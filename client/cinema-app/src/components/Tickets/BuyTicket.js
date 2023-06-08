@@ -40,7 +40,7 @@ const BuyTicket = () => {
 			toast.success('You have successfully purchased a ticket!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			navigate('/tickets');
+			navigate(`/movies`);
 		} catch (error) {
 			toast.error('Failed to purchase ticket. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
@@ -63,7 +63,7 @@ const BuyTicket = () => {
 	return (
 		<div className={styles['buy-ticket-container']}>
 			<h1>Projection: {projections.movieName}</h1>
-			<p>Date: {projections.dateTimeStr}</p>
+			<p>Date: {projections.dateTimeStr.split('T').join(' ')}</p>
 			<p>Hall: {projections.hall}</p>
 			<p>Type: {projections.typeName}</p>
 			<p>Price: {projections.ticketPrice}</p>

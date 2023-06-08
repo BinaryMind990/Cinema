@@ -70,6 +70,10 @@ const Projections = () => {
 		navigate('/projections/add');
 	};
 
+	const ticketLists = (projectionId) => {
+		return navigate(`/tickets/projection/${projectionId}`);
+	};
+
 	const deleteHandler = async (projectionId) => {
 		try {
 			await CinemaAxios.delete(`/projections/${projectionId}`);
@@ -131,6 +135,7 @@ const Projections = () => {
 				url={getMovieUrl}
 				buy={buyTicket}
 				delete={deleteHandler}
+				ticketLists={ticketLists}
 				user={user}
 				role={role}
 			/>

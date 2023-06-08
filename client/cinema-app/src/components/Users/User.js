@@ -1,16 +1,55 @@
-import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './User.module.css';
 import { CircleLoader } from 'react-spinners';
-import { UserContext } from '../../contexts/UserContext';
+import CinemaAxios from 'apis/CinemaAxios';
+import Button from 'components/UI/Button';
 
 const User = () => {
-	const { fetchUserById, selectedUser, loading } = useContext(UserContext);
+	const [userById, setUserById] = useState(null);
+	const [userTickets, setUserTickets] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetchUserById(id);
+		const getUserById = async (id) => {
+			try {
+				const res = await CinemaAxios.get(`/users/${id}`);
+				const result = await CinemaAxios.get(`/tickets/user/${id}`);
+
+				setUserById(res.data);
+				setUserTickets(result.data);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
+		getUserById(id);
 	}, [id]);
+
+	const goToEditHandler = (userId) => {
+		navigate(`/users/edit/${userId}`);
+	};
+
+	const mapKeyToDisplay = (key) => {
+		switch (key) {
+			case 'ticketSellDate':
+				return 'Ticket sell date';
+			case 'ticketSellTime':
+				return 'Ticket sell time';
+			case 'userName':
+				return 'Username';
+			case 'name':
+				return 'Name';
+			case 'lastName':
+				return 'Last name';
+			case 'role':
+				return 'Role';
+			default:
+				return key;
+		}
+	};
 
 	if (loading) {
 		return (
@@ -20,28 +59,48 @@ const User = () => {
 		);
 	}
 
-	console.log('USER', id);
-	console.log('USER', selectedUser);
-
 	return (
 		<div className={styles['user-info']}>
 			<h1>User</h1>
-			<p>
-				<span className={styles.label}>Name:</span>
-				<span>{selectedUser?.name}</span>
-			</p>
-			<p>
-				<span className={styles.label}>Last Name:</span>
-				<span>{selectedUser?.lastName}</span>
-			</p>
-			<p>
-				<span className={styles.label}>Email:</span>
-				<span>{selectedUser?.eMail}</span>
-			</p>
-			<p>
-				<span className={styles.label}>Username:</span>
-				<span>{selectedUser?.userName}</span>
-			</p>
+			{userById &&
+				Object.entries(userById).map(
+					([key, value]) =>
+						key !== 'id' && (
+							<p key={key}>
+								<span className={styles.label}>
+									{mapKeyToDisplay(key)}:
+								</span>
+								<span>{value}</span>
+							</p>
+						)
+				)}
+			<div>
+				<Button
+					className='orange'
+					onClick={() => goToEditHandler(userById.id)}
+				>
+					Edit
+				</Button>
+			</div>
+			<div>
+				{Object.values(userTickets).map((ticket) => (
+					<div key={ticket.id}>
+						{Object.entries(ticket).map(
+							([key, value]) =>
+								key !== 'id' &&
+								key !== 'userId' && (
+									<p key={key}>
+										<span className={styles.label}>
+											{mapKeyToDisplay(key)}:
+										</span>
+										<span>{value}</span>
+									</p>
+								)
+						)}
+						<div className={styles.separator} />
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };

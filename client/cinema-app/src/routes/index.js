@@ -9,11 +9,12 @@ import CreateProjection from 'components/Projections/CreateProjection';
 import BuyTicket from 'components/Tickets/BuyTicket';
 import Users from 'components/Users/Users';
 import User from 'components/Users/User';
-import EditUser from 'components/Users/EditUser';
+import EditUser from 'components/Users/EditUser/EditUser';
 import RegisterUser from 'components/Users/RegisterUser';
 import Login from 'components/Authorization/Login';
+import Report from 'components/Report/Report';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from 'contexts/UserContext';
 
 export const AppRoutes = () => {
@@ -21,18 +22,25 @@ export const AppRoutes = () => {
 
 	const navigate = useNavigate();
 
-	const protectedPaths = ['/users', '/movies', '/tickets'];
+	useEffect(() => {
+		const protectedPaths = ['/users', '/movies', '/reports'];
 
-	if (
-		!role &&
-		protectedPaths.some((path) => window.location.pathname.startsWith(path))
-	) {
-		return navigate('/', { replace: true });
-	}
+		if (
+			!role &&
+			protectedPaths.some((path) =>
+				window.location.pathname.startsWith(path)
+			)
+		) {
+			navigate('/', { replace: true });
+		}
 
-	// if (role !== 'ROLE_ADMIN' && window.location.pathname.startsWith('/users')) {
-	// 	return navigate('/movies', { replace: true });
-	// }
+		if (
+			role !== 'ROLE_ADMIN' &&
+			window.location.pathname.startsWith('/users')
+		) {
+			navigate('/movies', { replace: true });
+		}
+	}, [role, navigate]);
 	return (
 		<Routes>
 			<Route path='/' element={<HomePage />} />
@@ -43,12 +51,13 @@ export const AppRoutes = () => {
 			<Route path='/movies/edit/:id' element={<EditMovie />} />
 			<Route path='/projections' element={<Projections />} />
 			<Route path='/projections/add' element={<CreateProjection />} />
-			<Route path='/tickets' element={<TicketsList />} />
+			<Route path='/tickets/projection/:id' element={<TicketsList />} />
 			<Route path='/tickets/buy/projections/:id' element={<BuyTicket />} />
 			<Route path='/users' element={<Users />} />
-			<Route path='/users/:id' element={<User />} />
+			<Route path='/account/:id' element={<User />} />
 			<Route path='/users/registration' element={<RegisterUser />} />
 			<Route path='/users/edit/:id' element={<EditUser />} />
+			<Route path='/reports' element={<Report />} />
 		</Routes>
 	);
 };

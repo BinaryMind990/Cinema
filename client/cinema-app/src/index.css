@@ -6,6 +6,7 @@
 
 html {
   font-family: 'Noto Sans JP', sans-serif;
+  height: 100%;
 }
 
 body {
@@ -13,13 +14,19 @@ body {
   color: #ddd;
   margin: 0;
   padding: 0;
+  height: 100%;
+  padding-top: 80px;
+  background-image: url('../public/assets/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 h1 {
   font-size: 2em;
   font-weight: bold;
   text-align: center;
-  margin-top: 100px;
+  margin: 0;
 }
 
 .loader-container {
@@ -41,6 +48,11 @@ h1 {
   transition: background-color 0.2s ease-in-out;
 }
 
-.link:hover {
-  background-color: #9933CC;
+.title-wrapper {
+  background-color: #151515;
+  padding: 20px;
+}
+
+.page-wrapper {
+  padding: 20px;
 }

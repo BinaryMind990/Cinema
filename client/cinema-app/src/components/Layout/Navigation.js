@@ -1,6 +1,5 @@
 import { Fragment, useContext } from 'react';
 import styles from './Navigation.module.css';
-import logo from '../../assets/movieLogo.png';
 import { UserContext } from '../../contexts/UserContext';
 import Button from '../UI/Button';
 import { guestLinks, navLinks } from 'components/Layout/NavLinks';
@@ -8,7 +7,7 @@ import { NavItem } from 'components/Layout/NavItem';
 
 const Navigation = () => {
 	const { user, role, logout } = useContext(UserContext);
-	const userId = user ? user.id : undefined; // Pristupamo ID-u korisnika
+	const userId = user ? user.id : undefined;
 
 	const handleLogout = () => logout();
 
@@ -51,7 +50,11 @@ const Navigation = () => {
 	return (
 		<Fragment>
 			<nav className={styles.navigation}>
-				<img src={logo} alt='Movie clap' className={styles.logo} />
+				<img
+					src='../../../assets/movieLogo.png'
+					alt='Movie clap'
+					className={styles.logo}
+				/>
 				<ul className={styles.navLinks}>
 					{!user && guestRoutes}
 					{user && (role === 'ROLE_ADMIN' ? adminRoutes : userRoutes)}

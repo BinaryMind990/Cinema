@@ -7,10 +7,10 @@ export const navLinks = [
 	{
 		title: 'Movies',
 		to: '/movies',
-		public: true,
+		public: false,
 	},
 	{
-		title: 'Repertoar',
+		title: 'Repertoire',
 		to: '/projections',
 		public: true,
 	},
@@ -37,7 +37,7 @@ export const guestLinks = [
 		to: '/',
 	},
 	{
-		title: 'Projections',
+		title: 'Repertoire',
 		to: '/projections',
 	},
 ];

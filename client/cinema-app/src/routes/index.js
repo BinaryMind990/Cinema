@@ -23,7 +23,7 @@ export const AppRoutes = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const protectedPaths = ['/users', '/movies', '/reports'];
+		const protectedPaths = ['/users', '/reports'];
 
 		if (
 			!role &&
@@ -55,8 +55,8 @@ export const AppRoutes = () => {
 			<Route path='/tickets/buy/projections/:id' element={<BuyTicket />} />
 			<Route path='/users' element={<Users />} />
 			<Route path='/account/:id' element={<User />} />
-			<Route path='/users/registration' element={<RegisterUser />} />
-			<Route path='/users/edit/:id' element={<EditUser />} />
+			<Route path='/account/registration' element={<RegisterUser />} />
+			<Route path='/account/edit/:id' element={<EditUser />} />
 			<Route path='/reports' element={<Report />} />
 		</Routes>
 	);

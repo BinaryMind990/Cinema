@@ -12,6 +12,7 @@ import { UserContext } from '../../contexts/UserContext';
 const Projections = () => {
 	const { user, role } = useContext(UserContext);
 	const [projections, setProjections] = useState([]);
+	const [movies, setMovies] = useState([]);
 	const [searchQuery] = useState({ date: '' });
 	const [selectedDate, setSelectedDate] = useState('');
 	const [loading, setLoading] = useState(true);
@@ -50,7 +51,18 @@ const Projections = () => {
 			}
 		};
 		getProjections();
+		getMovies();
 	}, [searchQuery, selectedDate]);
+
+	const getMovies = async () => {
+		try {
+			const res = await CinemaAxios.get(`/movies`);
+			setMovies(res.data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+		}
+	};
 
 	const projectionDates = [
 		...new Set(
@@ -107,45 +119,51 @@ const Projections = () => {
 
 	return (
 		<div>
-			<h1>Projections</h1>
-			<div className={styles['date-picker-container']}>
-				{projectionDates.map((date, index) => (
-					<div
-						key={index}
-						className={`${styles['date-item']} ${
-							selectedDate === date ? styles['active'] : ''
-						}`}
-						onClick={() => handleSearchDate(date)}
-					>
-						<FaCalendarAlt className={styles['calendar-icon']} />
-						{date}
-					</div>
-				))}
+			<div className='title-wrapper'>
+				<h1>Repertoire</h1>
 			</div>
-			<Table
-				items={
-					selectedDate
-						? projections.filter(
-								(projection) =>
-									projection.dateTimeStr.split('T')[0] === selectedDate
-						  )
-						: projections
-				}
-				title={`Projections`}
-				url={getMovieUrl}
-				buy={buyTicket}
-				delete={deleteHandler}
-				ticketLists={ticketLists}
-				user={user}
-				role={role}
-			/>
-			{role === 'ROLE_ADMIN' && (
-				<div className={styles.addButton}>
-					<Button className='blue' onClick={goToAddHandler}>
-						Add
-					</Button>
+			<div className='page-wrapper'>
+				<div className={styles['date-picker-container']}>
+					{projectionDates.map((date, index) => (
+						<div
+							key={index}
+							className={`${styles['date-item']} ${
+								selectedDate === date ? styles['active'] : ''
+							}`}
+							onClick={() => handleSearchDate(date)}
+						>
+							<FaCalendarAlt className={styles['calendar-icon']} />
+							{date}
+						</div>
+					))}
 				</div>
-			)}
+				<Table
+					items={
+						selectedDate
+							? projections.filter(
+									(projection) =>
+										projection.dateTimeStr.split('T')[0] ===
+										selectedDate
+							  )
+							: projections
+					}
+					title={`Projections`}
+					url={getMovieUrl}
+					buy={buyTicket}
+					delete={deleteHandler}
+					ticketLists={ticketLists}
+					user={user}
+					role={role}
+					movies={movies}
+				/>
+				{role === 'ROLE_ADMIN' && (
+					<div className={styles.addButton}>
+						<Button className='blue' onClick={goToAddHandler}>
+							Add
+						</Button>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

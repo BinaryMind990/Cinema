@@ -13,10 +13,14 @@ const Table = (props) => {
 					</tr>
 				</thead>
 				<tbody>
-					{props.items.map((item) => {
-						const dateTimeString = item.dateTimeStr;
-						const date = new Date(dateTimeString);
-						const formattedDateTime = date.toLocaleString('fr-FR', {
+					{props.movies.map((movie) => {
+						const item = props.items.find(
+							(item) => item?.movieId === movie.id
+						);
+						if (!item) return null;
+						const dateTimeString = item?.dateTimeStr;
+						const date = dateTimeString ? new Date(dateTimeString) : null;
+						const formattedDateTime = date?.toLocaleString('fr-FR', {
 							day: '2-digit',
 							month: '2-digit',
 							year: 'numeric',
@@ -26,17 +30,22 @@ const Table = (props) => {
 						return (
 							<tr key={item.id}>
 								<td className={styles.cell}>
-									<div className={styles.projectionInfo}>
-										<Link
-											className={styles.link}
-											to={props.url(item.movieId)}
-										>
-											{item.movieName}
-										</Link>
-										<p>{formattedDateTime}</p>
-										<p>{item.typeName}</p>
-										<p>{item.hall}</p>
-										<p>{item.ticketPrice}</p>
+									<div className={styles['movie-info']}>
+										<div className={styles['movie-poster']}>
+											<img src={movie.posterLink} alt='' />
+										</div>
+										<div className={styles['movie-details']}>
+											<Link
+												className={styles.link}
+												to={props.url(item.movieId)}
+											>
+												{item.movieName}
+											</Link>
+											<p>{formattedDateTime}</p>
+											<p>{item.typeName}</p>
+											<p>{item.hall}</p>
+											<p>{item.ticketPrice}</p>
+										</div>
 									</div>
 									<div className={styles.actions}>
 										<div className={styles.buttonWrapper}>

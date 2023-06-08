@@ -8,6 +8,10 @@
     transition: all 0.3s ease;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .button:hover,
 .button:active {
     background: #928a94;
@@ -43,4 +47,13 @@
 .red:hover,
 .red:active {
     background-color: #B22222;
+}
+
+.purple {
+    background-color: #9933CC;
+}
+
+.purple:hover,
+.purple:active {
+    background-color: #68097a;
 }

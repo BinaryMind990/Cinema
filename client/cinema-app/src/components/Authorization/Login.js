@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import Button from '../UI/Button';
 import { UserContext } from '../../contexts/UserContext';
 import styles from './Login.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const { login } = useContext(UserContext);
@@ -9,14 +10,23 @@ const Login = () => {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 
+	const navigate = useNavigate();
+
 	const handleSubmitLogin = (e) => {
 		e.preventDefault();
 		login(userName, password);
 	};
 
+	const goToRegisterPage = () => {
+		navigate('/account/registration');
+	};
+
+	<a href='https://pngtree.com/free-backgrounds'>
+		free background photos from pngtree.com/
+	</a>;
+
 	return (
 		<div className={styles['login-form']}>
-			<h1>Login</h1>
 			<form onSubmit={handleSubmitLogin}>
 				<label htmlFor='username'>Username</label>
 				<input
@@ -34,8 +44,15 @@ const Login = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button type='submit' className={`button blue`}>
+				<Button type='submit' className={`button blue full-width`}>
 					Log in
+				</Button>
+				<p>or</p>
+				<Button
+					className={`button purple full-width`}
+					onClick={goToRegisterPage}
+				>
+					Register
 				</Button>
 			</form>
 		</div>

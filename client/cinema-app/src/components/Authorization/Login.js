@@ -49,7 +49,7 @@ const Login = () => {
 				</Button>
 				<p>or</p>
 				<Button
-					className={`button purple full-width`}
+					className={`button yellow full-width`}
 					onClick={goToRegisterPage}
 				>
 					Register

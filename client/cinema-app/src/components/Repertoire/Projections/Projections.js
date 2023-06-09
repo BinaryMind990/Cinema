@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import CinemaAxios from '../../apis/CinemaAxios';
-import Table from '../UI/Table';
-import Button from '../UI/Button';
+import CinemaAxios from '../../../apis/CinemaAxios';
+import Table from './TableProjections/Table';
+import Button from '../../UI/Button';
 import styles from './Projections.module.css';
 import { CircleLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../../contexts/UserContext';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);

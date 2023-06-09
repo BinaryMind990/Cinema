@@ -52,3 +52,24 @@ export const userClient = {
 		}
 	},
 };
+
+export const dataClient = {
+	getMovies: async () => {
+		try {
+			const response = await CinemaAxios.get('/movies');
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	deleteMovie: async (movieId) => {
+		try {
+			await CinemaAxios.delete(`/movies/${movieId}`);
+			toast.success('Movie was deleted successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		} catch (error) {
+			throw error;
+		}
+	},
+};

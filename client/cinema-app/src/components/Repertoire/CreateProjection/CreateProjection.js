@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
-import CinemaAxios from '../../apis/CinemaAxios';
-import Button from '../UI/Button';
+import CinemaAxios from '../../../apis/CinemaAxios';
+import Button from '../../UI/Button';
 import styles from './CreateProjection.module.css';
 import { toast } from 'react-toastify';
+import { DataContext } from 'contexts/GetDataContext';
 
 const CreateProjection = () => {
-	const [movies, setMovies] = useState([]);
+	const { movies } = useContext(DataContext);
 	const [types, setTypes] = useState([]);
 	const [halls, setHalls] = useState([]);
 	const [projectionData, setProjectionData] = useState({
@@ -21,20 +22,9 @@ const CreateProjection = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		getMovies();
 		getTypes();
 		getHalls();
 	}, []);
-
-	const getMovies = async () => {
-		try {
-			const res = await CinemaAxios.get(`/movies`);
-			setMovies(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-		}
-	};
 
 	const getTypes = async () => {
 		try {

@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from '../../../UI/Button';
 import { Link } from 'react-router-dom';
 import { FaTrash, FaTicketAlt } from 'react-icons/fa';
 import styles from './Table.module.css';

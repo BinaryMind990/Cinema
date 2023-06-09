@@ -24,7 +24,7 @@
 }
 
 
-table {
+/* table {
     width: 100%;
     max-width: 80%;
     margin: 0 auto;
@@ -42,7 +42,7 @@ th {
 td {
     padding: 10px;
     border-bottom: 1px solid #e6e6e6;
-}
+} */
 
 .cell {
     display: flex;

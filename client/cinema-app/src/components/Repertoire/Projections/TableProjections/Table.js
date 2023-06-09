@@ -7,11 +7,6 @@ const Table = (props) => {
 	return (
 		<div>
 			<table>
-				<thead>
-					<tr>
-						<th>{props.title}</th>
-					</tr>
-				</thead>
 				<tbody>
 					{props.movies.map((movie) => {
 						const item = props.items.find(
@@ -35,56 +30,54 @@ const Table = (props) => {
 											<img src={movie.posterLink} alt='' />
 										</div>
 										<div className={styles['movie-details']}>
-											<Link
-												className={styles.link}
-												to={props.url(item.movieId)}
-											>
-												{item.movieName}
-											</Link>
+											<h2>
+												<Link
+													className={styles.link}
+													to={props.url(item.movieId)}
+												>
+													{item.movieName}
+												</Link>
+											</h2>
 											<p>{formattedDateTime}</p>
 											<p>{item.typeName}</p>
 											<p>{item.hall}</p>
-											<p>{item.ticketPrice}</p>
+											<p>{`${item.ticketPrice.toFixed(2)} din`}</p>
 										</div>
 									</div>
 									<div className={styles.actions}>
-										<div className={styles.buttonWrapper}>
-											{item.freeSeats > 0 &&
-												props.role === 'ROLE_USER' && (
-													<Link
-														className={`${styles.link} ${styles.buy}`}
-														to={props.buy(item.id)}
+										{item.freeSeats > 0 &&
+											props.role === 'ROLE_USER' && (
+												<div className={styles['button-wrapper']}>
+													<Button
+														className={`orange`}
+														onClick={() => props.buy(item.id)}
 													>
-														<FaTicketAlt
-															className={`${styles.trashIcon} orange`}
-														/>
-													</Link>
-												)}
-										</div>
-										<div className={styles.buttonWrapper}>
-											{props.role === 'ROLE_ADMIN' && (
-												<>
+														<FaTicketAlt />
+													</Button>
+												</div>
+											)}
+										{props.role === 'ROLE_ADMIN' && (
+											<div className={styles['button-sets']}>
+												<div className={styles['button-wrapper']}>
 													<Button
 														className='red'
 														onClick={() => props.delete(item.id)}
 													>
-														<FaTrash
-															className={styles.trashIcon}
-														/>
+														<FaTrash />
 													</Button>
+												</div>
+												<div className={styles['button-wrapper']}>
 													<Button
-														className={`${styles.link} ${styles.buy}`}
+														className={`orange`}
 														onClick={() =>
 															props.ticketLists(item.id)
 														}
 													>
-														<FaTicketAlt
-															className={`${styles.trashIcon} orange`}
-														/>
+														<FaTicketAlt />
 													</Button>
-												</>
-											)}
-										</div>
+												</div>
+											</div>
+										)}
 									</div>
 								</td>
 							</tr>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './RegisterUser.module.css';
-import Button from '../UI/Button';
+import Button from '../../UI/Button';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { userClient } from 'apis/CinemaClient';

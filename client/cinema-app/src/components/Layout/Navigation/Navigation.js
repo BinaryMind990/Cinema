@@ -1,9 +1,9 @@
 import { Fragment, useContext } from 'react';
-import styles from './Navigation.module.css';
-import { UserContext } from '../../contexts/UserContext';
-import Button from '../UI/Button';
-import { guestLinks, navLinks } from 'components/Layout/NavLinks';
-import { NavItem } from 'components/Layout/NavItem';
+import './Navigation.css';
+import { UserContext } from '../../../contexts/UserContext';
+import Button from '../../UI/Button';
+import { guestLinks, navLinks } from '../Navigation/NavLinks';
+import { NavItem } from '../Navigation/NavItem';
 
 const Navigation = () => {
 	const { user, role, logout } = useContext(UserContext);
@@ -11,14 +11,14 @@ const Navigation = () => {
 
 	const handleLogout = () => logout();
 
-	const generateUserNavItem = (to, title, userId, styles) => {
+	const generateUserNavItem = (to, title, userId) => {
 		const userUrl = to.replace(':id', userId || '');
 		return (
 			<NavItem
 				key={userUrl}
 				url={userUrl}
 				title={title}
-				styleName={styles}
+				styleName={'link'}
 			/>
 		);
 	};
@@ -26,36 +26,32 @@ const Navigation = () => {
 	const publicLinks = navLinks.filter((route) => route.public);
 
 	const guestRoutes = guestLinks.map(({ to, title }) => (
-		<NavItem key={to} url={to} title={title} styleName={styles.link} />
+		<NavItem key={to} url={to} title={title} styleName={'link'} />
 	));
 
 	const userRoutes = publicLinks.map(({ to, title }) => {
 		if (to === '/account/:id') {
-			return generateUserNavItem(to, title, userId, styles.link);
+			return generateUserNavItem(to, title, userId);
 		}
-		return (
-			<NavItem key={to} url={to} title={title} styleName={styles.link} />
-		);
+		return <NavItem key={to} url={to} title={title} styleName={'link'} />;
 	});
 
 	const adminRoutes = navLinks.map(({ to, title }) => {
 		if (to === '/account/:id') {
-			return generateUserNavItem(to, title, userId, styles.link);
+			return generateUserNavItem(to, title, userId);
 		}
-		return (
-			<NavItem key={to} url={to} title={title} styleName={styles.link} />
-		);
+		return <NavItem key={to} url={to} title={title} styleName={'link'} />;
 	});
 
 	return (
 		<Fragment>
-			<nav className={styles.navigation}>
+			<nav className={'navigation'}>
 				<img
 					src='../../../assets/movieLogo.png'
 					alt='Movie clap'
-					className={styles.logo}
+					className={'logo'}
 				/>
-				<ul className={styles.navLinks}>
+				<ul className={'navLinks'}>
 					{!user && guestRoutes}
 					{user && (role === 'ROLE_ADMIN' ? adminRoutes : userRoutes)}
 					{user && (

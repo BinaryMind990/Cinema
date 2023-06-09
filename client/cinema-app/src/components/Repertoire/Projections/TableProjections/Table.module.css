@@ -1,79 +1,15 @@
-table {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th {
-    font-weight: bold;
-    text-align: left;
-    padding: 10px;
-    border-bottom: 2px solid #e6e6e6;
-}
-
-tr {
-    background-color: rgba(5, 29, 49, 0.7);
-}
-
-td {
-    padding: 10px;
-    border-bottom: 1px solid #e6e6e6;
-}
-
 .cell {
     display: flex;
     justify-content: space-between;
 }
 
 .link {
-    display: inline-block;
-    padding: 0.75rem 1rem;
-    border-radius: 0.25rem;
-    background-color: #2a2a2a;
     color: #fff;
-    font-weight: 500;
     text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
 }
 
 .link:hover {
-    background-color: #746b6b;
-}
-
-.link:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.5);
-}
-
-.link.buy {
-    background-color: #ffa500;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.link.buy:hover {
-    background-color: #cc6600;
-}
-
-.link.buy:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5);
-}
-
-
-.actions {
-    display: flex;
-    align-items: center;
-}
-
-.buttonWrapper+.buttonWrapper {
-    margin-left: 10px;
+    color: #ffa500;
 }
 
 .movie-info {
@@ -88,4 +24,21 @@ td {
 .movie-poster img {
     width: 100%;
     display: block;
+}
+
+.movie-poster+.movie-details {
+    margin-left: 30px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.button-sets {
+    display: flex;
+}
+
+.button-wrapper+.button-wrapper {
+    margin-left: 10px;
 }

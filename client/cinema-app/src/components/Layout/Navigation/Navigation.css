@@ -26,17 +26,3 @@
 .navLinks li:last-child {
     margin-right: 0;
 }
-
-.link {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 10px;
-}
-
-.link:hover {
-    color: #0069d9;
-    text-decoration: none;
-    background-color: transparent;
-}

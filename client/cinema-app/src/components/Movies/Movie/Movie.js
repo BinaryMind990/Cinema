@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import styles from './Movie.module.css';
-import CinemaAxios from '../../apis/CinemaAxios';
+import CinemaAxios from '../../../apis/CinemaAxios';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});

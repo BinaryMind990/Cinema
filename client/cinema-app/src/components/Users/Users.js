@@ -51,35 +51,37 @@ const Users = () => {
 
 	return (
 		<div>
-			<h1>Users</h1>
-			<table className={styles['users-table']}>
-				<thead>
-					<tr>
-						<th>Users</th>
-						<th>Role</th>
-						<th>Registration date</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{users.map((user) => {
-						return (
-							<tr key={user.id}>
-								<td className={styles.cell}>
-									<Link
-										className={styles.link}
-										to={getUserUrl(user.id)}
-									>
-										{user.username}
-									</Link>
-								</td>
-								<td>{user.userRole}</td>
-								<td>
-									{user.registrationDateTime.split('T').join(' ')}
-								</td>
-								<td>
-									<div className={styles.actions}>
-										<div className={styles.buttonWrapper}>
+			<div className='title-wrapper'>
+				<h1>Users</h1>
+			</div>
+			<div className='page-wrapper'>
+				<table className={styles['users-table']}>
+					<thead>
+						<tr>
+							<th>Users</th>
+							<th>Role</th>
+							<th>Registration date</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{users.map((user) => {
+							return (
+								<tr key={user.id}>
+									<td>
+										<Link
+											className={styles.link}
+											to={getUserUrl(user.id)}
+										>
+											{user.username}
+										</Link>
+									</td>
+									<td>{user.userRole}</td>
+									<td>
+										{user.registrationDateTime.split('T').join(' ')}
+									</td>
+									<td>
+										<div className={styles.actions}>
 											<Button
 												className='red'
 												onClick={() => deleteUser(user.id)}
@@ -87,13 +89,13 @@ const Users = () => {
 												<FaTrash className={styles.trashIcon} />
 											</Button>
 										</div>
-									</div>
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 };

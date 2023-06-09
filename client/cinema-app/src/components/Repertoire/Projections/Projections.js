@@ -75,7 +75,7 @@ const Projections = () => {
 	};
 
 	const buyTicket = (projectionId) => {
-		return `/tickets/buy/projections/${projectionId}`;
+		return navigate(`/tickets/buy/projections/${projectionId}`);
 	};
 
 	const goToAddHandler = () => {

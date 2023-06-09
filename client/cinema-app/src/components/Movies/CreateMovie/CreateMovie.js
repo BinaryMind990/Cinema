@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Button from '../UI/Button';
-import CinemaAxios from '../../apis/CinemaAxios';
+import CinemaAxios from '../../../apis/CinemaAxios';
 import { useNavigate } from 'react-router-dom';
 import styles from './CreateMovie.module.css';
 import { toast } from 'react-toastify';
+import Button from 'components/UI/Button';
 
 const CreateMovie = () => {
 	const [movieData, setMovieData] = useState({

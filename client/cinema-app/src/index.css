@@ -29,6 +29,16 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
 .loader-container {
   height: 100vh;
   display: flex;
@@ -37,15 +47,13 @@ h1 {
 }
 
 .link {
-  align-self: flex-start;
-  margin-left: 10px;
-  padding: 0.75rem 1rem;
-  border-radius: 0.25rem;
-  background-color: #2a2a2a;
   color: #fff;
-  font-weight: 500;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
+}
+
+.link:hover,
+.link.active {
+  color: #0069d9;
 }
 
 .title-wrapper {
@@ -55,4 +63,28 @@ h1 {
 
 .page-wrapper {
   padding: 20px;
+}
+
+table {
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 20px;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #e6e6e6;
+}
+
+tr {
+  background-color: rgba(5, 29, 49, 0.7);
+}
+
+td {
+  padding: 10px;
 }

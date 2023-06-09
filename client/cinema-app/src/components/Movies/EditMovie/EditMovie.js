@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../UI/Button';
 import { useParams } from 'react-router-dom';
 import styles from './EditMovie.module.css';
-import CinemaAxios from '../../apis/CinemaAxios';
+import CinemaAxios from '../../../apis/CinemaAxios';
 import { toast } from 'react-toastify';
 import { CircleLoader } from 'react-spinners';
+import Button from 'components/UI/Button';
 
 const EditMovie = () => {
 	const [editMovieData, setEditMovieData] = useState({

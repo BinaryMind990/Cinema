@@ -47,7 +47,7 @@ const Login = () => {
 				<Button type='submit' className={`button blue full-width`}>
 					Log in
 				</Button>
-				<p>or</p>
+				<p className={styles.divider}>or</p>
 				<Button
 					className={`button yellow full-width`}
 					onClick={goToRegisterPage}

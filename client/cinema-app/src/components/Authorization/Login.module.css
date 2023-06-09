@@ -19,6 +19,7 @@
     margin-bottom: 20px;
 }
 
-.login-form p {
+.login-form .divider {
     text-align: center;
+    margin: 10px 0;
 }

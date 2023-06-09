@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { UserProvider } from './contexts/UserContext';
-import Header from './components/Layout/Header';
+import Header from './components/Layout/Header/Header';
 import { AppRoutes } from './routes';
 import { DataProvider } from 'contexts/GetDataContext';
 

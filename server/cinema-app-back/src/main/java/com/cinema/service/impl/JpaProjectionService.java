@@ -3,6 +3,7 @@ package com.cinema.service.impl;
 import com.cinema.model.Hall;
 import com.cinema.model.Projection;
 import com.cinema.model.Type;
+import com.cinema.repository.MovieRep;
 import com.cinema.repository.ProjectionRep;
 import com.cinema.service.ProjectionService;
 import com.cinema.support.ProjectionDTOtoProjectionNew;
@@ -23,6 +24,9 @@ public class JpaProjectionService implements ProjectionService {
 
 	@Autowired
 	private ProjectionRep projectionRep;
+	
+	@Autowired
+	private MovieRep movieRep;
 
 	
 	@Autowired
@@ -40,6 +44,15 @@ public class JpaProjectionService implements ProjectionService {
 
 	@Override
 	public Projection save(ProjectionDTOCreate dto) {
+		
+		if(movieRep.findOneById(dto.getMovieId()) == null) {
+			System.out.println("odabran je nepostojeci film");
+			return null;
+		}
+		if(movieRep.findOneById(dto.getMovieId()).isDeleted()) {
+			System.out.println("ne moze se kreirati projekcija jer je film obrisan");
+			return null;
+		}
 		
 		
 		int hallId = dto.getHallId().intValue();
@@ -62,18 +75,30 @@ public class JpaProjectionService implements ProjectionService {
 		default:
 			System.out.println("odabrani tip projekcije nije podrzan u odabranoj sali");
 			return null;
-			
+
 		}
+		
 		Projection projection = toProjection.convert(dto);
-	/*	
+		/*	
 		if (!projection.getHall().getTypes().stream().map(t -> t.getId()).collect(Collectors.toList()).contains(projection.getType().getId())) {
-			
+
 			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
 			return null;
 		}
-*/
+		 */
 		
-		
+		/*
+		System.out.println(projection.getHall().getTypes().contains(projection.getType()));
+		System.out.println(projection.getHall().getTypes());
+		System.out.println(projection.getType());
+		if (!projection.getHall().getTypes().contains(projection.getType())) {
+	
+			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
+			return null;
+		}
+		 */
+	
+
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now())) {
 			System.out.println("Projekcija ne moze biti u proslosti");
 			return null;
@@ -101,8 +126,7 @@ public class JpaProjectionService implements ProjectionService {
 			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
 		}
-		if(projection.getMovie().isDeleted())
-			return null;
+		
 		Projection savedProjection = projectionRep.save(projection);
 		return savedProjection;
 	}

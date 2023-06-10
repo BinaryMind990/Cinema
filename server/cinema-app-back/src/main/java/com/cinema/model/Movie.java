@@ -43,13 +43,16 @@ public class Movie {
 
 	@Column
 	private String posterLink;
-	
+
 	@Column
 	private boolean deleted = Boolean.FALSE;
-	
+
 	@Column
 	private String director;
-	
+
+	@Column
+	private String imdbLink;
+
 	@Version
 	private int version = 0;
 
@@ -158,9 +161,6 @@ public class Movie {
 	public void setPosterLink(String posterLink) {
 		this.posterLink = posterLink;
 	}
-	
-	
-	
 
 	public String getDirector() {
 		return director;
@@ -177,8 +177,6 @@ public class Movie {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	
-	
 
 	public int getVersion() {
 		return version;
@@ -186,6 +184,14 @@ public class Movie {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public String getImdbLink() {
+		return imdbLink;
+	}
+
+	public void setImdbLink(String imdbLink) {
+		this.imdbLink = imdbLink;
 	}
 
 	@Override

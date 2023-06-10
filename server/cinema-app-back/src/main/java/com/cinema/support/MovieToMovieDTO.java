@@ -25,6 +25,7 @@ public class MovieToMovieDTO implements Converter<Movie, MovieDTO> {
         dto.setPosterLink(movie.getPosterLink());
         dto.setVersion(movie.getVersion());
         dto.setDirector(movie.getDirector());
+        dto.setImdbLink(movie.getImdbLink());
         return dto;
     }
 

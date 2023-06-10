@@ -12,12 +12,12 @@ INSERT INTO hall (name) VALUES ('Hall 1'), ('Hall 2'), ('Hall 3'), ('Hall 4'), (
 
 INSERT INTO type_hall (hall_id, type_id) VALUES (1, 1), (1,2), (2, 1), (3, 1), (4, 2), (4, 3), (5, 3);
 
-INSERT INTO movie (country, distributor, description, duration, name, year, poster_link, deleted, version, director) 
-VALUES('Serbia','ART VISTA d.o.o', 'Description for 1. movie', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg', 0, 0, 'Dragan Bjelogrlic, Zoran Lisinac'),
-	  ('Serbia', 'unknown', 'Description for 2. movie', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg', 0, 0, 'Srdjan Koljevic'),
-      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg', 0, 0, 'Radivoje Andric'),
-      ('Serbia', 'Vans','Description for 4. movie', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg', 0, 0, 'Dusan Kovacevic'),
-	  ('Serbia', 'unknown', 'Description for 5. movie', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg', 0, 0, 'Dusan Kovacevic, Bozidar Bota Nikolic');
+INSERT INTO movie (country, distributor, description, duration, name, year, poster_link, deleted, version, director, imdb_link) 
+VALUES('Serbia','ART VISTA d.o.o', 'Description for 1. movie', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg', 0, 0, 'Dragan Bjelogrlic, Zoran Lisinac', 'https://www.imdb.com/title/tt8737152/'),
+	  ('Serbia', 'unknown', 'Description for 2. movie', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg', 0, 0, 'Srdjan Koljevic', 'https://www.imdb.com/title/tt1324061/'),
+      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg', 0, 0, 'Radivoje Andric', 'https://www.imdb.com/title/tt0383846/'),
+      ('Serbia', 'Vans','Description for 4. movie', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg', 0, 0, 'Dusan Kovacevic', 'https://www.imdb.com/title/tt0339535/'),
+	  ('Serbia', 'unknown', 'Description for 5. movie', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg', 0, 0, 'Dusan Kovacevic, Bozidar Bota Nikolic', 'https://www.imdb.com/title/tt0086935/');
 	  
 	  
 INSERT INTO projection (date_and_time, ticket_price, hall_id, movie_id, type_id, deleted) VALUES 

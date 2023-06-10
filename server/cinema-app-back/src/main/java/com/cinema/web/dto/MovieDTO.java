@@ -38,6 +38,10 @@ public class MovieDTO {
 	@NotBlank
 	private String posterLink;
 	
+	@NotNull
+	@NotBlank
+	private String imdbLink;
+	
 	private int version;
 	
 	@NotNull
@@ -165,6 +169,14 @@ public class MovieDTO {
 	}
 	
 	
+
+	public String getImdbLink() {
+		return imdbLink;
+	}
+
+	public void setImdbLink(String imdbLink) {
+		this.imdbLink = imdbLink;
+	}
 
 	public String getDirector() {
 		return director;

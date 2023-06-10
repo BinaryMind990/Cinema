@@ -71,113 +71,108 @@ const CreateProjection = () => {
 	}
 
 	return (
-		<div className={styles['create-projection-container']}>
-			<form
-				className={styles['create-projection-form']}
-				onSubmit={addProjectionSubmitHandle}
-			>
-				<label htmlFor='movieName'>Movie</label>
-				<br />
-				<select
-					name='movieName'
-					id='movieName'
-					onChange={(e) =>
-						setProjectionData({
-							...projectionData,
-							movieId: e.target.value,
-						})
-					}
+		<div>
+			<div className='title-wrapper'>
+				<h1>Create Projection</h1>
+			</div>
+			<div className='page-wrapper'>
+				<form
+					className={styles['create-projection-form']}
+					onSubmit={addProjectionSubmitHandle}
 				>
-					<option>Choose movie</option>
-					{movies.map((movie) => {
-						return (
-							<option key={movie.id} value={movie.id}>
-								{movie.name}
-							</option>
-						);
-					})}
-				</select>
-				<br />
-				<label htmlFor='Type'>Type</label>
-				<br />
-				<select
-					name='Type'
-					id='Type'
-					onChange={(e) =>
-						setProjectionData({
-							...projectionData,
-							typeId: e.target.value,
-						})
-					}
-				>
-					<option>Chose type</option>
-					{types.map((type) => {
-						return (
-							<option key={type.id} value={type.id}>
-								{type.name}
-							</option>
-						);
-					})}
-				</select>
-				<br />
-				<label htmlFor='hall'>Hall</label>
-				<br />
-				<select
-					name='hall'
-					id='hall'
-					onChange={(e) =>
-						setProjectionData({
-							...projectionData,
-							hallId: e.target.value,
-						})
-					}
-				>
-					<option>Chose hall</option>
-					{halls.map((hall) => {
-						return (
-							<option key={hall.id} value={hall.id}>
-								{hall.name}
-							</option>
-						);
-					})}
-				</select>
-				<br />
-				<label htmlFor='dateAndTime'>Date and Time</label>
-				<br />
-				<input
-					type='datetime-local'
-					name='dateAndTime'
-					id='dateAndTime'
-					onChange={(e) =>
-						setProjectionData({
-							...projectionData,
-							dateTimeStr: `${e.target.value.slice(
-								0,
-								10
-							)} ${e.target.value.slice(11, 16)}`,
-						})
-					}
-				/>
-				<br />
-				<label htmlFor='ticketPrice'>Ticket Price</label>
-				<br />
-				<input
-					type='number'
-					min={0}
-					name='ticketPrice'
-					id='ticketPrice'
-					onChange={(e) =>
-						setProjectionData({
-							...projectionData,
-							ticketPrice: e.target.value,
-						})
-					}
-				/>
-				<br />
-				<Button type='submit' className='blue'>
-					Add
-				</Button>
-			</form>
+					<label htmlFor='movieName'>Movie</label>
+					<select
+						name='movieName'
+						id='movieName'
+						onChange={(e) =>
+							setProjectionData({
+								...projectionData,
+								movieId: e.target.value,
+							})
+						}
+					>
+						<option>Choose movie</option>
+						{movies.map((movie) => {
+							return (
+								<option key={movie.id} value={movie.id}>
+									{movie.name}
+								</option>
+							);
+						})}
+					</select>
+					<label htmlFor='Type'>Type</label>
+					<select
+						name='Type'
+						id='Type'
+						onChange={(e) =>
+							setProjectionData({
+								...projectionData,
+								typeId: e.target.value,
+							})
+						}
+					>
+						<option>Chose type</option>
+						{types.map((type) => {
+							return (
+								<option key={type.id} value={type.id}>
+									{type.name}
+								</option>
+							);
+						})}
+					</select>
+					<label htmlFor='hall'>Hall</label>
+					<select
+						name='hall'
+						id='hall'
+						onChange={(e) =>
+							setProjectionData({
+								...projectionData,
+								hallId: e.target.value,
+							})
+						}
+					>
+						<option>Chose hall</option>
+						{halls.map((hall) => {
+							return (
+								<option key={hall.id} value={hall.id}>
+									{hall.name}
+								</option>
+							);
+						})}
+					</select>
+					<label htmlFor='dateAndTime'>Date and Time</label>
+					<input
+						type='datetime-local'
+						name='dateAndTime'
+						id='dateAndTime'
+						onChange={(e) =>
+							setProjectionData({
+								...projectionData,
+								dateTimeStr: `${e.target.value.slice(
+									0,
+									10
+								)} ${e.target.value.slice(11, 16)}`,
+							})
+						}
+					/>
+					<label htmlFor='ticketPrice'>Ticket Price</label>
+					<input
+						type='number'
+						min={0}
+						name='ticketPrice'
+						id='ticketPrice'
+						onChange={(e) =>
+							setProjectionData({
+								...projectionData,
+								ticketPrice: e.target.value,
+							})
+						}
+					/>
+					<Button type='submit' className='blue full-width'>
+						Save Projection
+					</Button>
+				</form>
+			</div>
 		</div>
 	);
 };

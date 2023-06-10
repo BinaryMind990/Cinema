@@ -9,13 +9,13 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: rgba(5, 29, 49, 0.7);
+    background-color: rgba(5, 30, 51, 0.7);
     border: 1px solid #051d31;
     cursor: pointer;
 }
 
 .date-item.active {
-    color: rgba(5, 29, 49);
+    color: #051d31;
     background-color: #FAB702;
 }
 
@@ -23,64 +23,32 @@
     margin-right: 5px;
 }
 
-
-/* table {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th {
-    font-weight: bold;
-    text-align: left;
-    padding: 10px;
-    border-bottom: 2px solid #e6e6e6;
-}
-
-td {
-    padding: 10px;
-    border-bottom: 1px solid #e6e6e6;
-} */
-
 .cell {
     display: flex;
     justify-content: space-between;
 }
 
-.link {
-    display: inline-block;
-    padding: 0.75rem 1rem;
-    border-radius: 0.25rem;
-    background-color: #2a2a2a;
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.link:hover {
-    background-color: #746b6b;
-}
-
-.link:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.5);
-}
-
-.actions {
+.sort-radio-wrapper {
     display: flex;
-    align-items: center;
+    margin-top: 20px;
+    justify-content: flex-end;
 }
 
-.buttonWrapper+.buttonWrapper {
-    margin-left: 10px;
+.sort-radio {
+    display: flex;
+    background-color: rgba(5, 30, 51, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.sort-radio span,
+.sort-radio label {
+    font-size: 12px;
+    text-transform: uppercase;
 }
 
 .addButton {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
     margin-top: 15px;
 }

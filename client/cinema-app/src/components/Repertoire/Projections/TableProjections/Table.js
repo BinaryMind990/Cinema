@@ -8,20 +8,22 @@ const Table = (props) => {
 		<div>
 			<table>
 				<tbody>
-					{props.movies.map((movie) => {
-						const item = props.items.find(
-							(item) => item?.movieId === movie.id
+					{props.items.map((item) => {
+						const movie = props.movies.find(
+							(movie) => movie.id === item.movieId
 						);
-						if (!item) return null;
-						const dateTimeString = item?.dateTimeStr;
-						const date = dateTimeString ? new Date(dateTimeString) : null;
-						const formattedDateTime = date?.toLocaleString('fr-FR', {
-							day: '2-digit',
-							month: '2-digit',
-							year: 'numeric',
-							hour: '2-digit',
-							minute: '2-digit',
-						});
+						const dateTimeString = item.dateTimeStr;
+						const dateParts = dateTimeString
+							? dateTimeString.split('T')[0].split('-')
+							: null;
+						const formattedDate = dateParts
+							? dateParts.reverse().join('.')
+							: null;
+						const time = dateTimeString
+							? dateTimeString.split('T')[1].substring(0, 5)
+							: null;
+						const formattedDateTime =
+							formattedDate && time ? `${formattedDate} ${time}` : null;
 						return (
 							<tr key={item.id}>
 								<td className={styles.cell}>

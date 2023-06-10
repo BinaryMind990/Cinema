@@ -1,21 +1,30 @@
 import { useContext, useEffect, useState } from 'react';
-import CinemaAxios from '../../../apis/CinemaAxios';
-import Table from './TableProjections/Table';
-import Button from '../../UI/Button';
-import styles from './Projections.module.css';
 import { CircleLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+
+import CinemaAxios from '../../../apis/CinemaAxios';
+import Table from './TableProjections/Table';
+import Button from '../../UI/Button';
+import styles from './Projections.module.css';
 import { UserContext } from '../../../contexts/UserContext';
+import { DataContext } from 'contexts/GetDataContext';
+import { searchRepertoir } from 'utils/SearchHelper';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);
+	const { movies } = useContext(DataContext);
+
 	const [projections, setProjections] = useState([]);
-	const [movies, setMovies] = useState([]);
 	const [searchQuery] = useState({ date: '' });
 	const [selectedDate, setSelectedDate] = useState('');
+	const [search, setSearch] = useState('');
+	const [sortOrder, setSortOrder] = useState('');
 	const [loading, setLoading] = useState(true);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -51,24 +60,19 @@ const Projections = () => {
 			}
 		};
 		getProjections();
-		getMovies();
 	}, [searchQuery, selectedDate]);
 
-	const getMovies = async () => {
-		try {
-			const res = await CinemaAxios.get(`/movies`);
-			setMovies(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
+	useEffect(() => {
+		if (projections.length > 0 && !selectedDate) {
+			setSelectedDate(
+				projections[0].dateTimeStr
+					.split('T')[0]
+					.split('-')
+					.reverse()
+					.join('-')
+			);
 		}
-	};
-
-	const projectionDates = [
-		...new Set(
-			projections.map((projection) => projection.dateTimeStr.split('T')[0])
-		),
-	];
+	}, [projections, selectedDate]);
 
 	const getMovieUrl = (movieId) => {
 		return `/movies/${movieId}`;
@@ -101,12 +105,32 @@ const Projections = () => {
 			});
 		}
 	};
+
+	const projectionDates = [
+		...new Set(
+			projections.map((projection) =>
+				projection.dateTimeStr.split('T')[0].split('-').reverse().join('-')
+			)
+		),
+	];
+
 	const handleSearchDate = (date) => {
 		if (selectedDate === date) {
 			setSelectedDate('');
 		} else {
 			setSelectedDate(date);
 		}
+		setSortOrder('');
+	};
+
+	const searchData = searchRepertoir(projections, search, sortOrder);
+
+	const handleSearch = (e) => {
+		setSearch(e.target.value);
+	};
+
+	const handleSortOrderChange = (e) => {
+		setSortOrder(e.target.value);
 	};
 
 	if (loading) {
@@ -121,6 +145,14 @@ const Projections = () => {
 		<div>
 			<div className='title-wrapper'>
 				<h1>Repertoire</h1>
+				<div className='search'>
+					<Input
+						className='search-input'
+						placeholder='Search...'
+						prefix={<SearchOutlined />}
+						onChange={handleSearch}
+					/>
+				</div>
 			</div>
 			<div className='page-wrapper'>
 				<div className={styles['date-picker-container']}>
@@ -137,15 +169,46 @@ const Projections = () => {
 						</div>
 					))}
 				</div>
+				{searchData.length === 0 && (
+					<div className='no-results'>
+						No projections found for the selected date.
+					</div>
+				)}
+				<div className={styles['sort-radio-wrapper']}>
+					<div className={styles['sort-radio']}>
+						<span>Sort by Price:</span>
+						<label>
+							<input
+								type='radio'
+								value='asc'
+								checked={sortOrder === 'asc'}
+								onChange={handleSortOrderChange}
+							/>
+							Asc
+						</label>
+						<label>
+							<input
+								type='radio'
+								value='desc'
+								checked={sortOrder === 'desc'}
+								onChange={handleSortOrderChange}
+							/>
+							Desc
+						</label>
+					</div>
+				</div>
 				<Table
 					items={
 						selectedDate
-							? projections.filter(
+							? searchData.filter(
 									(projection) =>
-										projection.dateTimeStr.split('T')[0] ===
-										selectedDate
+										projection.dateTimeStr
+											.split('T')[0]
+											.split('-')
+											.reverse()
+											.join('-') === selectedDate
 							  )
-							: projections
+							: searchData
 					}
 					title={`Projections`}
 					url={getMovieUrl}
@@ -159,7 +222,7 @@ const Projections = () => {
 				{role === 'ROLE_ADMIN' && (
 					<div className={styles.addButton}>
 						<Button className='blue' onClick={goToAddHandler}>
-							Add
+							Add Projection
 						</Button>
 					</div>
 				)}

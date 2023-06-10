@@ -109,8 +109,9 @@ public class ProjectionController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProjectionDTO> create(@Valid @RequestBody ProjectionDTOCreate dto) {
 
+	
 		Projection newProjection = toProjectionNew.convert(dto);
-		Projection savedProjection = projectionService.save(newProjection);
+		Projection savedProjection = projectionService.save(dto);
 		if (savedProjection == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

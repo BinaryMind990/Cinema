@@ -1,6 +1,8 @@
 package com.cinema.service;
 
 import com.cinema.model.Projection;
+import com.cinema.web.dto.ProjectionDTOCreate;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public interface ProjectionService {
 
     List<Projection> findAll();
 
-    Projection save(Projection projection);
+    Projection save(ProjectionDTOCreate dto);
 
     Projection update(Projection projection);
 

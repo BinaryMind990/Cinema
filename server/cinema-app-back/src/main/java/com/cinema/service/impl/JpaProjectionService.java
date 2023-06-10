@@ -1,8 +1,13 @@
 package com.cinema.service.impl;
 
+import com.cinema.model.Hall;
 import com.cinema.model.Projection;
+import com.cinema.model.Type;
 import com.cinema.repository.ProjectionRep;
 import com.cinema.service.ProjectionService;
+import com.cinema.support.ProjectionDTOtoProjectionNew;
+import com.cinema.web.dto.ProjectionDTOCreate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,12 +15,18 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JpaProjectionService implements ProjectionService {
 
 	@Autowired
 	private ProjectionRep projectionRep;
+
+	
+	@Autowired
+	private ProjectionDTOtoProjectionNew toProjection;
 
 	@Override
 	public Projection findOne(Long id) {
@@ -28,13 +39,41 @@ public class JpaProjectionService implements ProjectionService {
 	}
 
 	@Override
-	public Projection save(Projection projection) {
-
-		if (!projection.getHall().getTypes().contains(projection.getType())) {
+	public Projection save(ProjectionDTOCreate dto) {
+		
+		
+		int hallId = dto.getHallId().intValue();
+		switch (dto.getTypeId().intValue()) {
+		case 1:
+			if(hallId == 1 || hallId == 2 || hallId == 3) {
+				break;
+			}
+			else return null;
+		case 2:
+			if(hallId ==1 || hallId == 4) {
+			break;
+			}
+			else return null;
+		case 3: 
+			if(hallId == 4 || hallId == 5) {
+			break;
+			}
+			return null;
+		default:
+			System.out.println("odabrani tip projekcije nije podrzan u odabranoj sali");
+			return null;
+			
+		}
+		Projection projection = toProjection.convert(dto);
+	/*	
+		if (!projection.getHall().getTypes().stream().map(t -> t.getId()).collect(Collectors.toList()).contains(projection.getType().getId())) {
+			
 			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
 			return null;
 		}
-
+*/
+		
+		
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now())) {
 			System.out.println("Projekcija ne moze biti u proslosti");
 			return null;

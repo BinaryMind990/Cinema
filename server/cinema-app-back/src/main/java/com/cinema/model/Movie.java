@@ -11,6 +11,7 @@ import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 //@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
@@ -45,6 +46,12 @@ public class Movie {
 	
 	@Column
 	private boolean deleted = Boolean.FALSE;
+	
+	@Column
+	private String director;
+	
+	@Version
+	private int version = 0;
 
 	@OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Projection> projections = new ArrayList<Projection>();
@@ -152,6 +159,16 @@ public class Movie {
 		this.posterLink = posterLink;
 	}
 	
+	
+	
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
 
 	public boolean isDeleted() {
 		return deleted;
@@ -159,6 +176,16 @@ public class Movie {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	@Override

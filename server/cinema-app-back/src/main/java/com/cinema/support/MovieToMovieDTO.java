@@ -23,7 +23,8 @@ public class MovieToMovieDTO implements Converter<Movie, MovieDTO> {
         dto.setDistributor(movie.getDistributor());
         dto.setYear(movie.getYear());
         dto.setPosterLink(movie.getPosterLink());
-
+        dto.setVersion(movie.getVersion());
+        dto.setDirector(movie.getDirector());
         return dto;
     }
 

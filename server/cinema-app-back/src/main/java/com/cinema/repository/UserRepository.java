@@ -23,6 +23,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
 	@Query("SELECT u from Users u WHERE "
 			+ "(:userName = NULL OR u.userName LIKE :userName%) AND "
-			+ "(:role = NULL OR u.role = :role)")
+			+ "(:role = NULL OR u.role = :role) AND "
+			+ " deleted = 0")
 	List<Users> search(@Param("userName") String userName,@Param("role") UserRole role, Sort sort);
 }

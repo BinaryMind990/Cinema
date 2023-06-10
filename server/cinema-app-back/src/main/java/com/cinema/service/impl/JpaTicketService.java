@@ -57,6 +57,7 @@ public class JpaTicketService implements TicketService {
 			return null;
 		Users user = userService.findbyUserName(userName).get();
 		
+		
 		Ticket ticket = toTicket.convert(dto);
 		ticket.setUser(user);
 		return ticketRep.save(ticket);

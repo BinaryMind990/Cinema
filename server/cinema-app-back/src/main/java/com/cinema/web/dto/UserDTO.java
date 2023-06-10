@@ -1,5 +1,7 @@
 package com.cinema.web.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +30,7 @@ public class UserDTO {
     
     private String role;
     
-    
+    private List<TicketDTO> tickets;
 
     public String getRole() {
 		return role;
@@ -77,6 +79,14 @@ public class UserDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+	public List<TicketDTO> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<TicketDTO> tickets) {
+		this.tickets = tickets;
+	}
 
 	@Override
 	public String toString() {

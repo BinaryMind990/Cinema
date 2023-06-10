@@ -31,9 +31,18 @@ public class MovieDTO {
 	@Positive
 	private int year;
 
+	@NotBlank
 	private String description;
 
+	@NotNull
+	@NotBlank
 	private String posterLink;
+	
+	private int version;
+	
+	@NotNull
+	@NotBlank
+	private String director;
 
 	public MovieDTO() {
 		super();
@@ -145,6 +154,24 @@ public class MovieDTO {
 
 	public void setPosterLink(String posterLink) {
 		this.posterLink = posterLink;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
+	
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
 	}
 
 	@Override

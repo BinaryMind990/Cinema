@@ -36,6 +36,7 @@ public class JpaMovieService implements MovieService {
     @Override
     public Movie save(Movie movie) {
     	movie.setDeleted(false);
+    	movie.setVersion(0);
         return movieRep.save(movie);
     }
 

@@ -31,30 +31,35 @@ public class JpaProjectionService implements ProjectionService {
 	public Projection save(Projection projection) {
 
 		if (!projection.getHall().getTypes().contains(projection.getType())) {
+			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
 			return null;
 		}
 
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now())) {
+			System.out.println("Projekcija ne moze biti u proslosti");
 			return null;
 		}
 		List<Projection> projections = projectionRep.findList(projection.getHall().getId(),
 				projection.getDateAndTime());
 		boolean occupiedTime = false;
 
-		if (projections.stream().anyMatch(p -> p.getDateAndTime().equals(projection.getDateAndTime())))
+		if (projections.stream().anyMatch(p -> p.getDateAndTime().equals(projection.getDateAndTime()))) {
+			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
-
+		}
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isBefore(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime()
 						.isBefore(p.getDateAndTime().plusMinutes(p.getMovie().getDuration())));
 
 		if (occupiedTime) {
+			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
 		}
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isAfter(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime().plusMinutes(projection.getMovie().getDuration())
 						.isAfter(p.getDateAndTime()));
 		if (occupiedTime) {
+			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
 		}
 		if(projection.getMovie().isDeleted())

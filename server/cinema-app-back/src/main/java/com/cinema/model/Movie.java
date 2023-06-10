@@ -6,11 +6,17 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 @Entity
-// @SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
-// @FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name =
-// "isDeleted", type = "boolean"))
-// @Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
+//@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
+//@FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+//@Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
 public class Movie {
 
 	@Id
@@ -40,6 +46,15 @@ public class Movie {
 
 	@Column
 	private boolean deleted = Boolean.FALSE;
+
+	@Column
+	private String director;
+
+	@Column
+	private String imdbLink;
+
+	@Version
+	private int version = 0;
 
 	@OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Projection> projections = new ArrayList<Projection>();
@@ -147,12 +162,36 @@ public class Movie {
 		this.posterLink = posterLink;
 	}
 
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
 	public boolean isDeleted() {
 		return deleted;
 	}
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getImdbLink() {
+		return imdbLink;
+	}
+
+	public void setImdbLink(String imdbLink) {
+		this.imdbLink = imdbLink;
 	}
 
 	@Override

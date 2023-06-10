@@ -54,6 +54,8 @@ public class JpaUserService implements UserService {
     @Override
     public Users delete(Long id) {
         Optional<Users> userOptional = userRepository.findById(id);
+        if(userOptional == null || userOptional.get().getDeleted())
+        	return null;
         if (userOptional.isPresent() && userOptional.get().getTickets().isEmpty()) {
             userRepository.deleteById(id);
             return userOptional.get();

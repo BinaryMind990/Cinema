@@ -5,6 +5,8 @@ public class TicketDTO {
 	private Long id;
 
 	private Long seat;
+	
+	private Long projectionId;
 
 	private String projectionDate;
 
@@ -17,6 +19,12 @@ public class TicketDTO {
 	private String hall;
 
 	private double price;
+	
+	private String ticketBuyDate;
+	
+	private String ticketBuyTime;
+	
+	
 
 	public TicketDTO(Long id, Long seat, String date, String time, String movieName, String type, String hall,
 			double price) {
@@ -51,21 +59,6 @@ public class TicketDTO {
 		this.seat = seat;
 	}
 
-	public String getDate() {
-		return projectionDate;
-	}
-
-	public void setDate(String date) {
-		this.projectionDate = date;
-	}
-
-	public String getTime() {
-		return projectionTime;
-	}
-
-	public void setTime(String time) {
-		this.projectionTime = time;
-	}
 
 	public String getMovieName() {
 		return movieName;
@@ -97,6 +90,49 @@ public class TicketDTO {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	
+
+	public String getProjectionDate() {
+		return projectionDate;
+	}
+
+	public void setProjectionDate(String projectionDate) {
+		this.projectionDate = projectionDate;
+	}
+
+	public String getProjectionTime() {
+		return projectionTime;
+	}
+
+	public void setProjectionTime(String projectionTime) {
+		this.projectionTime = projectionTime;
+	}
+	
+
+	public Long getProjectionId() {
+		return projectionId;
+	}
+
+	public void setProjectionId(Long projectionId) {
+		this.projectionId = projectionId;
+	}
+
+	public String getTicketBuyDate() {
+		return ticketBuyDate;
+	}
+
+	public void setTicketBuyDate(String ticketBuyDate) {
+		this.ticketBuyDate = ticketBuyDate;
+	}
+
+	public String getTicketBuyTime() {
+		return ticketBuyTime;
+	}
+
+	public void setTicketBuyTime(String ticketBuyTime) {
+		this.ticketBuyTime = ticketBuyTime;
 	}
 
 	@Override

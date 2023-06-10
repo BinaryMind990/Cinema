@@ -19,6 +19,8 @@ public class MovieDTOtoMovieNew implements Converter<MovieDTO, Movie> {
         movie.setDescription(dto.getDescription());
         movie.setDistributor(dto.getDistributor());
         movie.setPosterLink(dto.getPosterLink());
+        movie.setDirector(dto.getDirector());
+        movie.setImdbLink(dto.getImdbLink());
 
         return movie;
     }

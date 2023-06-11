@@ -48,44 +48,83 @@ const User = () => {
 	}
 
 	return (
-		<div className={styles['user-info']}>
-			<h1>User</h1>
-			{userById &&
-				Object.entries(userById).map(([key, value]) => {
-					if (key === 'tickets' || key === 'id') return null;
-					const displayKey = mapKeyToDisplay(key);
-					return <p key={key}>{`${displayKey}: ${value}`}</p>;
-				})}
-			<div className={styles['button-wrapper']}>
-				<Button className='orange' onClick={() => editUser(userById.id)}>
-					Edit
-				</Button>
+		<div>
+			<div className='title-wrapper'>
+				<h1>User</h1>
 			</div>
-			{userById &&
-				userById.tickets.map((ticket) => (
-					<div key={ticket.id}>
-						{Object.entries(ticket).map(([key, value]) => {
-							if (key === 'id' || key === 'projectionId') return null;
+			<div className='page-wrapper'>
+				<div className={`form ${styles['user-info']}`}>
+					{userById &&
+						Object.entries(userById).map(([key, value]) => {
+							if (key === 'tickets' || key === 'id') return null;
 							const displayKey = mapKeyToDisplay(key);
-							let displayValue = value;
-							if (key === 'hall') {
-								displayValue = value.split(' ')[1];
-							} else if (key === 'price') {
-								displayValue = `${Number(value).toFixed(2)} RSD`;
-							} else if (
-								key === 'projectionDate' ||
-								key === 'ticketBuyDate'
-							) {
-								displayValue = value
-									.split('T')[0]
-									.split('-')
-									.reverse()
-									.join('-');
-							}
-							return <p key={key}>{`${displayKey}: ${displayValue}`}</p>;
+							return (
+								<p key={key}>
+									<span className='yellow-text'>{`${displayKey}:`}</span>
+									{`${value}`}
+								</p>
+							);
 						})}
+					<div className={styles['button-wrapper']}>
+						<Button
+							className='orange'
+							onClick={() => editUser(userById.id)}
+						>
+							Edit
+						</Button>
 					</div>
-				))}
+				</div>
+				{role !== 'ROLE_ADMIN' && (
+					<>
+						{userById &&
+						userById.tickets &&
+						userById.tickets.length > 0 ? (
+							<table className={styles['purchased-tickets']}>
+								<caption>
+									<h3>Purchased tickets</h3>
+								</caption>
+								<thead>
+									<tr>
+										{Object.keys(userById.tickets[0]).map((key) => {
+											if (key === 'id' || key === 'projectionId')
+												return null;
+											const displayKey = mapKeyToDisplay(key);
+											return <th key={key}>{displayKey}</th>;
+										})}
+									</tr>
+								</thead>
+								<tbody>
+									{userById.tickets.map((ticket) => (
+										<tr key={ticket.id}>
+											{Object.entries(ticket).map(([key, value]) => {
+												if (key === 'id' || key === 'projectionId')
+													return null;
+												const displayValue =
+													key === 'hall'
+														? value.split(' ')[0]
+														: key === 'movieName'
+														? value
+														: key === 'price'
+														? `${Number(value).toFixed(2)} RSD`
+														: typeof value === 'string'
+														? value
+																.split('T')[0]
+																.split('-')
+																.reverse()
+																.join('-')
+														: value;
+												return <td key={key}>{displayValue}</td>;
+											})}
+										</tr>
+									))}
+								</tbody>
+							</table>
+						) : (
+							''
+						)}
+					</>
+				)}
+			</div>
 		</div>
 	);
 };

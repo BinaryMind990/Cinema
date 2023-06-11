@@ -1,7 +1,8 @@
-import CinemaAxios from 'apis/CinemaAxios';
-import Button from 'components/UI/Button';
 import { useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
+import CinemaAxios from 'apis/CinemaAxios';
+import styles from './Reports.module.css';
+import Button from 'components/UI/Button';
 import { mapKeyToDisplayReport } from 'utils/MapKeyHelper';
 
 const Report = () => {
@@ -51,7 +52,7 @@ const Report = () => {
 				<h1>Report</h1>
 			</div>
 			<div className='page-wrapper'>
-				<div>
+				<div className={styles['date-picker']}>
 					<label htmlFor='dateFrom'>
 						Date from
 						<input
@@ -82,25 +83,41 @@ const Report = () => {
 							}
 						/>
 					</label>
-					<Button className={`blue`} onClick={handleReset}>
+					<Button className={`red`} onClick={handleReset}>
 						Reset
 					</Button>
 				</div>
-
 				<div>
-					{reports.map((report) => (
-						<div key={report.movieId}>
-							{Object.entries(report).map(
-								([key, value]) =>
-									key !== 'movieId' && (
-										<p key={key}>
-											<span>{mapKeyToDisplayReport(key)}: </span>
-											<span>{value}</span>
-										</p>
-									)
-							)}
-						</div>
-					))}
+					{reports.length > 0 ? (
+						<table className={styles['reports-table']}>
+							<thead>
+								<tr>
+									{Object.keys(reports[0]).map(
+										(key) =>
+											key !== 'movieId' && (
+												<th key={key}>
+													{mapKeyToDisplayReport(key)}
+												</th>
+											)
+									)}
+								</tr>
+							</thead>
+							<tbody>
+								{reports.map((report) => (
+									<tr key={report.movieId}>
+										{Object.entries(report).map(
+											([key, value]) =>
+												key !== 'movieId' && (
+													<td key={key}>{value}</td>
+												)
+										)}
+									</tr>
+								))}
+							</tbody>
+						</table>
+					) : (
+						<p>Nema dostupnih izvještaja.</p>
+					)}
 				</div>
 			</div>
 		</div>

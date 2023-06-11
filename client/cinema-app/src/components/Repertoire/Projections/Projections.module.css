@@ -42,7 +42,7 @@
     text-transform: uppercase;
 }
 
-.addButton {
+.add-button {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;

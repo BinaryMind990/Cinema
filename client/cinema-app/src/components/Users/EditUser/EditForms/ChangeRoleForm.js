@@ -1,9 +1,10 @@
 import Button from 'components/UI/Button';
+import styles from '../EditUser.module.css';
 
 const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 	return (
 		<form className='form' onSubmit={handleSubmit}>
-			<div>
+			<div className={styles['change-role']}>
 				<label>Role</label>
 				<label>
 					<input

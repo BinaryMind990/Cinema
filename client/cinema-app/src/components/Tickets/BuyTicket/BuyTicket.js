@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import Button from '../UI/Button';
-import styles from './BuyTicket.modul.css';
+import Button from '../../UI/Button';
+import './BuyTicket.css';
 import { CircleLoader } from 'react-spinners';
 import { dataClient, ticketClient } from 'apis/CinemaClient';
 
@@ -51,16 +51,12 @@ const BuyTicket = () => {
 	}
 
 	return (
-		<div className={styles['buy-ticket-container']}>
+		<div>
 			<div className='title-wrapper'>
 				<h1>Projection: {projections?.movieName}</h1>
 			</div>
 			<div className='page-wrapper'>
-				<p>Date: {projections?.dateTimeStr.split('T').join(' ')}</p>
-				<p>Hall: {projections?.hall}</p>
-				<p>Type: {projections?.typeName}</p>
-				<p>Price: {projections?.ticketPrice}</p>
-				<form className={'form'} onSubmit={buyTicketHandler}>
+				<form className={'form buy-ticket'} onSubmit={buyTicketHandler}>
 					<label htmlFor='seatNumber'>Seat number: </label>
 					<div>
 						<select
@@ -85,10 +81,26 @@ const BuyTicket = () => {
 									);
 								})}
 						</select>
+						<p>
+							<span className='yellow-text'>Date:</span>
+							{projections?.dateTimeStr.split('T').join(' ')}
+						</p>
+						<p>
+							<span className='yellow-text'>Hall:</span>
+							{projections?.hall}
+						</p>
+						<p>
+							<span className='yellow-text'>Type:</span>
+							{projections?.typeName}
+						</p>
+						<p>
+							<span className='yellow-text'>Price:</span>
+							{projections?.ticketPrice}
+						</p>
 					</div>
-					<div className={styles.buttonWrapper}>
-						<Button className={`ticket-button blue`} type='submit'>
-							Buy
+					<div className='button-wrapper'>
+						<Button className={`blue`} type='submit'>
+							Buy ticket
 						</Button>
 					</div>
 				</form>

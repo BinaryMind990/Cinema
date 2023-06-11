@@ -206,7 +206,7 @@ const Projections = () => {
 					movies={movies}
 				/>
 				{role === 'ROLE_ADMIN' && (
-					<div className={styles.addButton}>
+					<div className={styles['add-button']}>
 						<Button className='blue' onClick={projectionAddHandler}>
 							Add projection
 						</Button>

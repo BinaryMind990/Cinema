@@ -61,6 +61,12 @@ p {
 
 .yellow-text {
   color: #fab702;
+  font-weight: bold;
+}
+
+.red-text {
+  color: #ff0000;
+  font-weight: bold;
 }
 
 .title-wrapper {

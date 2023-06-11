@@ -97,13 +97,33 @@ public class UserController {
 
         // ogranicenje da obicni korisnik moze da menja samo svoje podatke i da ne moze
         // da menja userName
-        if (userName != userDTO.getUserName() || !userDTO.getUserName().equals(userToChange.getUserName())) {
+        // if (userName != userDTO.getUserName() ||
+        // !userDTO.getUserName().equals(userToChange.getUserName())) {
+        // return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        // }
+
+        // ovo radi
+        // if (!userName.equals(userDTO.getUserName()) ||
+        // !userDTO.getUserName().equals(userToChange.getUserName())) {
+        // return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        // }
+        // Users user = toUser.convert(userDTO);
+        // return new ResponseEntity<>(toUserDTO.convert(userService.save(user)),
+        // HttpStatus.OK);
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            // Admin može mijenjati podatke korisnika
+            Users user = toUser.convert(userDTO);
+            return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+        } else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
+            // Obični korisnik može mijenjati samo svoje podatke
+            Users user = toUser.convert(userDTO);
+            return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+        } else {
+            // Korisnik nema ovlasti za ažuriranje podataka
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-        Users user = toUser.convert(userDTO);
-
-        return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

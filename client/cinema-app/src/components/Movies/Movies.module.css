@@ -11,39 +11,36 @@
 
 .cell {
     display: flex;
+    align-items: center;
+}
+
+.cell h2 {
+    margin-bottom: 0;
+    margin-left: 30px;
 }
 
 .link {
-    align-self: flex-start;
-    margin-left: 10px;
-    padding: 0.75rem 1rem;
-    border-radius: 0.25rem;
-    background-color: #2a2a2a;
     color: #fff;
-    font-weight: 500;
     text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
 }
 
 .link:hover {
-    background-color: #746b6b;
+    color: #fab702;
 }
 
 .actions {
     display: flex;
     flex-grow: 1;
-    align-items: center;
     justify-content: flex-end;
 }
 
-.buttonWrapper+.buttonWrapper {
+.button-wrapper+.button-wrapper {
     margin-left: 10px;
 }
 
 
-.addButton {
-    width: 100%;
-    max-width: 80%;
-    margin: 0 auto;
-    margin-top: 15px;
+.add-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }

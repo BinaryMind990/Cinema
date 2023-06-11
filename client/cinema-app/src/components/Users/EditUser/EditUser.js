@@ -64,7 +64,6 @@ const EditUser = () => {
 			toast.success('User role changed successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			navigate('/');
 		} catch (error) {
 			toast.error('Failed to change user role. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
@@ -79,7 +78,6 @@ const EditUser = () => {
 			toast.success('User password changed successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
-			navigate(`/`);
 		} catch (error) {
 			toast.error('Failed to change user password. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
@@ -89,15 +87,7 @@ const EditUser = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
-			await userClient.edit(id, editUserData);
-
-			navigate(`/movies`);
-		} catch (error) {
-			toast.error('Failed to update user. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await userClient.edit(id, editUserData);
 	};
 
 	if (loading) {

@@ -27,7 +27,7 @@ const Movies = () => {
 			<div className='title-wrapper'>
 				<h1>Movies</h1>
 			</div>
-			<div className=''>
+			<div className='page-wrapper'>
 				<table>
 					<tbody>
 						{movies.map((movie) => (
@@ -39,14 +39,16 @@ const Movies = () => {
 											alt={`Movie poster for ${movie.name}`}
 										/>
 									</div>
-									<Link
-										className={styles.link}
-										to={getMovieUrl(movie.id)}
-									>
-										{movie.name}
-									</Link>
+									<h2>
+										<Link
+											className={styles.link}
+											to={getMovieUrl(movie.id)}
+										>
+											{movie.name}
+										</Link>
+									</h2>
 									<div className={styles.actions}>
-										<div className={styles.buttonWrapper}>
+										<div className={styles['button-wrapper']}>
 											<Button
 												className='orange'
 												onClick={() => goToEditHandler(movie.id)}
@@ -54,7 +56,7 @@ const Movies = () => {
 												Edit
 											</Button>
 										</div>
-										<div className={styles.buttonWrapper}>
+										<div className={styles['button-wrapper']}>
 											<Button
 												className='red'
 												onClick={() => deleteMovie(movie.id)}
@@ -68,9 +70,9 @@ const Movies = () => {
 						))}
 					</tbody>
 				</table>
-				<div className={styles.addButton}>
+				<div className={styles['add-button']}>
 					<Button className='blue' onClick={goToAddHandler}>
-						Add
+						Add movie
 					</Button>
 				</div>
 			</div>

@@ -120,7 +120,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 
 			<Button type='submit' className='blue full-width'>
-				Save Movie
+				Save movie
 			</Button>
 		</form>
 	);

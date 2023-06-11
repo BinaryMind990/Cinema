@@ -1,12 +1,10 @@
 import HomePage from 'components/HomePage';
 import Movies from 'components/Movies/Movies';
 import Projections from '../components/Repertoire/Projections/Projections';
-import TicketsList from 'components/Tickets/TicketsList';
 import Movie from 'components/Movies/Movie/Movie';
 import CreateMovie from '../components/Movies/CreateMovie/CreateMovie';
 import EditMovie from 'components/Movies/EditMovie/EditMovie';
 import CreateProjection from 'components/Repertoire/CreateProjection/CreateProjection';
-import BuyTicket from 'components/Tickets/BuyTicket';
 import Users from 'components/Users/Users';
 import User from '../components/Users/User/User';
 import EditUser from 'components/Users/EditUser/EditUser';
@@ -16,6 +14,8 @@ import Report from 'components/Report/Report';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from 'contexts/UserContext';
+import TicketsList from 'components/Tickets/TicketList/TicketsList';
+import BuyTicket from 'components/Tickets/BuyTicket/BuyTicket';
 
 export const AppRoutes = () => {
 	const { role } = useContext(UserContext);

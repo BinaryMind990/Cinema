@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import { dataClient } from 'apis/CinemaClient';
+import styles from './TicketsList.module.css';
 
 const TicketsList = () => {
 	const [ticketsList, setTicketsList] = useState([]);
@@ -51,7 +52,7 @@ const TicketsList = () => {
 							<th>Username</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody className={styles['ticket-list']}>
 						{ticketsList.map((ticket) => (
 							<tr key={ticket.id}>
 								<td>

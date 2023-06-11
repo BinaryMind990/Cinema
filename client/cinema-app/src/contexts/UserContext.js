@@ -56,6 +56,7 @@ export const UserProvider = ({ children }) => {
 
 	const contextValue = {
 		user,
+		setUser,
 		role,
 		login,
 		logout,

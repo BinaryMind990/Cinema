@@ -55,9 +55,12 @@ const Table = (props) => {
 														onClick={() => props.buy(item.id)}
 													>
 														Buy ticket
-														{/* <FaTicketAlt /> */}
 													</Button>
 												</div>
+											)}
+										{item.freeSeats === 0 &&
+											props.role !== 'ROLE_ADMIN' && (
+												<p className='red-text'>Tickets are sold</p>
 											)}
 										{props.role === 'ROLE_ADMIN' && (
 											<div className={styles['button-sets']}>

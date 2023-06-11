@@ -28,13 +28,19 @@ export const userClient = {
 		}
 	},
 	edit: async (id, editUserData) => {
-		await CinemaAxios.put(`/users/${id}`, editUserData);
-		toast.success(
-			`User ${editUserData.userName} has been updated successfully!`,
-			{
+		try {
+			await CinemaAxios.put(`/users/${id}`, editUserData);
+			toast.success(
+				`User ${editUserData.userName} has been updated successfully!`,
+				{
+					position: toast.POSITION.TOP_RIGHT,
+				}
+			);
+		} catch (error) {
+			toast.error('Failed to update user. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
-			}
-		);
+			});
+		}
 	},
 	delete: async (userId) => {
 		try {

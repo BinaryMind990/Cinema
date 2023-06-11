@@ -1,4 +1,4 @@
-import { dataClient, movieClient, userClient } from 'apis/CinemaClient';
+import { dataClient, movieClient } from 'apis/CinemaClient';
 import { createContext, useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -9,7 +9,6 @@ export const DataProvider = ({ children }) => {
 	const [movies, setMovies] = useState([]);
 	const [types, setTypes] = useState([]);
 	const [halls, setHalls] = useState([]);
-	const [users, setUsers] = useState([]);
 
 	const [loading, setLoading] = useState(true);
 
@@ -17,7 +16,6 @@ export const DataProvider = ({ children }) => {
 		getMovies();
 		getTypes();
 		getHalls();
-		getUsers();
 	}, []);
 
 	const getMovies = async () => {
@@ -61,30 +59,12 @@ export const DataProvider = ({ children }) => {
 		}
 	};
 
-	const getUsers = async () => {
-		try {
-			const res = await userClient.get('/users');
-			setUsers(res);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-		}
-	};
-
-	const deleteUser = async (userId) => {
-		await userClient.delete(userId);
-		setUsers(users.filter((user) => user.id !== userId));
-	};
-
 	const contextValue = {
 		movies,
 		setMovies,
 		types,
 		halls,
-		users,
 		deleteMovie,
-		deleteUser,
 		loading,
 	};
 

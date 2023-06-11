@@ -1,12 +1,18 @@
 .user-info {
-    padding: 20px;
-    background-color: rgba(5, 29, 49, 0.7);
-    border-radius: 5px;
+    margin-bottom: 30px;
 }
 
-.user-info-label {
-    font-weight: bold;
+.user-info span {
     margin-right: 10px;
+}
+
+.purchased-tickets caption {
+    background-color: #051d31;
+    ;
+}
+
+.purchased-tickets td:last-child {
+    text-align: right;
 }
 
 .button-wrapper {

@@ -38,27 +38,36 @@ const Movie = () => {
 	}
 
 	return (
-		<div className={styles['movie-container']}>
-			<img
-				className={styles['movie-image']}
-				src={movie.posterLink}
-				alt={`Movie poster for ${movie.name}`}
-			/>
-			<div className={styles['movie-details']}>
-				<div className={styles['movie-info']}>
-					<h1>{movie.name}</h1>
-					<p>Duration: {movie.duration} min</p>
-				</div>
-				<p>Country: {movie.country}</p>
-				<p>Distributor: {movie.distributor}</p>
-				<p>Year: {movie.year}</p>
-				<Link target='blank' to={movie.imdbLink}>
-					<FaImdb size={55} className={styles.icon} />
-				</Link>
-				<p>Year: {movie.year}</p>
-				<p>Director: {movie.director}</p>
-				<div className={styles['movie-description']}>
-					Description: {movie.description}
+		<div>
+			<div className='title-wrapper'>
+				<h1>Movie details</h1>
+			</div>
+			<div className='page-wrapper'>
+				<div className={styles['movie-container']}>
+					<img
+						className={styles['movie-image']}
+						src={movie.posterLink}
+						alt={`Movie poster for ${movie.name}`}
+					/>
+					<div className={styles['movie-details']}>
+						<div className={styles['movie-info']}>
+							<h2>{movie.name}</h2>
+							<p>Duration: {movie.duration} min</p>
+							<p>Country: {movie.country}</p>
+							<p>Distributor: {movie.distributor}</p>
+							<p>Year: {movie.year}</p>
+							<p>Director: {movie.director}</p>
+							<Link
+								target='blank'
+								className={styles['imdb-link']}
+								to={movie.imdbLink}
+							>
+								<FaImdb size={55} className={styles.icon} />
+							</Link>
+							<p className={styles['movie-description']}>Description:</p>
+							<p>{movie.description}</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Users.module.css';
 import Button from '../UI/Button';
@@ -6,17 +6,38 @@ import { CircleLoader } from 'react-spinners';
 import { FaTrash } from 'react-icons/fa';
 
 import { NavigateContext } from 'contexts/NavigateContext';
-import { DataContext } from 'contexts/MainContext';
+
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { searchUsers } from 'utils/SearchHelper';
+import { userClient } from 'apis/CinemaClient';
 
 const Users = () => {
 	const { getUserUrl } = useContext(NavigateContext);
-	const { users, deleteUser, loading } = useContext(DataContext);
+	const [users, setUsers] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [search, setSearch] = useState('');
 
 	const searchData = searchUsers(users, search);
+
+	useEffect(() => {
+		const getUsers = async () => {
+			try {
+				const res = await userClient.get('/users');
+				setUsers(res);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+				console.log(error);
+			}
+		};
+		getUsers();
+	}, []);
+
+	const deleteUser = async (userId) => {
+		await userClient.delete(userId);
+		setUsers(users.filter((user) => user.id !== userId));
+	};
 
 	const handleSearch = (e) => {
 		setSearch(e.target.value);

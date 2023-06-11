@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -11,12 +10,18 @@ import Table from './TableProjections/Table';
 import Button from '../../UI/Button';
 import styles from './Projections.module.css';
 import { UserContext } from '../../../contexts/UserContext';
-import { DataContext } from 'contexts/GetDataContext';
+
 import { searchRepertoir } from 'utils/SearchHelper';
+import { DataContext } from 'contexts/MainContext';
+import { projectionClient } from 'apis/CinemaClient';
+import { NavigateContext } from 'contexts/NavigateContext';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);
 	const { movies } = useContext(DataContext);
+
+	const { getMovieUrl, projectionAddHandler, ticketLists } =
+		useContext(NavigateContext);
 
 	const [projections, setProjections] = useState([]);
 	const [searchQuery] = useState({ date: '' });
@@ -74,36 +79,17 @@ const Projections = () => {
 		}
 	}, [projections, selectedDate]);
 
-	const getMovieUrl = (movieId) => {
-		return `/movies/${movieId}`;
-	};
-
 	const buyTicket = (projectionId) => {
-		return navigate(`/tickets/buy/projections/${projectionId}`);
-	};
-
-	const goToAddHandler = () => {
-		navigate('/projections/add');
-	};
-
-	const ticketLists = (projectionId) => {
-		return navigate(`/tickets/projection/${projectionId}`);
+		if (user) {
+			return navigate(`/tickets/buy/projections/${projectionId}`);
+		} else {
+			return navigate(`/`);
+		}
 	};
 
 	const deleteHandler = async (projectionId) => {
-		try {
-			await CinemaAxios.delete(`/projections/${projectionId}`);
-			setProjections(
-				projections.filter((movie) => movie.id !== projectionId)
-			);
-			toast.success('Projection was deleted successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error(`Failed to delete the projection. Please try again!`, {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await projectionClient.deleteProjection(projectionId);
+		setProjections(projections.filter((movie) => movie.id !== projectionId));
 	};
 
 	const projectionDates = [
@@ -221,7 +207,7 @@ const Projections = () => {
 				/>
 				{role === 'ROLE_ADMIN' && (
 					<div className={styles.addButton}>
-						<Button className='blue' onClick={goToAddHandler}>
+						<Button className='blue' onClick={projectionAddHandler}>
 							Add projection
 						</Button>
 					</div>

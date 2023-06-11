@@ -13,51 +13,62 @@ import EditUser from 'components/Users/EditUser/EditUser';
 import RegisterUser from '../components/Users/RegisterUser/RegisterUser';
 import Login from 'components/Authorization/Login';
 import Report from 'components/Report/Report';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
 import { UserContext } from 'contexts/UserContext';
 
 export const AppRoutes = () => {
 	const { role } = useContext(UserContext);
-
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		const protectedPaths = ['/users', '/reports'];
-
-		if (
-			!role &&
-			protectedPaths.some((path) =>
-				window.location.pathname.startsWith(path)
-			)
-		) {
-			navigate('/', { replace: true });
-		}
-
-		if (
-			role !== 'ROLE_ADMIN' &&
-			window.location.pathname.startsWith('/users')
-		) {
-			navigate('/movies', { replace: true });
-		}
-	}, [role, navigate]);
 	return (
 		<Routes>
 			<Route path='/' element={<HomePage />} />
 			<Route path='/login' element={<Login />} />
-			<Route path='/movies' element={<Movies />} />
 			<Route path='/movies/:id' element={<Movie />} />
-			<Route path='/movies/add' element={<CreateMovie />} />
-			<Route path='/movies/edit/:id' element={<EditMovie />} />
 			<Route path='/projections' element={<Projections />} />
-			<Route path='/projections/add' element={<CreateProjection />} />
-			<Route path='/tickets/projection/:id' element={<TicketsList />} />
 			<Route path='/tickets/buy/projections/:id' element={<BuyTicket />} />
-			<Route path='/users' element={<Users />} />
-			<Route path='/account/:id' element={<User />} />
 			<Route path='/account/registration' element={<RegisterUser />} />
-			<Route path='/account/edit/:id' element={<EditUser />} />
-			<Route path='/reports' element={<Report />} />
+			{role && (
+				<>
+					<Route path='/account/:id' element={<User />} />
+					<Route path='/account/edit/:id' element={<EditUser />} />
+				</>
+			)}
+			{role === 'ROLE_ADMIN' ? (
+				<>
+					<Route path='/movies' element={<Movies />} />
+					<Route path='/movies/add' element={<CreateMovie />} />
+					<Route path='/movies/edit/:id' element={<EditMovie />} />
+					<Route path='/users' element={<Users />} />
+					<Route path='/projections/add' element={<CreateProjection />} />
+					<Route
+						path='/tickets/projection/:id'
+						element={<TicketsList />}
+					/>
+					<Route path='/reports' element={<Report />} />
+				</>
+			) : (
+				<>
+					<Route path='/movies/*' element={<Navigate to='/' replace />} />
+					<Route
+						path='/movies/add'
+						element={<Navigate to='/' replace />}
+					/>
+					<Route
+						path='/movies/edit/:id'
+						element={<Navigate to='/' replace />}
+					/>
+					<Route path='/users/*' element={<Navigate to='/' replace />} />
+					<Route
+						path='/projections/add'
+						element={<Navigate to='/' replace />}
+					/>
+					<Route
+						path='/tickets/projection/:id'
+						element={<Navigate to='/' replace />}
+					/>
+					<Route path='/reports/*' element={<Navigate to='/' replace />} />
+				</>
+			)}
 		</Routes>
 	);
 };

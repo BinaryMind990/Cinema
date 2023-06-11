@@ -2,6 +2,7 @@ import CinemaAxios from 'apis/CinemaAxios';
 import Button from 'components/UI/Button';
 import { useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
+import { mapKeyToDisplayReport } from 'utils/MapKeyHelper';
 
 const Report = () => {
 	const [reports, setReports] = useState([]);
@@ -34,21 +35,6 @@ const Report = () => {
 
 	const handleReset = () => {
 		setSearchQuery({ dateFrom: '', dateTo: '' });
-	};
-
-	const mapKeyToDisplay = (key) => {
-		switch (key) {
-			case 'name':
-				return 'Title';
-			case 'numberOfProjections':
-				return 'Number of Projections';
-			case 'sum':
-				return 'Sum';
-			case 'soldTicketsForMovie':
-				return 'Number of sold tickets';
-			default:
-				return key;
-		}
 	};
 
 	if (loading) {
@@ -103,12 +89,12 @@ const Report = () => {
 
 				<div>
 					{reports.map((report) => (
-						<div key={report.id}>
+						<div key={report.movieId}>
 							{Object.entries(report).map(
 								([key, value]) =>
 									key !== 'movieId' && (
-										<p key={report.id}>
-											<span>{mapKeyToDisplay(key)}: </span>
+										<p key={key}>
+											<span>{mapKeyToDisplayReport(key)}: </span>
 											<span>{value}</span>
 										</p>
 									)

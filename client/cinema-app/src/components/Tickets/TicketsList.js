@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import CinemaAxios from '../../apis/CinemaAxios';
 import { CircleLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
+import { dataClient } from 'apis/CinemaClient';
 
 const TicketsList = () => {
 	const [ticketsList, setTicketsList] = useState([]);
@@ -13,8 +13,8 @@ const TicketsList = () => {
 	useEffect(() => {
 		const getTickets = async () => {
 			try {
-				const res = await CinemaAxios.get(`/tickets/projection/${id}`);
-				setTicketsList(res.data);
+				const res = await dataClient.getTicketList(id);
+				setTicketsList(res);
 				setLoading(false);
 			} catch (error) {
 				console.log(error);
@@ -33,27 +33,41 @@ const TicketsList = () => {
 		);
 	}
 
-	console.log('TICKET', ticketsList);
-
 	if (error) {
 		return <p>Oops! Something went wrong. Please try again later</p>;
 	}
 
 	return (
 		<div>
-			<h1>Sold tickets for projection</h1>
-			<ul>
-				{ticketsList.map((ticket) => (
-					<li key={ticket.id}>
-						{/* <p>Title: {ticket.ticketSellDate}</p> */}
-						<p>Date: {ticket.ticketSellDate}</p>
-						<p>Time: {ticket.ticketSellTime}</p>
-						<p>Username: {ticket.userName}</p>
-						{/* <p>Type: {ticket.type}</p> */}
-						{/* <p>Seat number: {ticket.seat}</p> */}
-					</li>
-				))}
-			</ul>
+			<div className='title-wrapper'>
+				<h1>Sold tickets for projection</h1>
+			</div>
+			<div className='page-wrapper'>
+				<table>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Username</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ticketsList.map((ticket) => (
+							<tr key={ticket.id}>
+								<td>
+									{ticket.ticketSellDate
+										.split('T')[0]
+										.split('-')
+										.reverse()
+										.join('-')}
+								</td>
+								<td>{ticket.ticketSellTime}</td>
+								<td>{ticket.userName}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 };

@@ -59,6 +59,7 @@ export const UserProvider = ({ children }) => {
 		role,
 		login,
 		logout,
+		loading,
 	};
 
 	if (loading) {

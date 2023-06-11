@@ -48,13 +48,14 @@ const Table = (props) => {
 									</div>
 									<div className={styles.actions}>
 										{item.freeSeats > 0 &&
-											props.role === 'ROLE_USER' && (
+											props.role !== 'ROLE_ADMIN' && (
 												<div className={styles['button-wrapper']}>
 													<Button
 														className={`orange`}
 														onClick={() => props.buy(item.id)}
 													>
-														<FaTicketAlt />
+														Buy ticket
+														{/* <FaTicketAlt /> */}
 													</Button>
 												</div>
 											)}

@@ -1,44 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Users.module.css';
 import Button from '../UI/Button';
 import { CircleLoader } from 'react-spinners';
 import { FaTrash } from 'react-icons/fa';
-import CinemaAxios from 'apis/CinemaAxios';
-import { toast } from 'react-toastify';
-import { userClient } from 'apis/CinemaClient';
+
+import { NavigateContext } from 'contexts/NavigateContext';
+import { DataContext } from 'contexts/MainContext';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { searchUsers } from 'utils/SearchHelper';
 
 const Users = () => {
-	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const { getUserUrl } = useContext(NavigateContext);
+	const { users, deleteUser, loading } = useContext(DataContext);
+	const [search, setSearch] = useState('');
 
-	const getUsers = async () => {
-		try {
-			const res = await CinemaAxios.get('/users');
-			setUsers(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-		}
-	};
-	useEffect(() => {
-		getUsers();
-	}, []);
+	const searchData = searchUsers(users, search);
 
-	const getUserUrl = (userId) => {
-		return `/account/${userId}`;
-	};
-
-	const deleteUser = async (userId) => {
-		try {
-			await userClient.delete(userId);
-			setUsers(users.filter((user) => user.id !== userId));
-		} catch (error) {
-			toast.error('Failed to delete user. Please try again.', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+	const handleSearch = (e) => {
+		setSearch(e.target.value);
 	};
 
 	if (loading) {
@@ -53,6 +34,14 @@ const Users = () => {
 		<div>
 			<div className='title-wrapper'>
 				<h1>Users</h1>
+				<div className='search'>
+					<Input
+						className='search-input'
+						placeholder='Search...'
+						prefix={<SearchOutlined />}
+						onChange={handleSearch}
+					/>
+				</div>
 			</div>
 			<div className='page-wrapper'>
 				<table className={styles['users-table']}>
@@ -65,7 +54,7 @@ const Users = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users.map((user) => {
+						{searchData.map((user) => {
 							return (
 								<tr key={user.id}>
 									<td>

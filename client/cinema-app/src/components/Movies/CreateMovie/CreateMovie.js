@@ -1,23 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { movieClient } from 'apis/CinemaClient';
-import MovieForm from './CreateForm/MovieForm';
+import MovieForm from '../MovieForm/MovieForm';
+import { useContext } from 'react';
+import { DataContext } from 'contexts/MainContext';
 
 const CreateMovie = () => {
 	const navigate = useNavigate();
+	const { setMovies } = useContext(DataContext);
 
 	const handleFormSubmit = async (formData) => {
-		try {
-			await movieClient.createMovie(formData);
-			toast.success('Movie was added successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			navigate('/movies');
-		} catch (error) {
-			toast.error('Failed to add the movie. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await movieClient.createMovie(formData);
+		setMovies((prevMovies) => [formData, ...prevMovies]);
+		navigate('/movies');
 	};
 
 	return (

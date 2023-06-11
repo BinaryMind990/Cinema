@@ -2,8 +2,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { UserProvider } from './contexts/UserContext';
 import Header from './components/Layout/Header/Header';
 import { AppRoutes } from './routes';
-import { DataProvider } from 'contexts/GetDataContext';
+
 import { NavigateProvider } from 'contexts/NavigateContext';
+import { DataProvider } from 'contexts/MainContext';
 
 function App() {
 	return (

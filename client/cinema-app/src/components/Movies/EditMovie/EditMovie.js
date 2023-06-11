@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './EditMovie.module.css';
-import { toast } from 'react-toastify';
 import { CircleLoader } from 'react-spinners';
-import MovieForm from '../CreateMovie/CreateForm/MovieForm';
+import MovieForm from '../MovieForm/MovieForm';
 import { dataClient, movieClient } from 'apis/CinemaClient';
 
 const EditMovie = () => {
@@ -27,17 +26,8 @@ const EditMovie = () => {
 	}, [id]);
 
 	const handleFormSubmit = async (formData) => {
-		try {
-			await movieClient.editMovie(id, formData);
-			toast.success(`Movie ${formData.name} was updated successfully!`, {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			navigate('/movies');
-		} catch (error) {
-			toast.error('Failed to update the movie. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await movieClient.editMovie(id, formData);
+		navigate(`/movies/${id}`);
 	};
 
 	if (loading) {

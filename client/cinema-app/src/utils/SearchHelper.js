@@ -1,7 +1,10 @@
 export const searchRepertoir = (projections, searchTerm, sortOrder) => {
 	const searchValue = searchTerm.toLowerCase();
-	const filteredProjections = projections.filter((projection) =>
-		projection.ticketPrice.toString().includes(searchValue)
+	const filteredProjections = projections.filter(
+		(projection) =>
+			projection.ticketPrice.toString().includes(searchValue) ||
+			projection.movieName.toLowerCase().includes(searchValue) ||
+			projection.typeName.toLowerCase().includes(searchValue)
 	);
 
 	filteredProjections.sort((a, b) => {
@@ -15,4 +18,15 @@ export const searchRepertoir = (projections, searchTerm, sortOrder) => {
 	});
 
 	return filteredProjections;
+};
+
+export const searchUsers = (users, searchTerm) => {
+	const searchValue = searchTerm.toLowerCase();
+	const filteredUsers = users.filter(
+		(user) =>
+			user?.username?.toLowerCase().includes(searchValue) ||
+			user?.userRole?.toLowerCase().includes(searchValue)
+	);
+
+	return filteredUsers;
 };

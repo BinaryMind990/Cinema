@@ -1,15 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
-import CinemaAxios from '../../../apis/CinemaAxios';
 import Button from '../../UI/Button';
-import { toast } from 'react-toastify';
-import { DataContext } from 'contexts/GetDataContext';
+import { DataContext } from 'contexts/MainContext';
+import { projectionClient } from 'apis/CinemaClient';
 
 const CreateProjection = () => {
-	const { movies } = useContext(DataContext);
-	const [types, setTypes] = useState([]);
-	const [halls, setHalls] = useState([]);
+	const { movies, types, halls, loading } = useContext(DataContext);
 	const [projectionData, setProjectionData] = useState({
 		movieId: '',
 		typeId: '',
@@ -17,48 +14,13 @@ const CreateProjection = () => {
 		dateTimeStr: '',
 		ticketPrice: '',
 	});
-	const [loading, setLoading] = useState(true);
+
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		getTypes();
-		getHalls();
-	}, []);
-
-	const getTypes = async () => {
-		try {
-			const res = await CinemaAxios.get(`/types`);
-			setTypes(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-		}
-	};
-
-	const getHalls = async () => {
-		try {
-			const res = await CinemaAxios.get(`/halls`);
-			setHalls(res.data);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-		}
-	};
 
 	const addProjectionSubmitHandle = async (e) => {
 		e.preventDefault();
-		try {
-			await CinemaAxios.post('/projections', projectionData);
-			toast.success('Projection was added successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			navigate('/projections');
-		} catch (error) {
-			toast.error('Failed to add projection. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			setLoading(false);
-		}
+		await projectionClient.createProjection(projectionData);
+		navigate('/projections');
 	};
 
 	if (loading) {

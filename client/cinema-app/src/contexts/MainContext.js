@@ -1,4 +1,4 @@
-import { dataClient, movieClient } from 'apis/CinemaClient';
+import { dataClient, movieClient, userClient } from 'apis/CinemaClient';
 import { createContext, useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -7,7 +7,18 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 	const [movies, setMovies] = useState([]);
+	const [types, setTypes] = useState([]);
+	const [halls, setHalls] = useState([]);
+	const [users, setUsers] = useState([]);
+
 	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		getMovies();
+		getTypes();
+		getHalls();
+		getUsers();
+	}, []);
 
 	const getMovies = async () => {
 		try {
@@ -18,10 +29,6 @@ export const DataProvider = ({ children }) => {
 			setLoading(false);
 		}
 	};
-
-	useEffect(() => {
-		getMovies();
-	}, []);
 
 	const deleteMovie = async (movieId) => {
 		try {
@@ -34,10 +41,50 @@ export const DataProvider = ({ children }) => {
 		}
 	};
 
+	const getTypes = async () => {
+		try {
+			const res = await dataClient.getTypes();
+			setTypes(res);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+		}
+	};
+
+	const getHalls = async () => {
+		try {
+			const res = await dataClient.getHalls();
+			setHalls(res);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+		}
+	};
+
+	const getUsers = async () => {
+		try {
+			const res = await userClient.get('/users');
+			setUsers(res);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			console.log(error);
+		}
+	};
+
+	const deleteUser = async (userId) => {
+		await userClient.delete(userId);
+		setUsers(users.filter((user) => user.id !== userId));
+	};
+
 	const contextValue = {
 		movies,
 		setMovies,
+		types,
+		halls,
+		users,
 		deleteMovie,
+		deleteUser,
 		loading,
 	};
 

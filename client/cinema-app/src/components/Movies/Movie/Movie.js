@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import styles from './Movie.module.css';
-import CinemaAxios from '../../../apis/CinemaAxios';
+import { dataClient } from 'apis/CinemaClient';
+import { FaImdb } from 'react-icons/fa';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});
@@ -13,8 +14,8 @@ const Movie = () => {
 	useEffect(() => {
 		const getMovie = async () => {
 			try {
-				const res = await CinemaAxios.get(`/movies/${id}`);
-				setMovie(res.data);
+				const res = await dataClient.getMoviesById(id);
+				setMovie(res);
 				setLoading(false);
 			} catch (error) {
 				setError(true);
@@ -51,7 +52,14 @@ const Movie = () => {
 				<p>Country: {movie.country}</p>
 				<p>Distributor: {movie.distributor}</p>
 				<p>Year: {movie.year}</p>
-				<div className={styles['movie-description']}></div>
+				<Link target='blank' to={movie.imdbLink}>
+					<FaImdb size={55} className={styles.icon} />
+				</Link>
+				<p>Year: {movie.year}</p>
+				<p>Director: {movie.director}</p>
+				<div className={styles['movie-description']}>
+					Description: {movie.description}
+				</div>
 			</div>
 		</div>
 	);

@@ -12,7 +12,7 @@ import ChangeRoleForm from './EditForms/ChangeRoleForm';
 import { userClient } from 'apis/CinemaClient';
 
 const EditUser = () => {
-	const { role } = useContext(UserContext);
+	const { user, role } = useContext(UserContext);
 	const [editUserData, setEditUserData] = useState({
 		userName: '',
 		name: '',
@@ -28,6 +28,8 @@ const EditUser = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 
+	const userId = user ? user.id : undefined;
+
 	useEffect(() => {
 		const getUserById = async (id) => {
 			try {
@@ -40,6 +42,12 @@ const EditUser = () => {
 		};
 		getUserById(id);
 	}, [id]);
+
+	useEffect(() => {
+		if (role !== 'ROLE_ADMIN' && Number(id) !== userId) {
+			navigate('/', { replace: true });
+		}
+	}, [role, userId, id, navigate]);
 
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;

@@ -116,7 +116,7 @@ const Report = () => {
 							</tbody>
 						</table>
 					) : (
-						<p>Nema dostupnih izvještaja.</p>
+						<p>There are no available reports.</p>
 					)}
 				</div>
 			</div>

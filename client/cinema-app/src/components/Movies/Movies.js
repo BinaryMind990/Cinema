@@ -9,7 +9,7 @@ import { NavigateContext } from 'contexts/NavigateContext';
 import { DataContext } from 'contexts/MainContext';
 
 const Movies = () => {
-	const { role, loading } = useContext(UserContext);
+	const { loading } = useContext(UserContext);
 	const { movies, deleteMovie } = useContext(DataContext);
 	const { getMovieUrl, goToAddHandler, goToEditHandler } =
 		useContext(NavigateContext);
@@ -45,27 +45,24 @@ const Movies = () => {
 									>
 										{movie.name}
 									</Link>
-
-									{role === 'ROLE_ADMIN' && (
-										<div className={styles.actions}>
-											<div className={styles.buttonWrapper}>
-												<Button
-													className='orange'
-													onClick={() => goToEditHandler(movie.id)}
-												>
-													Edit
-												</Button>
-											</div>
-											<div className={styles.buttonWrapper}>
-												<Button
-													className='red'
-													onClick={() => deleteMovie(movie.id)}
-												>
-													<FaTrash className={styles.trashIcon} />
-												</Button>
-											</div>
+									<div className={styles.actions}>
+										<div className={styles.buttonWrapper}>
+											<Button
+												className='orange'
+												onClick={() => goToEditHandler(movie.id)}
+											>
+												Edit
+											</Button>
 										</div>
-									)}
+										<div className={styles.buttonWrapper}>
+											<Button
+												className='red'
+												onClick={() => deleteMovie(movie.id)}
+											>
+												<FaTrash className={styles.trashIcon} />
+											</Button>
+										</div>
+									</div>
 								</td>
 							</tr>
 						))}

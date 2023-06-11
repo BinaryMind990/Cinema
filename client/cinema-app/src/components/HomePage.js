@@ -7,7 +7,7 @@ const HomePage = () => {
 	return (
 		<div>
 			<div className='title-wrapper'>
-				<h1>Welcome to Cinema Sutjeska</h1>
+				<h1>Welcome to Cinema El Capitan</h1>
 			</div>
 			{!user && (
 				<div className='page-wrapper'>

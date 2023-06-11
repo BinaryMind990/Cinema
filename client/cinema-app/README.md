@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+<h1>Cinema App</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h2>Description</h2>
 
-## Available Scripts
+<p>
+	The Cinema App is a web application developed as part of the "Cinema"
+	project. It allows users to browse and reserve movie screenings in a cinema.
+</p>
 
-In the project directory, you can run:
+<h2>Demo</h2>
 
-### `npm start`
+<p>
+  You can check out the demo of the application <a href="https://formula1-championship.netlify.app/" target='_blank'>here</a>.
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<h2>Features</h2>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<ul>
+	<li>Browsing a list of movies, screening types, and halls</li>
+	<li>
+		Viewing details of screenings, including time, hall, and available tickets
+	</li>
+	<li>Reserving tickets for desired screenings</li>
+	<li>Adding new screenings to the system</li>
+	<li>User registration and authentication</li>
+	<li>Simulating the ticket purchasing process</li>
+	<li>
+		Admin functionalities:
+		<ul>
+			<li>Managing movies, screenings, and users</li>
+			<li>Viewing sales reports</li>
+			<li>Searching and filtering data</li>
+		</ul>
+	</li>
+</ul>
 
-### `npm test`
+<h2>Technologies</h2>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p>The application is developed using the following technologies:</p>
 
-### `npm run build`
+<ul>
+  <li>React.js for building the user interface.</li>
+  <li>React Router for managing application routes.</li>
+  <li>Axios for communicating with the API.</li>
+  <li>CSS for styling and appearance of the application.</li>
+  <li>Git for version control and managing code changes.</li>
+  <li>Netlify for hosting the code and deployment.</li>
+	<li>Backend: </li>
+  <li>Java(SpringBoot)</li>
+	<li>Maven</li>
+	<li>Hibernate</li>
+	<li>Database: MySQL</li>
+</ul>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<h2>Installation and Setup</h2>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<ol>
+	<li>Clone the GitHub repository to your local machine:</li>
+</ol>
+<pre><code>git clone https://github.com/BinaryMind990/Cinema.git</code></pre>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<ol start="2">
+	<li>Set up the MySQL database and run the necessary scripts.</li>
+	<li>
+		Start the backend server:
+		<ol>
+			<li>Navigate to the <code>server/cinema-app/src/java/com/cinema</code> directory.</li>
+			<li>Run the <code>CinemaApplication.java</code> file.</li>
+		</ol>
+	</li>
+	<li>
+		Start the frontend application:
+		<ol>
+			<li>Navigate to the <code>client/cinema-app</code> directory.</li>
+			<li>Install the dependencies:</li>
+		</ol>
+		<pre><code>npm install</code></pre>
+		<ol start="3">
+			<li>Start the React development server:</li>
+		</ol>
+		<pre><code>npm start</code></pre>
+	</li>
+	<li>
+		The application will be accessible at
+		<a href="http://localhost:3000" target="_blank">http://localhost:3000</a>.
+	</li>
+</ol>
 
-### `npm run eject`
+<h2>Author</h2>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<p>
+  Stefan Jevtovic - <a href="https://github.com/BinaryMind990">@BinaryMind990</a>
+</p>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<h2>License</h2>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p>
+	This application is licensed under the MIT License. For more details, see the
+	<a href="LICENSE">LICENSE</a> file.
+</p>

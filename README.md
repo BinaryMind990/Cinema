@@ -1,12 +1,20 @@
 <h1>Cinema App</h1>
 
 <h2>Description</h2>
+
 <p>
 	The Cinema App is a web application developed as part of the "Cinema"
 	project. It allows users to browse and reserve movie screenings in a cinema.
 </p>
 
+<h2>Demo</h2>
+
+<p>
+  You can check out the demo of the application <a href="https://formula1-championship.netlify.app/" target='_blank'>here</a>.
+</p>
+
 <h2>Features</h2>
+
 <ul>
 	<li>Browsing a list of movies, screening types, and halls</li>
 	<li>
@@ -27,14 +35,25 @@
 </ul>
 
 <h2>Technologies</h2>
+
 <p>The application is developed using the following technologies:</p>
+
 <ul>
-	<li>Frontend: React.js</li>
-	<li>Backend: Java(SpringBoot)</li>
+  <li>React.js for building the user interface.</li>
+  <li>React Router for managing application routes.</li>
+  <li>Axios for communicating with the API.</li>
+  <li>CSS for styling and appearance of the application.</li>
+  <li>Git for version control and managing code changes.</li>
+  <li>Netlify for hosting the code and deployment.</li>
+	<li>Backend: </li>
+  <li>Java(SpringBoot)</li>
+	<li>Maven</li>
+	<li>Hibernate</li>
 	<li>Database: MySQL</li>
 </ul>
 
 <h2>Installation and Setup</h2>
+
 <ol>
 	<li>Clone the GitHub repository to your local machine:</li>
 </ol>
@@ -67,13 +86,14 @@
 	</li>
 </ol>
 
-<h2>Contributing</h2>
+<h2>Author</h2>
+
 <p>
-	If you would like to contribute to the development of this application, feel
-	free to open an issue or submit a pull request on the GitHub repository.
+  Stefan Jevtovic - <a href="https://github.com/BinaryMind990">@BinaryMind990</a>
 </p>
 
 <h2>License</h2>
+
 <p>
 	This application is licensed under the MIT License. For more details, see the
 	<a href="LICENSE">LICENSE</a> file.

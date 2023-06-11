@@ -1,13 +1,14 @@
-.user-info p {
-    margin: 10px 0;
+.user-info {
+    padding: 20px;
+    background-color: rgba(5, 29, 49, 0.7);
+    border-radius: 5px;
+}
+
+.user-info-label {
     font-weight: bold;
+    margin-right: 10px;
 }
 
-.user-info span {
-    margin-left: 10px;
-}
-
-.separator {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
+.button-wrapper {
+    margin-top: 20px;
 }

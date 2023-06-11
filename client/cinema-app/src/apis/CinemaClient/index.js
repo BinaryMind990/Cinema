@@ -20,7 +20,6 @@ export const userClient = {
 		}
 	},
 	getById: async (id) => {
-		await CinemaAxios.get(`/users/${id}`);
 		try {
 			const response = await CinemaAxios.get(`/users/${id}`);
 			return response.data;
@@ -58,6 +57,37 @@ export const dataClient = {
 		try {
 			const response = await CinemaAxios.get('/movies');
 			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	getMoviesById: async (id) => {
+		try {
+			const response = await CinemaAxios.get(`/movies/${id}`);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+};
+
+export const movieClient = {
+	createMovie: async (formData) => {
+		try {
+			await CinemaAxios.post('/movies', formData);
+			toast.success(`${formData.name} was added successfully!`, {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		} catch (error) {
+			throw error;
+		}
+	},
+	editMovie: async (id, formData) => {
+		try {
+			await CinemaAxios.put(`/movies/${id}`, formData);
+			toast.success('Movie was edited successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
 		} catch (error) {
 			throw error;
 		}

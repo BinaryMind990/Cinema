@@ -1,4 +1,4 @@
-import { dataClient } from 'apis/CinemaClient';
+import { dataClient, movieClient } from 'apis/CinemaClient';
 import { createContext, useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ export const DataProvider = ({ children }) => {
 
 	const deleteMovie = async (movieId) => {
 		try {
-			await dataClient.deleteMovie(movieId);
+			await movieClient.deleteMovie(movieId);
 			setMovies(movies.filter((movie) => movie.id !== movieId));
 		} catch (error) {
 			toast.error('Failed to delete the movie. Please try again!', {
@@ -36,6 +36,7 @@ export const DataProvider = ({ children }) => {
 
 	const contextValue = {
 		movies,
+		setMovies,
 		deleteMovie,
 		loading,
 	};

@@ -2,11 +2,12 @@ import Button from 'components/UI/Button';
 
 const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 	return (
-		<form onSubmit={handleSubmit}>
+		<form className='form' onSubmit={handleSubmit}>
 			<div>
 				<label>Role</label>
 				<label>
 					<input
+						className='radio-button'
 						type='radio'
 						name='role'
 						value='USER'
@@ -17,6 +18,7 @@ const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 				</label>
 				<label>
 					<input
+						className='radio-button'
 						type='radio'
 						name='role'
 						value='ADMIN'
@@ -27,7 +29,7 @@ const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 				</label>
 			</div>
 			<Button className={`blue`} type='submit'>
-				Change Role
+				Change role
 			</Button>
 		</form>
 	);

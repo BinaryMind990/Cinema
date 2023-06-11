@@ -102,24 +102,28 @@ const EditUser = () => {
 
 	return (
 		<div className={styles['edit-user-container']}>
-			<h1>Edit user</h1>
-			<EditUserForm
-				editUserData={editUserData}
-				handleFormChange={handleFormChange}
-				handleSubmit={handleSubmit}
-			/>
-			<ChangePasswordForm
-				editUserData={editUserData}
-				handleFormChange={handleFormChange}
-				handleSubmit={handlePasswordChange}
-			/>
-			{role === 'ROLE_ADMIN' && (
-				<ChangeRoleForm
+			<div className='title-wrapper'>
+				<h1>Edit user</h1>
+			</div>
+			<div className='page-wrapper'>
+				<EditUserForm
 					editUserData={editUserData}
 					handleFormChange={handleFormChange}
-					handleSubmit={handleRoleChange}
+					handleSubmit={handleSubmit}
 				/>
-			)}
+				<ChangePasswordForm
+					editUserData={editUserData}
+					handleFormChange={handleFormChange}
+					handleSubmit={handlePasswordChange}
+				/>
+				{role === 'ROLE_ADMIN' && (
+					<ChangeRoleForm
+						editUserData={editUserData}
+						handleFormChange={handleFormChange}
+						handleSubmit={handleRoleChange}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };

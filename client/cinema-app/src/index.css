@@ -38,6 +38,10 @@ p {
   margin-bottom: 5px;
 }
 
+.credits {
+  display: none;
+}
+
 .loader-container {
   height: 100vh;
   display: flex;
@@ -52,7 +56,11 @@ p {
 
 .link:hover,
 .link.active {
-  color: #0069d9;
+  color: #fab702;
+}
+
+.yellow-text {
+  color: #fab702;
 }
 
 .title-wrapper {
@@ -71,14 +79,14 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
-  margin-top: 10px;
 }
 
 th {
   font-weight: bold;
   text-align: left;
   padding: 10px;
-  border-bottom: 2px solid #e6e6e6;
+  border-bottom: 2px solid #fab702;
+  color: #fab702;
 }
 
 tr {
@@ -96,11 +104,44 @@ input[type='radio'] {
   height: 10px;
 }
 
-svg {
-  height: 16px;
+.form {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(5, 29, 49, 0.7);
+  border-radius: 5px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form select,
+.form textarea,
+.form input:not(.radio-button) {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
 }
 
 select:focus-visible,
 input:focus-visible {
   outline: none;
+}
+
+.form-button {
+  margin-top: 20px;
+}
+
+.form+.form {
+  margin-top: 20px;
+}
+
+.form .not-editable-value {
+  margin-bottom: 20px;
 }

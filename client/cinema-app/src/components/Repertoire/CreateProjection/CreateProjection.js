@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import CinemaAxios from '../../../apis/CinemaAxios';
 import Button from '../../UI/Button';
-import styles from './CreateProjection.module.css';
 import { toast } from 'react-toastify';
 import { DataContext } from 'contexts/GetDataContext';
 
@@ -76,10 +75,7 @@ const CreateProjection = () => {
 				<h1>Create Projection</h1>
 			</div>
 			<div className='page-wrapper'>
-				<form
-					className={styles['create-projection-form']}
-					onSubmit={addProjectionSubmitHandle}
-				>
+				<form className={'form'} onSubmit={addProjectionSubmitHandle}>
 					<label htmlFor='movieName'>Movie</label>
 					<select
 						name='movieName'
@@ -169,7 +165,7 @@ const CreateProjection = () => {
 						}
 					/>
 					<Button type='submit' className='blue full-width'>
-						Save Projection
+						Save projection
 					</Button>
 				</form>
 			</div>

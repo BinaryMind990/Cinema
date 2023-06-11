@@ -1,60 +1,22 @@
-import { useContext, useState } from 'react';
-import Button from '../UI/Button';
+import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import styles from './Login.module.css';
-import { useNavigate } from 'react-router-dom';
+import { NavigateContext } from 'contexts/NavigateContext';
+import LoginForm from './LoginForm/LoginForm';
 
 const Login = () => {
 	const { login } = useContext(UserContext);
+	const { toRegisterPage } = useContext(NavigateContext);
 
-	const [userName, setUserName] = useState('');
-	const [password, setPassword] = useState('');
-
-	const navigate = useNavigate();
-
-	const handleSubmitLogin = (e) => {
-		e.preventDefault();
+	const handleLogin = (userName, password) => {
 		login(userName, password);
 	};
 
-	const goToRegisterPage = () => {
-		navigate('/account/registration');
-	};
-
-	<a href='https://pngtree.com/free-backgrounds'>
-		free background photos from pngtree.com/
-	</a>;
-
 	return (
-		<div className={styles['login-form']}>
-			<form onSubmit={handleSubmitLogin}>
-				<label htmlFor='username'>Username</label>
-				<input
-					type='text'
-					name='username'
-					id='username'
-					value={userName}
-					onChange={(e) => setUserName(e.target.value)}
-				/>
-				<label htmlFor='password'>Password</label>
-				<input
-					type='password'
-					name='password'
-					id='password'
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<Button type='submit' className={`button blue full-width`}>
-					Log in
-				</Button>
-				<p className={styles.divider}>or</p>
-				<Button
-					className={`button yellow full-width`}
-					onClick={goToRegisterPage}
-				>
-					Register
-				</Button>
-			</form>
+		<div>
+			<LoginForm
+				handleLogin={handleLogin}
+				goToRegisterPage={toRegisterPage}
+			/>
 		</div>
 	);
 };

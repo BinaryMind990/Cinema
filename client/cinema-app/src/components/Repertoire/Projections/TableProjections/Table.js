@@ -29,7 +29,7 @@ const Table = (props) => {
 								<td className={styles.cell}>
 									<div className={styles['movie-info']}>
 										<div className={styles['movie-poster']}>
-											<img src={movie.posterLink} alt='' />
+											<img src={movie?.posterLink} alt='' />
 										</div>
 										<div className={styles['movie-details']}>
 											<h2>

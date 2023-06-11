@@ -2,9 +2,11 @@ import Button from 'components/UI/Button';
 
 const EditUserForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 	return (
-		<form onSubmit={handleSubmit}>
+		<form className='form' onSubmit={handleSubmit}>
 			<label htmlFor='username'>Username</label>
-			<p>{editUserData.userName}</p>
+			<p className='not-editable-value yellow-text'>
+				{editUserData.userName}
+			</p>
 			<label htmlFor='name'>Name</label>
 			<input
 				type='text'
@@ -30,7 +32,7 @@ const EditUserForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 				onChange={handleFormChange}
 			/>
 			<Button className={`blue`} type='submit'>
-				Save Changes
+				Save changes
 			</Button>
 		</form>
 	);

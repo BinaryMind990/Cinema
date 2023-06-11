@@ -1,6 +1,5 @@
 package com.cinema.web.controller;
 
-import com.cinema.enumeration.UserRole;
 import com.cinema.model.Projection;
 import com.cinema.model.Ticket;
 import com.cinema.model.Users;
@@ -12,12 +11,10 @@ import com.cinema.support.TicketToTicketDtoForDispay;
 import com.cinema.web.dto.TicketDTO;
 import com.cinema.web.dto.TicketDTOCreate;
 import com.cinema.web.dto.TicketDtoForDisplay;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
@@ -53,16 +50,17 @@ public class TicketController {
 	@Autowired
 	private UserService userService;
 
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(value = "/projection/{id}") //metoda vraca prodate karte za odabranu projekciju koje moze da vidi samo admin
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/projection/{id}") // metoda vraca prodate karte za odabranu projekciju koje moze da vidi samo
+																					// admin
 	public ResponseEntity<List<TicketDtoForDisplay>> getByProjection(@PathVariable Long id) {
 		Projection projection = projectionService.findOne(id);
-		if(projection == null) {
+		if (projection == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		List<Ticket> tickets = projection.getTickets();
 
-		//    List<Ticket> tickets = ticketService.findAll();
+		// List<Ticket> tickets = ticketService.findAll();
 		return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
 	}
 
@@ -74,57 +72,59 @@ public class TicketController {
 
 		Ticket ticket = ticketService.findOne(id);
 
-		if(ticket == null) {
+		if (ticket == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        //metoda ogranicava da korisnik moze da vidi samo svoje karte
-        if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(ticket.getUser().getUserName())) { 	
-        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }  
-        return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
+		}
+		// metoda ogranicava da korisnik moze da vidi samo svoje karte
+		if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(ticket.getUser().getUserName())) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
 
-    }
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping(value = "/user/{id}")   //ova metoda vraca karte za korisnika
-    public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id){
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	String userName = auth.getName();
+	}
 
-    	Optional<Users> user = userService.findOne(id);
-    	if(!user.isPresent()) {
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	}
-    	//metoda ogranicava da korisnik moze da vidi samo svoje karte
-    	if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) { 	
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	} 
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@GetMapping(value = "/user/{id}") // ova metoda vraca karte za korisnika
+	public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
 
-    	List<Ticket> tickets = user.get().getTickets();
-    	return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);	
-    }
+		Optional<Users> user = userService.findOne(id);
+		if (!user.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		// metoda ogranicava da korisnik moze da vidi samo svoje karte
+		if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
-    // @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TicketDTO> create(@Valid @RequestBody TicketDTOCreate dto) {
+		List<Ticket> tickets = user.get().getTickets();
+		return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);
+	}
 
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	String userName = auth.getName();
+	// @PreAuthorize("hasRole('ROLE_USER')")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TicketDTO> create(@Valid @RequestBody TicketDTOCreate dto) {
 
-    	Ticket savedTicket = ticketService.save(dto, userName);
-    	if (savedTicket == null)
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
 
-    	return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.CREATED);
-    }
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+		Ticket savedTicket = ticketService.save(dto, userName);
+		if (savedTicket == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-    	Ticket deletedTicket = ticketService.delete(id);
-    	if (deletedTicket == null)
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.CREATED);
+	}
 
-    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+		Ticket deletedTicket = ticketService.delete(id);
+		if (deletedTicket == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 
 }

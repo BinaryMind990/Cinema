@@ -6,7 +6,7 @@ const ChangePasswordForm = ({
 	handleSubmit,
 }) => {
 	return (
-		<form onSubmit={handleSubmit}>
+		<form className='form' onSubmit={handleSubmit}>
 			<label htmlFor='oldPassword'>Old password</label>
 			<input
 				type='password'
@@ -32,7 +32,7 @@ const ChangePasswordForm = ({
 				onChange={handleFormChange}
 			/>
 			<Button className={`blue`} type='submit'>
-				Change Password
+				Change password
 			</Button>
 		</form>
 	);

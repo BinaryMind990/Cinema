@@ -23,15 +23,10 @@
     margin-right: 5px;
 }
 
-.cell {
-    display: flex;
-    justify-content: space-between;
-}
-
 .sort-radio-wrapper {
     display: flex;
-    margin-top: 20px;
     justify-content: flex-end;
+    margin-top: 30px;
 }
 
 .sort-radio {
@@ -43,12 +38,12 @@
 
 .sort-radio span,
 .sort-radio label {
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
 }
 
 .addButton {
     display: flex;
     justify-content: flex-end;
-    margin-top: 15px;
+    margin-top: 20px;
 }

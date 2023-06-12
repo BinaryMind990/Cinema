@@ -10,7 +10,6 @@ const CreateMovie = () => {
 
 	const handleFormSubmit = async (formData) => {
 		await movieClient.createMovie(formData);
-
 		setMovies((prevMovies) => [formData, ...prevMovies]);
 		navigate('/movies');
 	};

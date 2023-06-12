@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Button from '../../UI/Button/Button';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { userClient } from 'apis/CinemaClient';
 
@@ -17,15 +16,8 @@ const RegisterUser = () => {
 
 	const registrationSubmitHandle = async (e) => {
 		e.preventDefault();
-
-		try {
-			userClient.register(userRegData);
-			navigate('/');
-		} catch (error) {
-			toast.error('Failed to register user. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		userClient.register(userRegData);
+		navigate('/');
 	};
 
 	return (

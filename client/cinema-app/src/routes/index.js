@@ -48,7 +48,7 @@ export const AppRoutes = () => {
 				</>
 			) : (
 				<>
-					<Route path='/movies/*' element={<Navigate to='/' replace />} />
+					<Route path='/movies' element={<Navigate to='/' replace />} />
 					<Route
 						path='/movies/add'
 						element={<Navigate to='/' replace />}
@@ -57,7 +57,7 @@ export const AppRoutes = () => {
 						path='/movies/edit/:id'
 						element={<Navigate to='/' replace />}
 					/>
-					<Route path='/users/*' element={<Navigate to='/' replace />} />
+					<Route path='/users' element={<Navigate to='/' replace />} />
 					<Route
 						path='/projections/add'
 						element={<Navigate to='/' replace />}
@@ -66,7 +66,7 @@ export const AppRoutes = () => {
 						path='/tickets/projection/:id'
 						element={<Navigate to='/' replace />}
 					/>
-					<Route path='/reports/*' element={<Navigate to='/' replace />} />
+					<Route path='/reports' element={<Navigate to='/' replace />} />
 				</>
 			)}
 		</Routes>

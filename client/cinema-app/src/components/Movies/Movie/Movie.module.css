@@ -2,9 +2,6 @@
     display: flex;
     padding: 10px;
     background-color: rgba(5, 30, 51, 0.7);
-    /* flex-direction: row;
-    justify-content: center;
-    align-items: center; */
 }
 
 .movie-image {
@@ -16,16 +13,7 @@
 .movie-details {
     width: 60%;
     margin-left: 40px;
-    /* display: flex;
-    flex-direction: column;
-    text-align: center; */
 }
-
-/* .movie-info {
-    display: block;
-    width: 400px;
-    margin: 0 auto;
-} */
 
 .movie-description {
     margin-top: 20px;

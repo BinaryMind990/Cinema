@@ -2,8 +2,6 @@ import { useParams } from 'react-router-dom';
 import styles from './EditUser.module.css';
 import { SyncLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import CinemaAxios from 'apis/CinemaAxios';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
 import EditUserForm from './EditForms/EditUserForm';
@@ -59,30 +57,16 @@ const EditUser = () => {
 
 	const handleRoleChange = async (e) => {
 		e.preventDefault();
-		try {
-			await CinemaAxios.put(`/users/changeRole/${id}/${editUserData.role}`);
-			toast.success('User role changed successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to change user role. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+
+		await userClient.editRole(id, editUserData);
 	};
 
 	const handlePasswordChange = async (e) => {
 		e.preventDefault();
-		try {
-			await CinemaAxios.put(`/users/changePassword/${id}`, editUserData);
-			toast.success('User password changed successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to change user password. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await userClient.editPassword(
+			`/users/changePassword/${id}`,
+			editUserData
+		);
 	};
 
 	const handleSubmit = async (e) => {

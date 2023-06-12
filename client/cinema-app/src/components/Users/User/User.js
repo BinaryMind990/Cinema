@@ -103,7 +103,7 @@ const User = () => {
 													return null;
 												const displayValue =
 													key === 'hall'
-														? value.split(' ')[0]
+														? value.split(' ')[1]
 														: key === 'movieName'
 														? value
 														: key === 'price'

@@ -18,7 +18,7 @@ const Navigation = () => {
 				key={userUrl}
 				url={userUrl}
 				title={title}
-				styleName={'link'}
+				styleName={'link menu-link'}
 			/>
 		);
 	};
@@ -26,21 +26,35 @@ const Navigation = () => {
 	const publicLinks = navLinks.filter((route) => route.public);
 
 	const guestRoutes = guestLinks.map(({ to, title }) => (
-		<NavItem key={to} url={to} title={title} styleName={'link'} />
+		<NavItem key={to} url={to} title={title} styleName={'link menu-link'} />
 	));
 
 	const userRoutes = publicLinks.map(({ to, title }) => {
 		if (to === '/account/:id') {
 			return generateUserNavItem(to, title, userId);
 		}
-		return <NavItem key={to} url={to} title={title} styleName={'link'} />;
+		return (
+			<NavItem
+				key={to}
+				url={to}
+				title={title}
+				styleName={'link menu-link'}
+			/>
+		);
 	});
 
 	const adminRoutes = navLinks.map(({ to, title }) => {
 		if (to === '/account/:id') {
 			return generateUserNavItem(to, title, userId);
 		}
-		return <NavItem key={to} url={to} title={title} styleName={'link'} />;
+		return (
+			<NavItem
+				key={to}
+				url={to}
+				title={title}
+				styleName={'link menu-link'}
+			/>
+		);
 	});
 
 	return (

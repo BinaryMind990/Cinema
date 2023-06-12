@@ -57,7 +57,7 @@ const Projections = () => {
 					});
 
 				setProjections(sortedProjections);
-				setLoading(true);
+				setLoading(false);
 			} catch (error) {
 				setLoading(false);
 			}

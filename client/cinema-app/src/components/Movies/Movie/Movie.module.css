@@ -1,18 +1,11 @@
 .movie-container {
-    display: flex;
     padding: 10px;
     background-color: rgba(5, 30, 51, 0.7);
 }
 
 .movie-image {
-    width: 40%;
-    max-width: 300px;
+    max-width: 150px;
     height: auto;
-}
-
-.movie-details {
-    width: 60%;
-    margin-left: 40px;
 }
 
 .movie-description {
@@ -26,4 +19,20 @@
 
 .icon {
     color: #fab702;
+}
+
+@media screen and (min-width: 768px) {
+    .movie-container {
+        display: flex;
+    }
+
+    .movie-image {
+        width: 40%;
+        max-width: 300px;
+    }
+
+    .movie-details {
+        width: 60%;
+        margin-left: 40px;
+    }
 }

@@ -1,6 +1,5 @@
 import Button from '../../../UI/Button/Button';
 import { Link } from 'react-router-dom';
-import { FaTicketAlt } from 'react-icons/fa';
 import styles from './Table.module.css';
 import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
 
@@ -67,7 +66,7 @@ const Table = (props) => {
 											<div className={styles['button-sets']}>
 												<div className={styles['button-wrapper']}>
 													<ConfirmationModal
-														title='Delete movie'
+														title='Delete projection'
 														message={`Are you sure you want to delete the projection for movie ${movie.name}?`}
 														onConfirm={() =>
 															props.delete(item.id)
@@ -82,7 +81,7 @@ const Table = (props) => {
 															props.ticketLists(item.id)
 														}
 													>
-														<FaTicketAlt />
+														Ticket lists
 													</Button>
 												</div>
 											</div>

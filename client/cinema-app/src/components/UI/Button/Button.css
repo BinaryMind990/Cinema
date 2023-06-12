@@ -3,11 +3,11 @@
     justify-content: center;
     font: inherit;
     color: #fff;
-    padding: 0.5rem 1rem;
+    font-size: 14px;
+    padding: 0.2rem 0.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    line-height: 1;
 }
 
 .full-width {
@@ -59,4 +59,12 @@
 .yellow:hover,
 .yellow:active {
     background-color: #ddaa1f;
+}
+
+@media screen and (min-width: 768px) {
+    .button {
+        padding: 0.5rem 1rem;
+        font-size: 16px;
+        line-height: 1;
+    }
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { SyncLoader } from 'react-spinners';
 import styles from './Movie.module.css';
 import { dataClient } from 'apis/CinemaClient';
 import { FaImdb } from 'react-icons/fa';
+import Loader from 'components/UI/Loader/Loader';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});
@@ -28,7 +28,7 @@ const Movie = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

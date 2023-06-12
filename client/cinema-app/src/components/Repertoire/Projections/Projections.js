@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { SyncLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
@@ -13,6 +12,7 @@ import { searchRepertoir } from 'utils/SearchHelper';
 import { DataContext } from 'contexts/MainContext';
 import { projectionClient } from 'apis/CinemaClient';
 import { NavigateContext } from 'contexts/NavigateContext';
+import Loader from 'components/UI/Loader/Loader';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);
@@ -57,7 +57,7 @@ const Projections = () => {
 					});
 
 				setProjections(sortedProjections);
-				setLoading(false);
+				setLoading(true);
 			} catch (error) {
 				setLoading(false);
 			}
@@ -120,7 +120,7 @@ const Projections = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

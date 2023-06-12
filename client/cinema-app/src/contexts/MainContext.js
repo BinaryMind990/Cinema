@@ -1,6 +1,6 @@
 import { dataClient } from 'apis/CinemaClient';
+import Loader from 'components/UI/Loader/Loader';
 import { createContext, useEffect, useState } from 'react';
-import { SyncLoader } from 'react-spinners';
 
 export const DataContext = createContext();
 
@@ -58,7 +58,7 @@ export const DataProvider = ({ children }) => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

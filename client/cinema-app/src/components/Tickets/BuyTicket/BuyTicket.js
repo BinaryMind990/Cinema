@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Button from '../../UI/Button/Button';
 import './BuyTicket.css';
-import { SyncLoader } from 'react-spinners';
 import { dataClient, ticketClient } from 'apis/CinemaClient';
+import Loader from 'components/UI/Loader/Loader';
 
 const BuyTicket = () => {
 	const [projections, setProjection] = useState({});
@@ -41,7 +41,7 @@ const BuyTicket = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

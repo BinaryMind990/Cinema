@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import styles from './EditUser.module.css';
-import { SyncLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
@@ -8,6 +7,7 @@ import EditUserForm from './EditForms/EditUserForm';
 import ChangePasswordForm from './EditForms/ChangePasswordForm';
 import ChangeRoleForm from './EditForms/ChangeRoleForm';
 import { userClient } from 'apis/CinemaClient';
+import Loader from 'components/UI/Loader/Loader';
 
 const EditUser = () => {
 	const { user, role } = useContext(UserContext);
@@ -77,7 +77,7 @@ const EditUser = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

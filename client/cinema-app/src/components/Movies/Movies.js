@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import Button from '../UI/Button/Button';
-import { SyncLoader } from 'react-spinners';
 import styles from './Movies.module.css';
 import { Link } from 'react-router-dom';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { dataClient, movieClient } from 'apis/CinemaClient';
 import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
+import Loader from 'components/UI/Loader/Loader';
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
@@ -34,7 +34,7 @@ const Movies = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

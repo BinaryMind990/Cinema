@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './User.module.css';
-import { SyncLoader } from 'react-spinners';
 import { userClient } from 'apis/CinemaClient';
 import { mapKeyToDisplay } from 'utils/MapKeyHelper';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { UserContext } from 'contexts/UserContext';
 import Button from 'components/UI/Button/Button';
+import Loader from 'components/UI/Loader/Loader';
 
 const User = () => {
 	const { user, role } = useContext(UserContext);
@@ -42,7 +42,7 @@ const User = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

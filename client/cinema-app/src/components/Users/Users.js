@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Users.module.css';
-import { SyncLoader } from 'react-spinners';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
@@ -9,6 +8,7 @@ import { searchUsers } from 'utils/SearchHelper';
 import { userClient } from 'apis/CinemaClient';
 import { UserContext } from 'contexts/UserContext';
 import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
+import Loader from 'components/UI/Loader/Loader';
 
 const Users = () => {
 	const { user, role } = useContext(UserContext);
@@ -47,7 +47,7 @@ const Users = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SyncLoader } from 'react-spinners';
 import Button from '../../UI/Button/Button';
 import { DataContext } from 'contexts/MainContext';
 import { projectionClient } from 'apis/CinemaClient';
+import Loader from 'components/UI/Loader/Loader';
 
 const CreateProjection = () => {
 	const { movies, types, halls, loading } = useContext(DataContext);
@@ -26,7 +26,7 @@ const CreateProjection = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

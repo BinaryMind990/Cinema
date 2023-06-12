@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { SyncLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import { dataClient } from 'apis/CinemaClient';
 import styles from './TicketsList.module.css';
+import Loader from 'components/UI/Loader/Loader';
 
 const TicketsList = () => {
 	const [ticketsList, setTicketsList] = useState([]);
@@ -29,7 +29,7 @@ const TicketsList = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

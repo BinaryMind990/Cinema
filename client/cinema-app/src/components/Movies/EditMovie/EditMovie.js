@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SyncLoader } from 'react-spinners';
 import MovieForm from '../MovieForm/MovieForm';
 import { dataClient, movieClient } from 'apis/CinemaClient';
+import Loader from 'components/UI/Loader/Loader';
 
 const EditMovie = () => {
 	const [editMovieData, setEditMovieData] = useState({});
@@ -32,7 +32,7 @@ const EditMovie = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<SyncLoader size={75} />
+				<Loader />
 			</div>
 		);
 	}

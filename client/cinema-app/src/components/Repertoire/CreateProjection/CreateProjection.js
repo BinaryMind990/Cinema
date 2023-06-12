@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CircleLoader } from 'react-spinners';
-import Button from '../../UI/Button';
+import { SyncLoader } from 'react-spinners';
+import Button from '../../UI/Button/Button';
 import { DataContext } from 'contexts/MainContext';
 import { projectionClient } from 'apis/CinemaClient';
 
@@ -26,7 +26,7 @@ const CreateProjection = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

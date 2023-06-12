@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import styles from './EditUser.module.css';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CinemaAxios from 'apis/CinemaAxios';
@@ -93,7 +93,7 @@ const EditUser = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

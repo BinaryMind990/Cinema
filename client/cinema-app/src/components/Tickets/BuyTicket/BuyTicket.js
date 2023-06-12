@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import Button from '../../UI/Button';
+import Button from '../../UI/Button/Button';
 import './BuyTicket.css';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import { dataClient, ticketClient } from 'apis/CinemaClient';
 
 const BuyTicket = () => {
@@ -41,7 +41,7 @@ const BuyTicket = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

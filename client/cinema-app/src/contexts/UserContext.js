@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { userClient } from 'apis/CinemaClient';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 
 export const UserContext = createContext();
 
@@ -66,7 +66,7 @@ export const UserProvider = ({ children }) => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Button from 'components/UI/Button';
+import Button from 'components/UI/Button/Button';
 
 const MovieForm = ({ initialData, onSubmit }) => {
 	const [movieData, setMovieData] = useState({

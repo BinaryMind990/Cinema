@@ -151,3 +151,16 @@ input:focus-visible {
 .form .not-editable-value {
   margin-bottom: 20px;
 }
+
+.ant-btn-primary:not(:disabled):hover {
+  background-color: #b22222;
+}
+
+.ant-btn-primary.ant-btn-dangerous {
+  background-color: #ff0000;
+}
+
+.ant-btn-primary.ant-btn-dangerous:hover {
+  background-color: #b22222 !important;
+  ;
+}

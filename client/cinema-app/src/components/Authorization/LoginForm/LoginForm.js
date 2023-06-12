@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Login.module.css';
-import Button from 'components/UI/Button';
+import Button from 'components/UI/Button/Button';
 
 const LoginForm = ({ handleLogin, goToRegisterPage }) => {
 	const [userName, setUserName] = useState('');

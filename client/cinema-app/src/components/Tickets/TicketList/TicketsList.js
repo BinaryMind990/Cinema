@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import { dataClient } from 'apis/CinemaClient';
 import styles from './TicketsList.module.css';
@@ -29,7 +29,7 @@ const TicketsList = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import styles from './Movie.module.css';
 import { dataClient } from 'apis/CinemaClient';
 import { FaImdb } from 'react-icons/fa';
@@ -28,7 +28,7 @@ const Movie = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

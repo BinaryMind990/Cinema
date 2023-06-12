@@ -1,24 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Users.module.css';
-import Button from '../UI/Button';
-import { CircleLoader } from 'react-spinners';
-import { FaTrash } from 'react-icons/fa';
-
+import { SyncLoader } from 'react-spinners';
 import { NavigateContext } from 'contexts/NavigateContext';
-
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { searchUsers } from 'utils/SearchHelper';
 import { userClient } from 'apis/CinemaClient';
+import { UserContext } from 'contexts/UserContext';
+import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
 
 const Users = () => {
+	const { user, role } = useContext(UserContext);
+
 	const { getUserUrl } = useContext(NavigateContext);
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [search, setSearch] = useState('');
 
 	const searchData = searchUsers(users, search);
+	const userId = user ? user.id : undefined;
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -46,7 +47,7 @@ const Users = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}
@@ -91,14 +92,16 @@ const Users = () => {
 										{user.registrationDateTime.split('T').join(' ')}
 									</td>
 									<td>
-										<div className={styles.actions}>
-											<Button
-												className='red'
-												onClick={() => deleteUser(user.id)}
-											>
-												<FaTrash className={styles.trashIcon} />
-											</Button>
-										</div>
+										{role === 'ROLE_ADMIN' && userId !== user.id && (
+											<div className={styles.actions}>
+												<ConfirmationModal
+													title='Delete user'
+													message={`Are you sure you want to delete user ${user.name}?`}
+													onConfirm={() => deleteUser(user.id)}
+													onCancel={() => {}}
+												/>
+											</div>
+										)}
 									</td>
 								</tr>
 							);

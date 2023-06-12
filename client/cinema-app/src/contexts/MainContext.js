@@ -1,7 +1,6 @@
-import { dataClient, movieClient } from 'apis/CinemaClient';
+import { dataClient } from 'apis/CinemaClient';
 import { createContext, useEffect, useState } from 'react';
-import { CircleLoader } from 'react-spinners';
-import { toast } from 'react-toastify';
+import { SyncLoader } from 'react-spinners';
 
 export const DataContext = createContext();
 
@@ -25,17 +24,6 @@ export const DataProvider = ({ children }) => {
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-		}
-	};
-
-	const deleteMovie = async (movieId) => {
-		try {
-			await movieClient.deleteMovie(movieId);
-			setMovies(movies.filter((movie) => movie.id !== movieId));
-		} catch (error) {
-			toast.error('Failed to delete the movie. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
 		}
 	};
 
@@ -64,14 +52,13 @@ export const DataProvider = ({ children }) => {
 		setMovies,
 		types,
 		halls,
-		deleteMovie,
 		loading,
 	};
 
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

@@ -149,7 +149,7 @@ export const movieClient = {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 		} catch (error) {
-			toast.error('Failed to add projection. Please try again!', {
+			toast.error('Failed to delete the movie. Please try again!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 			throw error;

@@ -1,4 +1,4 @@
-import Button from 'components/UI/Button';
+import Button from 'components/UI/Button/Button';
 import styles from '../EditUser.module.css';
 
 const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {

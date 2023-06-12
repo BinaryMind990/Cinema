@@ -1,7 +1,7 @@
 import { Fragment, useContext } from 'react';
 import './Navigation.css';
 import { UserContext } from '../../../contexts/UserContext';
-import Button from '../../UI/Button';
+import Button from '../../UI/Button/Button';
 import { guestLinks, navLinks } from '../Navigation/NavLinks';
 import { NavItem } from '../Navigation/NavItem';
 

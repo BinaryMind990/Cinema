@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import CinemaAxios from 'apis/CinemaAxios';
 import styles from './Reports.module.css';
-import Button from 'components/UI/Button';
+import Button from 'components/UI/Button/Button';
 import { mapKeyToDisplayReport } from 'utils/MapKeyHelper';
 
 const Report = () => {
@@ -41,7 +41,7 @@ const Report = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import MovieForm from '../MovieForm/MovieForm';
 import { dataClient, movieClient } from 'apis/CinemaClient';
 
@@ -32,7 +32,7 @@ const EditMovie = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

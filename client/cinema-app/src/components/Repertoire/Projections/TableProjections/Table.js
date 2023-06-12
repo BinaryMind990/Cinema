@@ -1,7 +1,8 @@
-import Button from '../../../UI/Button';
+import Button from '../../../UI/Button/Button';
 import { Link } from 'react-router-dom';
-import { FaTrash, FaTicketAlt } from 'react-icons/fa';
+import { FaTicketAlt } from 'react-icons/fa';
 import styles from './Table.module.css';
+import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
 
 const Table = (props) => {
 	return (
@@ -65,12 +66,14 @@ const Table = (props) => {
 										{props.role === 'ROLE_ADMIN' && (
 											<div className={styles['button-sets']}>
 												<div className={styles['button-wrapper']}>
-													<Button
-														className='red'
-														onClick={() => props.delete(item.id)}
-													>
-														<FaTrash />
-													</Button>
+													<ConfirmationModal
+														title='Delete movie'
+														message={`Are you sure you want to delete the projection for movie ${movie.name}?`}
+														onConfirm={() =>
+															props.delete(item.id)
+														}
+														onCancel={() => {}}
+													/>
 												</div>
 												<div className={styles['button-wrapper']}>
 													<Button

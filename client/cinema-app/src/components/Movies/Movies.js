@@ -1,23 +1,40 @@
-import { useContext } from 'react';
-import Button from '../UI/Button';
-import { CircleLoader } from 'react-spinners';
+import { useContext, useEffect, useState } from 'react';
+import Button from '../UI/Button/Button';
+import { SyncLoader } from 'react-spinners';
 import styles from './Movies.module.css';
 import { Link } from 'react-router-dom';
-import { FaTrash } from 'react-icons/fa';
-import { UserContext } from '../../contexts/UserContext';
 import { NavigateContext } from 'contexts/NavigateContext';
-import { DataContext } from 'contexts/MainContext';
+import { dataClient, movieClient } from 'apis/CinemaClient';
+import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
 
 const Movies = () => {
-	const { loading } = useContext(UserContext);
-	const { movies, deleteMovie } = useContext(DataContext);
+	const [movies, setMovies] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const { getMovieUrl, goToAddHandler, goToEditHandler } =
 		useContext(NavigateContext);
+
+	useEffect(() => {
+		const getMovies = async () => {
+			try {
+				const res = await dataClient.getMovies();
+				setMovies(res);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
+		getMovies();
+	}, []);
+
+	const deleteMovie = async (movieId) => {
+		await movieClient.deleteMovie(movieId);
+		setMovies(movies.filter((movie) => movie.id !== movieId));
+	};
 
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}
@@ -57,12 +74,12 @@ const Movies = () => {
 											</Button>
 										</div>
 										<div className={styles['button-wrapper']}>
-											<Button
-												className='red'
-												onClick={() => deleteMovie(movie.id)}
-											>
-												<FaTrash className={styles.trashIcon} />
-											</Button>
+											<ConfirmationModal
+												title='Delete movie'
+												message={`Are you sure you want to delete the movie ${movie.name}?`}
+												onConfirm={() => deleteMovie(movie.id)}
+												onCancel={() => {}}
+											/>
 										</div>
 									</div>
 								</td>

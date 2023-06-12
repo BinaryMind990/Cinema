@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../../UI/Button';
+import Button from '../../UI/Button/Button';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { userClient } from 'apis/CinemaClient';

@@ -1,16 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { CircleLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-
 import CinemaAxios from '../../../apis/CinemaAxios';
 import Table from './TableProjections/Table';
-import Button from '../../UI/Button';
+import Button from '../../UI/Button/Button';
 import styles from './Projections.module.css';
 import { UserContext } from '../../../contexts/UserContext';
-
 import { searchRepertoir } from 'utils/SearchHelper';
 import { DataContext } from 'contexts/MainContext';
 import { projectionClient } from 'apis/CinemaClient';
@@ -122,7 +120,7 @@ const Projections = () => {
 	if (loading) {
 		return (
 			<div className='loader-container'>
-				<CircleLoader size={75} />
+				<SyncLoader size={75} />
 			</div>
 		);
 	}

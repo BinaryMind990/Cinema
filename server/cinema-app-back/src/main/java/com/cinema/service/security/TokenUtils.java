@@ -3,16 +3,25 @@ package com.cinema.service.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.cinema.model.Users;
+import com.cinema.service.UserService;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class TokenUtils {
+	
+	@Autowired
+	private UserService userService;
 
 	@Value("myXAuthSecret")
 	private String secret;
@@ -65,12 +74,29 @@ public class TokenUtils {
 	}
 
 	public String generateToken(UserDetails userDetails) {
-		Map<String, Object> claims = new HashMap<String, Object>();
-		claims.put("sub", userDetails.getUsername());
-		claims.put("role", userDetails.getAuthorities().toArray()[0]);
-		claims.put("created", new Date(System.currentTimeMillis()));
-		return Jwts.builder().setClaims(claims)
-				.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
+		String username = userDetails.getUsername();
+
+		// Dohvatite korisnika na osnovu korisničkog imena
+		Optional<Users> optionalUser = userService.findbyUserName(username);
+		if (optionalUser.isPresent()) {
+			Users loggedInUser = optionalUser.get();
+			Long userId = loggedInUser.getId();
+
+			// Dodajte ID korisnika u JWT token
+			Map<String, Object> claims = new HashMap<>();
+			claims.put("sub", userDetails.getUsername());
+			claims.put("id", userId);
+			claims.put("role", userDetails.getAuthorities().toArray()[0]);
+			claims.put("created", new Date());
+
+			// Generišite token kao i prethodno
+			return Jwts.builder().setClaims(claims)
+					.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+					.signWith(SignatureAlgorithm.HS512, secret).compact();
+		}
+
+		// Ukoliko korisnik nije pronađen, možete baciti odgovarajući exception ili
+		// vratiti null, zavisno od zahteva
+		return null;
 	}
 }

@@ -1,6 +1,7 @@
 package com.cinema.service;
 
 import com.cinema.model.Users;
+import com.cinema.web.dto.UserChangePasswordByAdminDto;
 import com.cinema.web.dto.UserChangePasswordDTO;
 import org.springframework.data.domain.Page;
 import java.util.List;
@@ -21,6 +22,8 @@ public interface UserService {
     Optional<Users> findbyUserName(String userName);
 
     boolean changePassword(Long id, UserChangePasswordDTO userChangePasswordDto);
+    
+    boolean changePasswordByAdmin(Long id, UserChangePasswordByAdminDto dto);
     
     Users changeRole(Users user, String role);
 

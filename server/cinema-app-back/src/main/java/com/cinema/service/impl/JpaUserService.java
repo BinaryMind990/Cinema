@@ -4,6 +4,7 @@ import com.cinema.enumeration.UserRole;
 import com.cinema.model.Users;
 import com.cinema.repository.UserRepository;
 import com.cinema.service.UserService;
+import com.cinema.web.dto.UserChangePasswordByAdminDto;
 import com.cinema.web.dto.UserChangePasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -99,6 +100,23 @@ public class JpaUserService implements UserService {
 
         return true;
     }
+    @Override
+	public boolean changePasswordByAdmin(Long id, UserChangePasswordByAdminDto dto) {
+		
+    	Optional<Users> result = userRepository.findById(id);
+    	if(!result.isPresent()) {
+    		throw new EntityNotFoundException();
+    	}
+    	Users user = result.get();
+    	
+    	if(!user.getUserName().equals(dto.getUserName()))
+    		return false;
+    	String password = passwordEncoder.encode(dto.getPassword());
+    	user.setPassword(password);
+    	userRepository.save(user);
+    	
+		return true;
+	}
 
 	@Override
 	public Users changeRole(Users user, String role) {
@@ -107,7 +125,6 @@ public class JpaUserService implements UserService {
 			Users changedUser = userRepository.save(user);
 			return changedUser;
 		}
-	
 		return null;
 	}
 
@@ -143,4 +160,6 @@ public class JpaUserService implements UserService {
 		}
 		return users;
 	}
+
+	
 }

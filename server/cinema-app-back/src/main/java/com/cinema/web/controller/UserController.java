@@ -8,6 +8,7 @@ import com.cinema.support.UserDTOToUser;
 import com.cinema.support.UserToUserDTO;
 import com.cinema.support.UserToUserDtoForView;
 import com.cinema.web.dto.AuthUserDTO;
+import com.cinema.web.dto.UserChangePasswordByAdminDto;
 import com.cinema.web.dto.UserDTO;
 import com.cinema.web.dto.UserDtoForAdminView;
 import com.cinema.web.dto.UserChangePasswordDTO;
@@ -95,15 +96,27 @@ public class UserController {
         }
        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
        Users userToChange = userService.findOne(id).get();
-              
+     /*         
        //ogranicenje da obicni korisnik moze da menja samo svoje podatke i da ne moze da menja userName
        if(userName != userDTO.getUserName() || !userDTO.getUserName().equals(userToChange.getUserName())) {
     	   return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
        }
+      */ 
+       if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+               .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+           // Admin može mijenjati podatke korisnika
+           Users user = toUser.convert(userDTO);
+           return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+       } else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
+           // Obični korisnik može mijenjati samo svoje podatke
+           Users user = toUser.convert(userDTO);
+           return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+       } else {
+           // Korisnik nema ovlasti za ažuriranje podataka
+           return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+       }
     		   
-        Users user = toUser.convert(userDTO);
-
-        return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+     
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/changeRole/{id}/{role}")
@@ -112,6 +125,11 @@ public class UserController {
     	if(!user.isPresent()) {
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	}
+    	String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
+    	if(user.get().getUserName().equals(loggedUser))
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	
+    	
     	if(!role.equalsIgnoreCase("ADMIN") && !role.equalsIgnoreCase("USER"))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	Users userChangedRole = userService.changeRole(user.get(), role.toUpperCase());
@@ -175,7 +193,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping(value = "/changePassword/{id}")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody UserChangePasswordDTO dto) {
 
@@ -195,6 +213,27 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(value = "/adminChangePassword/{id}")
+    public ResponseEntity<Void> adminChangePassword(@PathVariable Long id, @RequestBody UserChangePasswordByAdminDto  dto){
+    	if(!dto.getPassword().equals(dto.getConfirmPassword()))
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	boolean result;
+      
+    	try {
+			result = userService.changePasswordByAdmin(id, dto);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+    	if(result) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    	}
+    	
+    	
     }
 
     @PreAuthorize("permitAll()")

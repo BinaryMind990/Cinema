@@ -27,6 +27,7 @@ const ConfirmationModal = ({ title, message, onConfirm, onCancel }) => {
 			</Button>
 			<Modal
 				title={title}
+				centered
 				open={modalOpen}
 				onCancel={handleCancel}
 				footer={[

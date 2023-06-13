@@ -44,6 +44,7 @@
 
 .red {
     background-color: #ff0000;
+    color: #fff;
 }
 
 .red:hover,

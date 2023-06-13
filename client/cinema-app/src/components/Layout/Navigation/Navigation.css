@@ -1,48 +1,54 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .logo {
     width: 80px;
     height: auto;
     margin-left: -15px;
 }
 
-.navLinks {
+.burger-icon {
+    display: inline-block;
+}
+
+.menu-outlined {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.ant-drawer-body {
+    background-color: #051d31;
+}
+
+.drawer-content {
     display: flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 10px 0;
+    flex-direction: column;
+    height: 100%;
+}
+
+.drawer-title {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-
 }
 
-.navLinks li {
-    margin-right: 10px;
+.ant-menu-light {
+    background: transparent;
 }
 
-.navLinks li:last-child {
-    margin-right: 0;
+
+.ant-menu-light .ant-menu-item-selected {
+    background-color: transparent;
+    color: #fab702;
 }
 
 .menu-link.link {
-    font-size: 14px;
+    font-size: 16px;
 }
 
-@media screen and (min-width: 768px) {
-    .navigation {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: inherit;
-        flex-direction: row;
-    }
-
-    .navLinks {
-        padding: 0;
-    }
-
-    .navLinks li {
-        margin-right: 20px;
-    }
-
-    .menu-link.link {
-        font-size: 16px;
-    }
+.ant-btn-default {
+    border-color: transparent;
 }

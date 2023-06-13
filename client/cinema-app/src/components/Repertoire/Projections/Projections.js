@@ -139,6 +139,13 @@ const Projections = () => {
 				</div>
 			</div>
 			<div className='page-wrapper'>
+				{role === 'ROLE_ADMIN' && (
+					<div className={styles['add-button']}>
+						<Button className='blue' onClick={projectionAddHandler}>
+							Add projection
+						</Button>
+					</div>
+				)}
 				<div className={styles['date-picker-container']}>
 					{projectionDates.map((date, index) => (
 						<div
@@ -203,13 +210,6 @@ const Projections = () => {
 					role={role}
 					movies={movies}
 				/>
-				{role === 'ROLE_ADMIN' && (
-					<div className={styles['add-button']}>
-						<Button className='blue' onClick={projectionAddHandler}>
-							Add projection
-						</Button>
-					</div>
-				)}
 			</div>
 		</div>
 	);

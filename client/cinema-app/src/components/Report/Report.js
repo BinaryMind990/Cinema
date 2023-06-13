@@ -87,7 +87,7 @@ const Report = () => {
 						Reset
 					</Button>
 				</div>
-				<div>
+				<div className='table-wrapper'>
 					{reports.length > 0 ? (
 						<table className={styles['reports-table']}>
 							<thead>

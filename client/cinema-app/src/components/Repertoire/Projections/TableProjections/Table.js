@@ -5,7 +5,7 @@ import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal
 
 const Table = (props) => {
 	return (
-		<div>
+		<div className='table-wrapper'>
 			<table>
 				<tbody>
 					{props.items.map((item) => {
@@ -81,7 +81,7 @@ const Table = (props) => {
 															props.ticketLists(item.id)
 														}
 													>
-														Ticket lists
+														Tickets
 													</Button>
 												</div>
 											</div>

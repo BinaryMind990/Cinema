@@ -77,7 +77,7 @@ const User = () => {
 					</div>
 				</div>
 				{role !== 'ROLE_ADMIN' && (
-					<>
+					<div className='table-wrapper'>
 						{userById &&
 						userById.tickets &&
 						userById.tickets.length > 0 ? (
@@ -124,7 +124,7 @@ const User = () => {
 						) : (
 							''
 						)}
-					</>
+					</div>
 				)}
 			</div>
 		</div>

@@ -83,10 +83,19 @@ p {
   padding: 20px 5%;
 }
 
+.table-wrapper {
+  overflow-y: auto;
+}
+
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
+}
+
+table caption {
+  text-align: left;
+  padding: 0 10px;
 }
 
 th {
@@ -203,5 +212,7 @@ input:focus-visible {
     width: 400px;
   }
 
-
+  table caption {
+    text-align: center
+  }
 }

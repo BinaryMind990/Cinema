@@ -45,52 +45,54 @@ const Movies = () => {
 				<h1>Movies</h1>
 			</div>
 			<div className='page-wrapper'>
-				<table>
-					<tbody>
-						{movies.map((movie) => (
-							<tr key={movie.id}>
-								<td className={styles.cell}>
-									<div className={styles.moviePoster}>
-										<img
-											src={movie.posterLink}
-											alt={`Movie poster for ${movie.name}`}
-										/>
-									</div>
-									<h2>
-										<Link
-											className={styles.link}
-											to={getMovieUrl(movie.id)}
-										>
-											{movie.name}
-										</Link>
-									</h2>
-									<div className={styles.actions}>
-										<div className={styles['button-wrapper']}>
-											<Button
-												className='orange'
-												onClick={() => goToEditHandler(movie.id)}
-											>
-												Edit
-											</Button>
-										</div>
-										<div className={styles['button-wrapper']}>
-											<ConfirmationModal
-												title='Delete movie'
-												message={`Are you sure you want to delete the movie ${movie.name}?`}
-												onConfirm={() => deleteMovie(movie.id)}
-												onCancel={() => {}}
-											/>
-										</div>
-									</div>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
 				<div className={styles['add-button']}>
 					<Button className='blue' onClick={goToAddHandler}>
 						Add movie
 					</Button>
+				</div>
+				<div className='table-wrapper'>
+					<table>
+						<tbody>
+							{movies.map((movie) => (
+								<tr key={movie.id}>
+									<td className={styles.cell}>
+										<div className={styles.moviePoster}>
+											<img
+												src={movie.posterLink}
+												alt={`Movie poster for ${movie.name}`}
+											/>
+										</div>
+										<h2>
+											<Link
+												className={styles.link}
+												to={getMovieUrl(movie.id)}
+											>
+												{movie.name}
+											</Link>
+										</h2>
+										<div className={styles.actions}>
+											<div className={styles['button-wrapper']}>
+												<Button
+													className='orange'
+													onClick={() => goToEditHandler(movie.id)}
+												>
+													Edit
+												</Button>
+											</div>
+											<div className={styles['button-wrapper']}>
+												<ConfirmationModal
+													title='Delete movie'
+													message={`Are you sure you want to delete the movie ${movie.name}?`}
+													onConfirm={() => deleteMovie(movie.id)}
+													onCancel={() => {}}
+												/>
+											</div>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

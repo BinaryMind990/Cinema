@@ -29,6 +29,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 		<form className={'form'} onSubmit={handleFormSubmit}>
 			<label htmlFor='poster'>Poster</label>
 			<input
+				required
 				type='text'
 				name='poster'
 				id='poster'
@@ -39,6 +40,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='movieName'>Title</label>
 			<input
+				required
 				type='text'
 				name='movieName'
 				id='movieName'
@@ -49,6 +51,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='duration'>Duration</label>
 			<input
+				required
 				type='number'
 				name='duration'
 				id='duration'
@@ -60,6 +63,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='distributor'>Distributor</label>
 			<input
+				required
 				type='text'
 				name='distributor'
 				id='distributor'
@@ -70,6 +74,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='country'>Country</label>
 			<input
+				required
 				type='text'
 				name='country'
 				id='country'
@@ -80,6 +85,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='year'>Year</label>
 			<input
+				required
 				type='number'
 				name='year'
 				id='year'
@@ -91,6 +97,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='description'>Description</label>
 			<textarea
+				required
 				name='description'
 				id='description'
 				value={movieData.description}
@@ -100,6 +107,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='imdbLink'>Imdb link</label>
 			<input
+				required
 				type='text'
 				name='imdbLink'
 				id='imdbLink'
@@ -110,6 +118,7 @@ const MovieForm = ({ initialData, onSubmit }) => {
 			/>
 			<label htmlFor='director'>Director</label>
 			<input
+				required
 				type='text'
 				name='director'
 				id='director'

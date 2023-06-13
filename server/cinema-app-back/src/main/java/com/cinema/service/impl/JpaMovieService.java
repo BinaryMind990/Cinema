@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,11 +48,18 @@ public class JpaMovieService implements MovieService {
     @Override
     public Movie delete(Long id) {
         Optional<Movie> movie = movieRep.findById(id);
+        if(!movie.isPresent()) {
+        	return null;
+        }
         if (movie.isPresent() && movie.get().getProjections().isEmpty()) {
             movieRep.deleteById(id);
             return movie.get();
         }
-        if(movie.isPresent() && !movie.get().getProjections().isEmpty()) {
+//        if (movie.get().getProjections().stream().anyMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now())));{
+//        	return null;
+//        }
+        
+        if(movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {
         	movie.get().setDeleted(true);
         	
         	movieRep.save(movie.get());

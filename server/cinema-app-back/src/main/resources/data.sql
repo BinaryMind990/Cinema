@@ -13,25 +13,36 @@ INSERT INTO hall (name) VALUES ('Hall 1'), ('Hall 2'), ('Hall 3'), ('Hall 4'), (
 INSERT INTO type_hall (hall_id, type_id) VALUES (1, 1), (1,2), (2, 1), (3, 1), (4, 2), (4, 3), (5, 3);
 
 INSERT INTO movie (country, distributor, description, duration, name, year, poster_link, deleted, version, director, imdb_link) 
-VALUES('Serbia','ART VISTA d.o.o', 'Description for 1. movie', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg', 0, 0, 'Dragan Bjelogrlic, Zoran Lisinac', 'https://www.imdb.com/title/tt8737152/'),
-	  ('Serbia', 'unknown', 'Description for 2. movie', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg', 0, 0, 'Srdjan Koljevic', 'https://www.imdb.com/title/tt1324061/'),
-      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg', 0, 0, 'Radivoje Andric', 'https://www.imdb.com/title/tt0383846/'),
-      ('Serbia', 'Vans','Description for 4. movie', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg', 0, 0, 'Dusan Kovacevic', 'https://www.imdb.com/title/tt0339535/'),
-	  ('Serbia', 'unknown', 'Description for 5. movie', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg', 0, 0, 'Dusan Kovacevic, Bozidar Bota Nikolic', 'https://www.imdb.com/title/tt0086935/');
-	  
+VALUES('Serbia','ART VISTA d.o.o', 'Biopic about Toma Zdravkovic, the man who is remembered not only for his songs and the unique way he sang them, but also as a bohemian, both in his behavior and his soul.', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg', 0, 0, 'Dragan Bjelogrlic, Zoran Lisinac', 'https://www.imdb.com/title/tt8737152/'),
+	  ('Serbia', 'unknown', 'The act of a woman with a broken nose, who suddenly jumps out of a taxi and throws herself off the bridge in Belgrade, connects the lives of three witnesses.', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg', 0, 0, 'Srdjan Koljevic', 'https://www.imdb.com/title/tt1324061/'),
+      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie''During one peculiar night, the lives of several interconnected people are changed, as they rapidly experience love, disappointment, joy, greed and remorse.', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg', 0, 0, 'Radivoje Andric', 'https://www.imdb.com/title/tt0383846/'),
+      ('Serbia', 'Vans','After the collapse of the Yugoslavian government, a former secret agent, now a taxi driver, enters the office of a former university professor, now a firm director.', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg', 0, 0, 'Dusan Kovacevic', 'https://www.imdb.com/title/tt0339535/'),
+	  ('Serbia', 'unknown', 'Convinced that his subtenant is a spy and an enemy of the state, a man falls into deep paranoia which leads to absurd and destructive chain of events.', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg', 0, 0, 'Dusan Kovacevic, Bozidar Bota Nikolic', 'https://www.imdb.com/title/tt0086935/'),
+	  ('United States', 'Taramount', 'American science fiction action film based on Hasbros Transformers toy line, and primarily influenced by the Beast Wars storyline.', 127, 'Transformers: Rise of the Beasts', 2023, 'http://www.arenacineplex.com/images/icons_66x96/1683398474trans.jpg', 0, 0, 'Steven Caple Jr.', 'https://www.imdb.com/title/tt5090568'),
+	  ('Finland', 'CON film', 'When an ex-soldier who discovers gold in the Lapland wilderness tries to take the loot into the city, Nazi soldiers led by a brutal SS officer battle him.', 91, 'Sisu', 2022, 'http://www.arenacineplex.com/images/icons_66x96/168569455217.5.2023_12_18_43_Sisu_SRB.jpg', 0, 0, '
+Jalmari Helander', 'https://www.imdb.com/title/tt14846026/' ),
+	  ('Russia', 'MegaCom Film', 'A young cat named Vincent, in the company of Maurice the mouse, escapes from the flood in an old harpsichord, which is picked up by sailors and sent to St. Petersburg, where it ends up in the Hermitage.',
+	  83, 'Cats in the Museum', 2023, 'http://www.arenacineplex.com/images/icons_66x96/1678804278macke.jpg', 0, 0, 'Vasily Rovensky', 'https://www.imdb.com/title/tt24069962');
 	  
 INSERT INTO projection (date_and_time, ticket_price, hall_id, movie_id, type_id, deleted) VALUES 
 ('2023-06-21 20:00', 400, 1, 1, 1, 0),
 ('2023-06-15 20:00', 500, 1, 1, 2, 0),
 ('2023-06-16 20:00', 450, 2, 1, 1, 0),
 ('2023-06-20 20:00', 400, 3, 2, 1, 0),
-('2023-06-12 20:00', 350, 4, 2, 2, 0),
-('2023-06-09 20:00', 350, 5, 3, 3, 0),
-('2023-06-08 20:00', 500, 4, 4, 2, 0),
+('2023-07-12 20:00', 350, 4, 2, 2, 0),
+('2023-07-09 20:00', 350, 5, 3, 3, 0),
+('2023-07-08 20:00', 500, 4, 4, 2, 0),
 ('2023-06-25 20:00', 450, 3, 4, 1, 0),
-('2023-06-12 18:00', 550, 2, 4, 1, 0),
+('2023-07-12 18:00', 550, 2, 4, 1, 0),
 ('2023-06-18 20:00', 600, 5, 5, 3, 0),
-('2023-04-14 20:00', 600, 4, 5, 3, 0);	  
+('2023-04-14 20:00', 600, 4, 5, 3, 0),
+('2023-06-21 17:00', 600, 5, 7, 3, 0),
+('2023-06-21 13:30', 300, 3, 8, 1, 0),
+('2023-06-21 15:45', 350, 3, 8, 1, 0),
+('2023-06-25 18:30', 400, 2, 7, 2, 0),
+('2023-06-20 20:00', 450, 4, 7, 2, 0),
+('2023-06-21 20:00', 600, 5, 7, 3, 0);
+
 
 INSERT INTO seat (seat_number, hall_id) VALUES 
 (1, 1),
@@ -57,7 +68,7 @@ INSERT INTO seat (seat_number, hall_id) VALUES
 (3, 5);
 
 INSERT INTO ticket (date_and_time, projection_id, seat_seat_number, seat_hall_id, user_id) VALUES 
-('2023-06-21 20:00:00', 1, 1, 1, 2),
+('2023-06-04 20:00:00', 1, 1, 1, 2),
 ('2023-04-23 20:00:00', 2, 1, 1, 3),
 ('2023-04-28 20:00:00', 3, 1, 2, 2),
 ('2023-04-15 20:00:00', 1, 2, 1, 3),

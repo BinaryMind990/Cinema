@@ -1,6 +1,7 @@
 package com.cinema.web.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class UserChangePasswordDTO {
 
@@ -11,9 +12,11 @@ public class UserChangePasswordDTO {
     private String oldPassword;
 
     @NotBlank(message = "Lozinka nije zadata.")
+    @Size(min = 5, max = 15)
     private String password;
 
     @NotBlank(message = "Ponovljena lozinka nije zadata.")
+    @Size(min = 5, max = 15)
     private String confirmPassword;
 
     public String getUserName() {

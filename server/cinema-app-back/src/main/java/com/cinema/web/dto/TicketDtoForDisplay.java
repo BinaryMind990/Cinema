@@ -13,6 +13,8 @@ public class TicketDtoForDisplay {
 	private String userName;
 	
 	private Long userId;
+	
+	private Long seatNumber;
 
 	public String getTicketSellDate() {
 		return ticketSellDate;
@@ -53,6 +55,14 @@ public class TicketDtoForDisplay {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getSeatNumber() {
+		return seatNumber;
+	}
+
+	public void setSeatNumber(Long seatNumber) {
+		this.seatNumber = seatNumber;
 	}
 
 	@Override

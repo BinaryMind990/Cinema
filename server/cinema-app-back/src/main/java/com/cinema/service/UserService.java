@@ -16,6 +16,8 @@ public interface UserService {
     Page<Users> findAll(int pageNumber);
 
     Users save(Users user);
+    
+    Users update(Users user);
 
     Users delete(Long id);
 

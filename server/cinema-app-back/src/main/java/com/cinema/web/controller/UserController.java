@@ -106,11 +106,11 @@ public class UserController {
                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
            // Admin može mijenjati podatke korisnika
            Users user = toUser.convert(userDTO);
-           return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+           return new ResponseEntity<>(toUserDTO.convert(userService.update(user)), HttpStatus.OK);
        } else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
            // Obični korisnik može mijenjati samo svoje podatke
            Users user = toUser.convert(userDTO);
-           return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
+           return new ResponseEntity<>(toUserDTO.convert(userService.update(user)), HttpStatus.OK);
        } else {
            // Korisnik nema ovlasti za ažuriranje podataka
            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
@@ -195,7 +195,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping(value = "/changePassword/{id}")
-    public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody UserChangePasswordDTO dto) {
+    public ResponseEntity<Void> changePassword(@PathVariable Long id, @Valid @RequestBody UserChangePasswordDTO dto) {
 
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -217,7 +217,7 @@ public class UserController {
     
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/adminChangePassword/{id}")
-    public ResponseEntity<Void> adminChangePassword(@PathVariable Long id, @RequestBody UserChangePasswordByAdminDto  dto){
+    public ResponseEntity<Void> adminChangePassword(@PathVariable Long id,@Valid @RequestBody UserChangePasswordByAdminDto  dto){
     	if(!dto.getPassword().equals(dto.getConfirmPassword()))
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	boolean result;

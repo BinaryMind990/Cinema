@@ -91,9 +91,8 @@ public class ProjectionController {
 
 		List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice, sortBy, sortAscOrDesc);
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
-
-
 	}
+	 
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {

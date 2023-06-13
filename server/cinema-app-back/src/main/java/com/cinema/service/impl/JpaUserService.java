@@ -51,6 +51,12 @@ public class JpaUserService implements UserService {
         user.setRegistrationDateTime(LocalDateTime.now());
         return userRepository.save(user);
     }
+    
+    @Override
+	public Users update(Users user) {
+		return userRepository.save(user);
+	}
+
 
     @Override
     public Users delete(Long id) {
@@ -90,9 +96,9 @@ public class JpaUserService implements UserService {
         }
 
         String password = userChangePasswordDTO.getPassword();
-        if (!userChangePasswordDTO.getPassword().equals("")) {
+    //    if (!userChangePasswordDTO.getPassword().equals("")) {
             password = passwordEncoder.encode(userChangePasswordDTO.getPassword());
-        }
+    //    }
 
         user.setPassword(password);
 
@@ -160,6 +166,4 @@ public class JpaUserService implements UserService {
 		}
 		return users;
 	}
-
-	
 }

@@ -1,8 +1,12 @@
 package com.cinema.web.dto;
 
 import java.util.Objects;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +21,7 @@ public class MovieDTO {
 
 	@NotNull
 	@Positive
+	@Max(value = 600)
 	private int duration;
 
 	@NotNull
@@ -28,18 +33,22 @@ public class MovieDTO {
 	private String country;
 
 	@NotNull
-	@Positive
+	@Min(value = 1888)
+	@Max(value = 2100)
 	private int year;
 
+	@NotNull
 	@NotBlank
 	private String description;
 
 	@NotNull
 	@NotBlank
+	@Pattern(regexp = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")
 	private String posterLink;
 	
 	@NotNull
 	@NotBlank
+	@Pattern(regexp = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")
 	private String imdbLink;
 	
 	private int version;

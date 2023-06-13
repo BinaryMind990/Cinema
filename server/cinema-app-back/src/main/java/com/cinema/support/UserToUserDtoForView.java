@@ -1,5 +1,9 @@
 package com.cinema.support;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +23,8 @@ public class UserToUserDtoForView implements Converter<Users, UserDtoForAdminVie
 		dto.setId(source.getId());
 		dto.setUsername(source.getUserName());
 		dto.setUserRole(source.getRole().toString());
-		dto.setRegistrationDateTime(source.getRegistrationDateTime().toString());
+		dto.setRegistrationDateTime(getdateTimeStr(source.getRegistrationDateTime()));
+		dto.seteMail(source.geteMail());
 		
 		return dto;
 	}
@@ -31,6 +36,12 @@ public class UserToUserDtoForView implements Converter<Users, UserDtoForAdminVie
 			dtos.add(convert(user));
 		}
 		return dtos;
+	}
+		
+	private String getdateTimeStr (LocalDateTime dateTime) throws DateTimeParseException{
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+		String dateTimeStr = dtf.format(dateTime);
+		return dateTimeStr;
 	}
 
 }

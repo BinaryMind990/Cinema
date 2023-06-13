@@ -1,7 +1,7 @@
 import Button from '../../../UI/Button/Button';
 import { Link } from 'react-router-dom';
 import styles from './Table.module.css';
-import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
 
 const Table = (props) => {
 	return (

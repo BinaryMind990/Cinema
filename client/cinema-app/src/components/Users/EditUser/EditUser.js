@@ -8,6 +8,7 @@ import ChangePasswordForm from './EditForms/ChangePasswordForm';
 import ChangeRoleForm from './EditForms/ChangeRoleForm';
 import { userClient } from 'apis/CinemaClient';
 import Loader from 'components/UI/Loader/Loader';
+import AdminChangePasswordForm from './EditForms/AdminChangePasswordForm';
 
 const EditUser = () => {
 	const { user, role } = useContext(UserContext);
@@ -55,23 +56,24 @@ const EditUser = () => {
 		}));
 	};
 
-	const handleRoleChange = async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		await userClient.editRole(id, editUserData);
+		await userClient.edit(id, editUserData);
 	};
 
 	const handlePasswordChange = async (e) => {
 		e.preventDefault();
-		await userClient.editPassword(
-			`/users/changePassword/${id}`,
-			editUserData
-		);
+		await userClient.editPassword(id, editUserData);
+	};
+	const handleAdminPasswordChange = async (e) => {
+		e.preventDefault();
+		await userClient.adminEditPassword(id, editUserData);
 	};
 
-	const handleSubmit = async (e) => {
+	const handleRoleChange = async (e) => {
 		e.preventDefault();
-		await userClient.edit(id, editUserData);
+
+		await userClient.editRole(id, editUserData);
 	};
 
 	if (loading) {
@@ -93,16 +95,25 @@ const EditUser = () => {
 					handleFormChange={handleFormChange}
 					handleSubmit={handleSubmit}
 				/>
-				<ChangePasswordForm
-					editUserData={editUserData}
-					handleFormChange={handleFormChange}
-					handleSubmit={handlePasswordChange}
-				/>
-				{role === 'ROLE_ADMIN' && (
-					<ChangeRoleForm
+				{role === 'ROLE_ADMIN' && editUserData.id !== userId ? (
+					<>
+						<AdminChangePasswordForm
+							editUserData={editUserData}
+							handleFormChange={handleFormChange}
+							handleSubmit={handleAdminPasswordChange}
+						/>
+
+						<ChangeRoleForm
+							editUserData={editUserData}
+							handleFormChange={handleFormChange}
+							handleSubmit={handleRoleChange}
+						/>
+					</>
+				) : (
+					<ChangePasswordForm
 						editUserData={editUserData}
 						handleFormChange={handleFormChange}
-						handleSubmit={handleRoleChange}
+						handleSubmit={handlePasswordChange}
 					/>
 				)}
 			</div>

@@ -4,7 +4,7 @@ import styles from './Movies.module.css';
 import { Link } from 'react-router-dom';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { dataClient, movieClient } from 'apis/CinemaClient';
-import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
 import Loader from 'components/UI/Loader/Loader';
 
 const Movies = () => {

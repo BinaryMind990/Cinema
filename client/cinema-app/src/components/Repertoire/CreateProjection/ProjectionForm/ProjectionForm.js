@@ -22,13 +22,16 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		<form className='form' onSubmit={handleSubmit}>
 			<label htmlFor='movieName'>Movie</label>
 			<select
+				required
 				name='movieName'
 				id='movieName'
 				onChange={(e) =>
 					setProjectionData({ ...projectionData, movieId: e.target.value })
 				}
 			>
-				<option>Choose movie</option>
+				<option selected value=''>
+					Choose movie
+				</option>
 				{movies.map((movie) => (
 					<option key={movie.id} value={movie.id}>
 						{movie.name}
@@ -37,13 +40,16 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 			</select>
 			<label htmlFor='type'>Type</label>
 			<select
+				required
 				name='type'
 				id='type'
 				onChange={(e) =>
 					setProjectionData({ ...projectionData, typeId: e.target.value })
 				}
 			>
-				<option>Choose type</option>
+				<option selected value=''>
+					Choose type
+				</option>
 				{types.map((type) => (
 					<option key={type.id} value={type.id}>
 						{type.name}
@@ -52,13 +58,16 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 			</select>
 			<label htmlFor='hall'>Hall</label>
 			<select
+				required
 				name='hall'
 				id='hall'
 				onChange={(e) =>
 					setProjectionData({ ...projectionData, hallId: e.target.value })
 				}
 			>
-				<option>Choose hall</option>
+				<option selected value=''>
+					Choose hall
+				</option>
 				{halls.map((hall) => (
 					<option key={hall.id} value={hall.id}>
 						{hall.name}
@@ -67,6 +76,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 			</select>
 			<label htmlFor='dateAndTime'>Date and Time</label>
 			<input
+				required
 				type='datetime-local'
 				name='dateAndTime'
 				id='dateAndTime'
@@ -82,6 +92,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 			/>
 			<label htmlFor='ticketPrice'>Ticket Price</label>
 			<input
+				required
 				type='number'
 				min={0}
 				name='ticketPrice'

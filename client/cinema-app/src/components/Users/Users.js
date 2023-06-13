@@ -7,7 +7,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { searchUsers } from 'utils/SearchHelper';
 import { userClient } from 'apis/CinemaClient';
 import { UserContext } from 'contexts/UserContext';
-import ConfirmationModal from 'components/UI/ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
 import Loader from 'components/UI/Loader/Loader';
 
 const Users = () => {

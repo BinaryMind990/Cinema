@@ -72,6 +72,21 @@ export const userClient = {
 			});
 		}
 	},
+	adminEditPassword: async (id, editUserData) => {
+		try {
+			await CinemaAxios.put(
+				`/users/adminChangePassword/${id}`,
+				editUserData
+			);
+			toast.success('User password changed successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		} catch (error) {
+			toast.error('Failed to change user password. Please try again!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		}
+	},
 	delete: async (userId) => {
 		try {
 			await CinemaAxios.delete(`/users/${userId}`);

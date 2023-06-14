@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './User.module.css';
 import { userClient } from 'apis/CinemaClient';
-import { mapKeyToDisplay } from 'utils/MapKeyHelper';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { UserContext } from 'contexts/UserContext';
 import Button from 'components/UI/Button/Button';
 import Loader from 'components/UI/Loader/Loader';
+import { mapKeyToDisplay } from 'utils/MapKey/MapKeyHelperUser';
 
 const User = () => {
 	const { user, role } = useContext(UserContext);
@@ -65,8 +65,6 @@ const User = () => {
 								</p>
 							);
 						})}
-					{/* TODO */}
-					{/* {userId === userById.id && ()} */}
 					<div className={styles['button-wrapper']}>
 						<Button
 							className='orange'

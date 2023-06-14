@@ -6,10 +6,7 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
-// @SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
-// @FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name =
-// "isDeleted", type = "boolean"))
-// @Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
+
 public class Movie {
 
 	@Id

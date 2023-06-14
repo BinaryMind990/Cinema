@@ -8,7 +8,7 @@ import Table from './TableProjections/Table';
 import Button from '../../UI/Button/Button';
 import styles from './Projections.module.css';
 import { UserContext } from '../../../contexts/UserContext';
-import { searchRepertoir } from 'utils/SearchHelper';
+import { searchRepertoir } from 'utils/SearchUtils/SearchHelper';
 import { DataContext } from 'contexts/MainContext';
 import { projectionClient } from 'apis/CinemaClient';
 import { NavigateContext } from 'contexts/NavigateContext';
@@ -160,11 +160,6 @@ const Projections = () => {
 						</div>
 					))}
 				</div>
-				{searchData.length === 0 && (
-					<div className='no-results'>
-						No projections found for the selected date.
-					</div>
-				)}
 				<div className={styles['sort-radio-wrapper']}>
 					<div className={styles['sort-radio']}>
 						<span>Sort by Price:</span>

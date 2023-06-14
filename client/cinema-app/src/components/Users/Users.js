@@ -4,7 +4,7 @@ import styles from './Users.module.css';
 import { NavigateContext } from 'contexts/NavigateContext';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { searchUsers } from 'utils/SearchHelper';
+import { searchUsers } from 'utils/SearchUtils/SearchHelper';
 import { userClient } from 'apis/CinemaClient';
 import { UserContext } from 'contexts/UserContext';
 import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';

@@ -2,7 +2,6 @@ package com.cinema.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

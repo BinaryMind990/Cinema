@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import CinemaAxios from 'apis/CinemaAxios';
 import styles from './Reports.module.css';
 import Button from 'components/UI/Button/Button';
-import { mapKeyToDisplayReport } from 'utils/MapKeyHelper';
+
 import Loader from 'components/UI/Loader/Loader';
+import { mapKeyToDisplayReport } from 'utils/MapKey/MapKeyHelperReport';
 
 const Report = () => {
 	const [reports, setReports] = useState([]);

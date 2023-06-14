@@ -4,7 +4,6 @@ import com.cinema.model.Projection;
 import com.cinema.web.dto.ProjectionDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

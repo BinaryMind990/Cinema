@@ -3,7 +3,6 @@ package com.cinema.support;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
 import com.cinema.model.Movie;
 import com.cinema.service.MovieService;
 import com.cinema.web.dto.MovieDTO;

@@ -47,6 +47,7 @@ const TicketsList = () => {
 				<table>
 					<thead>
 						<tr>
+							<th>Seat number</th>
 							<th>Date</th>
 							<th>Time</th>
 							<th>Username</th>
@@ -55,13 +56,8 @@ const TicketsList = () => {
 					<tbody className={styles['ticket-list']}>
 						{ticketsList.map((ticket) => (
 							<tr key={ticket.id}>
-								<td>
-									{ticket.ticketSellDate
-										.split('T')[0]
-										.split('-')
-										.reverse()
-										.join('-')}
-								</td>
+								<td>{ticket.seatNumber}</td>
+								<td>{ticket.ticketSellDate}</td>
 								<td>{ticket.ticketSellTime}</td>
 								<td>{ticket.userName}</td>
 							</tr>

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 public class UserDTO {
 
-    @Positive(message = "Id mora biti pozitivan broj.")
+    @Positive(message = "Id must be positive number.")
     private Long id;
 
     @NotBlank
@@ -22,25 +22,25 @@ public class UserDTO {
     @Email
     private String eMail;
 
-    @Size(min=2, max=50)
+    @Size(min = 2, max = 50)
     private String name;
 
-    @Size(min=2, max=50)
+    @Size(min = 2, max = 50)
     private String lastName;
-    
+
     private String role;
-    
+
     private List<TicketDTO> tickets;
 
     public String getRole() {
-		return role;
-	}
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -80,18 +80,18 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-	public List<TicketDTO> getTickets() {
-		return tickets;
-	}
+    public List<TicketDTO> getTickets() {
+        return tickets;
+    }
 
-	public void setTickets(List<TicketDTO> tickets) {
-		this.tickets = tickets;
-	}
+    public void setTickets(List<TicketDTO> tickets) {
+        this.tickets = tickets;
+    }
 
-	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", userName=" + userName + ", eMail=" + eMail + ", name=" + name + ", lastName="
-				+ lastName + ", role=" + role + "]";
-	}
+    @Override
+    public String toString() {
+        return "UserDTO [id=" + id + ", userName=" + userName + ", eMail=" + eMail + ", name=" + name + ", lastName="
+                + lastName + ", role=" + role + "]";
+    }
 
 }

@@ -38,7 +38,7 @@ const RegistrationForm = ({ onSubmit }) => {
 			(user) => user.username === userRegData.userName
 		);
 		const existingEmail = users.find(
-			(user) => user.email === userRegData.eMail
+			(user) => user.eMail === userRegData.eMail
 		);
 		if (existingUsername) {
 			setErrorMessage('Username already exists.');
@@ -53,6 +53,7 @@ const RegistrationForm = ({ onSubmit }) => {
 			navigate('/projections');
 		}
 	};
+
 	return (
 		<div>
 			{errorModal && (

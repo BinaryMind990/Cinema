@@ -1,8 +1,11 @@
+import CinemaAxios from 'apis/CinemaAxios';
 import Button from 'components/UI/Button/Button';
-import { useState } from 'react';
+import ErrorModal from 'components/UI/Modals/ErrorModal';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
+	// const [projections, setProjections] = useState([]);
 	const [projectionData, setProjectionData] = useState({
 		movieId: '',
 		typeId: '',
@@ -10,104 +13,185 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		dateTimeStr: '',
 		tiketPrice: '',
 	});
+	const [errorModal, setErrorModal] = useState(false);
+	// const [errorMessage, setErrorMessage] = useState('');
+
+	// useEffect(() => {
+	// 	getProjections();
+	// }, []);
+
+	// const getProjections = async () => {
+	// 	try {
+	// 		const res = await CinemaAxios.get('/projections');
+	// 		setProjections(res.data);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+
+	const checkType = projectionData.typeId;
+
+	const hallsOption = () => {
+		if (!checkType) {
+			return [];
+		}
+		switch (checkType) {
+			case '1':
+				return [halls[0], halls[1], halls[2]];
+			case '2':
+				return [halls[0], halls[3]];
+			case '3':
+				return [halls[3], halls[4]];
+			default:
+				return [];
+		}
+	};
 
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		// const selectedDate = new Date(projectionData.dateTimeStr);
+		// const currentDate = new Date();
+		// console.log('Unutra', projections);
+		// const existingProjection =
+		// 	projections.length > 0 &&
+		// 	projections.some(
+		// 		(projection) =>
+		// 			projection.hallId === projectionData.hallId &&
+		// 			new Date(projection.dateTimeStr) === selectedDate
+		// 	);
+
+		// if (selectedDate < currentDate) {
+		// 	setErrorMessage('Selection of a past date is not allowed.');
+		// 	setErrorModal(true);
+		// 	return;
+		// } else if (existingProjection) {
+		// 	setErrorMessage(
+		// 		'The selected hall is already occupied at the specified time.'
+		// 	);
+		// 	setErrorModal(true);
+		// 	return;
+		// } else {
 		onSubmit(projectionData);
 		navigate('/projections');
+		// }
 	};
 	return (
-		<form className='form' onSubmit={handleSubmit}>
-			<label htmlFor='movieName'>Movie</label>
-			<select
-				required
-				name='movieName'
-				id='movieName'
-				onChange={(e) =>
-					setProjectionData({ ...projectionData, movieId: e.target.value })
-				}
-			>
-				<option selected value=''>
-					Choose movie
-				</option>
-				{movies.map((movie) => (
-					<option key={movie.id} value={movie.id}>
-						{movie.name}
+		<div>
+			{/* <>
+				{errorModal && (
+					<ErrorModal
+						title='Error'
+						message={errorMessage}
+						onClose={() => setErrorModal(false)}
+					/>
+				)}
+			</> */}
+			<form className='form' onSubmit={handleSubmit}>
+				<label htmlFor='movieName'>Movie</label>
+				<select
+					required
+					name='movieName'
+					id='movieName'
+					onChange={(e) =>
+						setProjectionData({
+							...projectionData,
+							movieId: e.target.value,
+						})
+					}
+				>
+					<option selected value=''>
+						Choose movie
 					</option>
-				))}
-			</select>
-			<label htmlFor='type'>Type</label>
-			<select
-				required
-				name='type'
-				id='type'
-				onChange={(e) =>
-					setProjectionData({ ...projectionData, typeId: e.target.value })
-				}
-			>
-				<option selected value=''>
-					Choose type
-				</option>
-				{types.map((type) => (
-					<option key={type.id} value={type.id}>
-						{type.name}
+					{movies.map((movie) => (
+						<option key={movie.id} value={movie.id}>
+							{movie.name}
+						</option>
+					))}
+				</select>
+				<label htmlFor='type'>Type</label>
+				<select
+					required
+					name='type'
+					id='type'
+					onChange={(e) =>
+						setProjectionData({
+							...projectionData,
+							typeId: e.target.value,
+						})
+					}
+				>
+					<option selected value=''>
+						Choose type
 					</option>
-				))}
-			</select>
-			<label htmlFor='hall'>Hall</label>
-			<select
-				required
-				name='hall'
-				id='hall'
-				onChange={(e) =>
-					setProjectionData({ ...projectionData, hallId: e.target.value })
-				}
-			>
-				<option selected value=''>
-					Choose hall
-				</option>
-				{halls.map((hall) => (
-					<option key={hall.id} value={hall.id}>
-						{hall.name}
-					</option>
-				))}
-			</select>
-			<label htmlFor='dateAndTime'>Date and Time</label>
-			<input
-				required
-				type='datetime-local'
-				name='dateAndTime'
-				id='dateAndTime'
-				onChange={(e) =>
-					setProjectionData({
-						...projectionData,
-						dateTimeStr: `${e.target.value.slice(
-							0,
-							10
-						)} ${e.target.value.slice(11, 16)}`,
-					})
-				}
-			/>
-			<label htmlFor='ticketPrice'>Ticket Price</label>
-			<input
-				required
-				type='number'
-				min={0}
-				name='ticketPrice'
-				id='ticketPrice'
-				onChange={(e) =>
-					setProjectionData({
-						...projectionData,
-						ticketPrice: e.target.value,
-					})
-				}
-			/>
-			<Button type='submit' className='blue full-width'>
-				Save projection
-			</Button>
-		</form>
+					{types.map((type) => (
+						<option key={type.id} value={type.id}>
+							{type.name}
+						</option>
+					))}
+				</select>
+				{checkType && (
+					<>
+						<label htmlFor='hall'>Hall</label>
+						<select
+							required
+							name='hall'
+							id='hall'
+							onChange={(e) =>
+								setProjectionData({
+									...projectionData,
+									hallId: e.target.value,
+								})
+							}
+						>
+							<option selected value=''>
+								Choose hall
+							</option>
+							{hallsOption().map((hall) => (
+								<option key={hall.id} value={hall.id}>
+									{hall.name}
+								</option>
+							))}
+						</select>
+					</>
+				)}
+				<label htmlFor='dateAndTime'>Date and Time</label>
+				<input
+					required
+					type='datetime-local'
+					name='dateAndTime'
+					id='dateAndTime'
+					onChange={(e) =>
+						setProjectionData({
+							...projectionData,
+							dateTimeStr: `${e.target.value.slice(
+								0,
+								10
+							)} ${e.target.value.slice(11, 16)}`,
+						})
+					}
+					min={new Date().toISOString().slice(0, 16)}
+				/>
+				<label htmlFor='ticketPrice'>Ticket Price</label>
+				<input
+					required
+					type='number'
+					min={0}
+					name='ticketPrice'
+					id='ticketPrice'
+					onChange={(e) =>
+						setProjectionData({
+							...projectionData,
+							ticketPrice: e.target.value,
+						})
+					}
+				/>
+				<Button type='submit' className='blue full-width'>
+					Save projection
+				</Button>
+			</form>
+		</div>
 	);
 };
 export default ProjectionForm;

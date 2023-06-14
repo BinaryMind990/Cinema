@@ -1,21 +1,41 @@
 import { useNavigate } from 'react-router-dom';
 import { movieClient } from 'apis/CinemaClient';
 import MovieForm from '../MovieForm/MovieForm';
-import { useContext } from 'react';
-import { DataContext } from 'contexts/MainContext';
+import { useState } from 'react';
+import ErrorModal from 'components/UI/Modals/ErrorModal';
+import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
 
 const CreateMovie = () => {
+	const [errorModal, setErrorModal] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const navigate = useNavigate();
-	const { setMovies } = useContext(DataContext);
-
 	const handleFormSubmit = async (formData) => {
-		await movieClient.createMovie(formData);
-		setMovies((prevMovies) => [formData, ...prevMovies]);
-		navigate('/movies');
+		try {
+			await movieClient.createMovie(formData);
+			navigate('/movies');
+		} catch (error) {
+			const errorMessage =
+				error.response.data.errors[0]?.defaultMessage ||
+				error.response.data.errors[1]?.defaultMessage ||
+				'Unknown error occurred';
+			const formattedMessage = formatErrorMessage(errorMessage);
+
+			setErrorMessage(formattedMessage);
+
+			setErrorModal(true);
+			return;
+		}
 	};
 
 	return (
 		<div>
+			{errorModal && (
+				<ErrorModal
+					title='Error'
+					message={errorMessage}
+					onClose={() => setErrorModal(false)}
+				/>
+			)}
 			<div className='title-wrapper'>
 				<h1>Create movie</h1>
 			</div>

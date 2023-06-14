@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
-	// const [projections, setProjections] = useState([]);
+	const [projections, setProjections] = useState([]);
 	const [projectionData, setProjectionData] = useState({
 		movieId: '',
 		typeId: '',
@@ -14,20 +14,20 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		tiketPrice: '',
 	});
 	const [errorModal, setErrorModal] = useState(false);
-	// const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
 
-	// useEffect(() => {
-	// 	getProjections();
-	// }, []);
+	useEffect(() => {
+		getProjections();
+	}, []);
 
-	// const getProjections = async () => {
-	// 	try {
-	// 		const res = await CinemaAxios.get('/projections');
-	// 		setProjections(res.data);
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
+	const getProjections = async () => {
+		try {
+			const res = await CinemaAxios.get('/projections');
+			setProjections(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const checkType = projectionData.typeId;
 
@@ -51,35 +51,50 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// const selectedDate = new Date(projectionData.dateTimeStr);
-		// const currentDate = new Date();
-		// console.log('Unutra', projections);
-		// const existingProjection =
-		// 	projections.length > 0 &&
-		// 	projections.some(
-		// 		(projection) =>
-		// 			projection.hallId === projectionData.hallId &&
-		// 			new Date(projection.dateTimeStr) === selectedDate
-		// 	);
 
-		// if (selectedDate < currentDate) {
-		// 	setErrorMessage('Selection of a past date is not allowed.');
-		// 	setErrorModal(true);
-		// 	return;
-		// } else if (existingProjection) {
-		// 	setErrorMessage(
-		// 		'The selected hall is already occupied at the specified time.'
-		// 	);
-		// 	setErrorModal(true);
-		// 	return;
-		// } else {
-		onSubmit(projectionData);
-		navigate('/projections');
-		// }
+		const selectedDateTime = new Date(projectionData.dateTimeStr);
+		const currentDateTime = new Date();
+		const allowedDateTime = new Date();
+		allowedDateTime.setHours(allowedDateTime.getHours() + 2);
+
+		const existingProjection =
+			projections.length > 0 &&
+			projections.some(
+				(projection) =>
+					projection.hallId === projectionData.hallId &&
+					new Date(projection.dateTimeStr).getTime() ===
+						selectedDateTime.getTime()
+			);
+
+		console.log(
+			existingProjection,
+			projectionData.hallId,
+			projectionData.dateTimeStr
+		);
+
+		if (
+			selectedDateTime < currentDateTime ||
+			selectedDateTime < allowedDateTime
+		) {
+			setErrorMessage(
+				'Projection cannot be in the past or less than 2 hours in the future.'
+			);
+			setErrorModal(true);
+			return;
+		} else if (existingProjection) {
+			setErrorMessage(
+				'The selected hall is already occupied at the specified time.'
+			);
+			setErrorModal(true);
+			return;
+		} else {
+			onSubmit(projectionData);
+			navigate('/projections');
+		}
 	};
 	return (
 		<div>
-			{/* <>
+			<>
 				{errorModal && (
 					<ErrorModal
 						title='Error'
@@ -87,7 +102,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 						onClose={() => setErrorModal(false)}
 					/>
 				)}
-			</> */}
+			</>
 			<form className='form' onSubmit={handleSubmit}>
 				<label htmlFor='movieName'>Movie</label>
 				<select
@@ -101,9 +116,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 						})
 					}
 				>
-					<option selected value=''>
-						Choose movie
-					</option>
+					<option value=''>Choose movie</option>
 					{movies.map((movie) => (
 						<option key={movie.id} value={movie.id}>
 							{movie.name}
@@ -122,9 +135,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 						})
 					}
 				>
-					<option selected value=''>
-						Choose type
-					</option>
+					<option value=''>Choose type</option>
 					{types.map((type) => (
 						<option key={type.id} value={type.id}>
 							{type.name}
@@ -145,9 +156,7 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 								})
 							}
 						>
-							<option selected value=''>
-								Choose hall
-							</option>
+							<option value=''>Choose hall</option>
 							{hallsOption().map((hall) => (
 								<option key={hall.id} value={hall.id}>
 									{hall.name}

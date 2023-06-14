@@ -5,17 +5,17 @@ import javax.validation.constraints.Size;
 
 public class UserChangePasswordDTO {
 
-    @NotBlank(message = "Korisnicko ime nije zadato.")
+    @NotBlank(message = "You must add username")
     private String userName;
 
-    @NotBlank(message = "Stara lozinka nije zadata.")
+    @NotBlank(message = "You must insert old password")
     private String oldPassword;
 
-    @NotBlank(message = "Lozinka nije zadata.")
+    @NotBlank(message = "You musr insert new password.")
     @Size(min = 5, max = 15)
     private String password;
 
-    @NotBlank(message = "Ponovljena lozinka nije zadata.")
+    @NotBlank(message = "You must insert confirmed password")
     @Size(min = 5, max = 15)
     private String confirmPassword;
 

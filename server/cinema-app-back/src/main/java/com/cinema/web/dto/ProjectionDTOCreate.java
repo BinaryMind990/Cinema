@@ -19,13 +19,13 @@ public class ProjectionDTOCreate {
 	private Long movieId;
 
 	@NotNull
-	@Min(value = 1)
-	@Max(value = 3)
+	@Min(value = 1, message = "Type id must be between 1 and 3")
+	@Max(value = 3, message = "Type id must be between 1 and 3")
 	private Long typeId;
 
 	@NotNull
-	@Min(value = 1)
-	@Max(value = 5)
+	@Min(value = 1, message = "Hall id must be between 1 and 5")
+	@Max(value = 5, message = "Hall id must be between 1 and 5")
 	private Long hallId;
 
 	@NotBlank(message = "Date and time are not added.")

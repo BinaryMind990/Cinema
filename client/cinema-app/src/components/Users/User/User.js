@@ -108,12 +108,6 @@ const User = () => {
 														? value
 														: key === 'price'
 														? `${Number(value).toFixed(2)} RSD`
-														: typeof value === 'string'
-														? value
-																.split('T')[0]
-																.split('-')
-																.reverse()
-																.join('-')
 														: value;
 												return <td key={key}>{displayValue}</td>;
 											})}

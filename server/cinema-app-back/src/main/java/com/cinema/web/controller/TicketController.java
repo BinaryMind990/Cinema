@@ -1,6 +1,5 @@
 package com.cinema.web.controller;
 
-import com.cinema.enumeration.UserRole;
 import com.cinema.model.Projection;
 import com.cinema.model.Ticket;
 import com.cinema.model.Users;

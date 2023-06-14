@@ -5,6 +5,8 @@ import com.cinema.web.dto.ProjectionDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +21,9 @@ public class ProjectionToProjectionDTO implements Converter<Projection, Projecti
 		dto.setId(projection.getId());
 		dto.setMovieId(projection.getMovie().getId());
 		dto.setMovieName(projection.getMovie().getName());
-		dto.setDateTimeStr(projection.getDateAndTime().toString());
+		
+		
+		dto.setDateTimeStr(getDateTimeStr(projection.getDateAndTime()));
 		dto.setHall(projection.getHall().getName());
 		dto.setHallId(projection.getHall().getId());
 		dto.setTicketPrice(projection.getTicketPrice());
@@ -43,5 +47,11 @@ public class ProjectionToProjectionDTO implements Converter<Projection, Projecti
 			dtos.add(convert(m));
 		}
 		return dtos;
+	}
+	
+	private String getDateTimeStr (LocalDateTime dateTime) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+		return dtf.format(dateTime);
+		
 	}
 }

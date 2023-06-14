@@ -37,8 +37,7 @@ public class ProjectionController {
 	@Autowired
 	private ProjectionToProjectionDTO toDto;
 
-	@Autowired
-	private ProjectionDTOtoProjectionNew toProjectionNew;
+
 	// @PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<List<ProjectionDTO>> search(@RequestParam(required = false) String date) {

@@ -15,17 +15,19 @@ public class UserDTO {
     private Long id;
 
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$")
+    @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$", message = "username must be between 3 and 15 characters, you can use lower case, upper case, and numbers")
     private String userName;
 
     @NotEmpty
-    @Email
+    @Email 
     private String eMail;
 
-    @Size(min=2, max=50)
+    @Size(min=2)
+    @Pattern(regexp = "^[A-Za-z][a-z']{2,30}(( |-)[a-zA-Z']{2,30}){0,3}$", message = "The name must start with a letter and contain only letters and possibly an apostrophe and a hyphen")
     private String name;
 
-    @Size(min=2, max=50)
+    @Size(min=2)
+    @Pattern(regexp = "^[A-Za-z][a-z']{2,30}(( |-)[a-zA-Z']{2,30}){0,3}$", message = "The lastname must start with a letter and contain only letters and possibly an apostrophe and a hyphen")
     private String lastName;
     
     private String role;

@@ -33,10 +33,10 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets = new ArrayList<Ticket>();
-    
+
     @Column
     private LocalDateTime registrationDateTime;
-    
+
     @Column
     private Boolean deleted = false;
 
@@ -117,27 +117,24 @@ public class Users {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
-    
 
     public Boolean getDeleted() {
-		return deleted;
-	}
+        return deleted;
+    }
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-	
-	
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
-	public LocalDateTime getRegistrationDateTime() {
-		return registrationDateTime;
-	}
+    public LocalDateTime getRegistrationDateTime() {
+        return registrationDateTime;
+    }
 
-	public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
-		this.registrationDateTime = registrationDateTime;
-	}
+    public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
+        this.registrationDateTime = registrationDateTime;
+    }
 
-	@Override
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

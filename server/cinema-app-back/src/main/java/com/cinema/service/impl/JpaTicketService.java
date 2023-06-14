@@ -27,7 +27,7 @@ public class JpaTicketService implements TicketService {
 
 	@Autowired
 	private ProjectionService projectionService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -50,13 +50,12 @@ public class JpaTicketService implements TicketService {
 			return null;
 		if (projection.getHall().getSeats().size() < dto.getSeatNumber())
 			return null;
-		
 
 		if (projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList())
 				.contains(dto.getSeatNumber()))
 			return null;
 		Users user = userService.findbyUserName(userName).get();
-		
+
 		Ticket ticket = toTicket.convert(dto);
 		ticket.setUser(user);
 		return ticketRep.save(ticket);

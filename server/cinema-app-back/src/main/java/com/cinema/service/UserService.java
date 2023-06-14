@@ -16,7 +16,7 @@ public interface UserService {
     Page<Users> findAll(int pageNumber);
 
     Users save(Users user);
-    
+
     Users update(Users user);
 
     Users delete(Long id);
@@ -24,10 +24,10 @@ public interface UserService {
     Optional<Users> findbyUserName(String userName);
 
     boolean changePassword(Long id, UserChangePasswordDTO userChangePasswordDto);
-    
+
     boolean changePasswordByAdmin(Long id, UserChangePasswordByAdminDto dto);
-    
+
     Users changeRole(Users user, String role);
 
-	List<Users> searchUsers(String userName, String role, String sortBy, String sort);
+    List<Users> searchUsers(String userName, String role, String sortBy, String sort);
 }

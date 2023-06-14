@@ -1,11 +1,9 @@
-import CinemaAxios from 'apis/CinemaAxios';
 import Button from 'components/UI/Button/Button';
 import ErrorModal from 'components/UI/Modals/ErrorModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
-	const [projections, setProjections] = useState([]);
 	const [projectionData, setProjectionData] = useState({
 		movieId: '',
 		typeId: '',
@@ -15,19 +13,6 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 	});
 	const [errorModal, setErrorModal] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-
-	useEffect(() => {
-		getProjections();
-	}, []);
-
-	const getProjections = async () => {
-		try {
-			const res = await CinemaAxios.get('/projections');
-			setProjections(res.data);
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	const checkType = projectionData.typeId;
 
@@ -57,33 +42,12 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		const allowedDateTime = new Date();
 		allowedDateTime.setHours(allowedDateTime.getHours() + 2);
 
-		const existingProjection =
-			projections.length > 0 &&
-			projections.some(
-				(projection) =>
-					projection.hallId === projectionData.hallId &&
-					new Date(projection.dateTimeStr).getTime() ===
-						selectedDateTime.getTime()
-			);
-
-		console.log(
-			existingProjection,
-			projectionData.hallId,
-			projectionData.dateTimeStr
-		);
-
 		if (
 			selectedDateTime < currentDateTime ||
 			selectedDateTime < allowedDateTime
 		) {
 			setErrorMessage(
 				'Projection cannot be in the past or less than 2 hours in the future.'
-			);
-			setErrorModal(true);
-			return;
-		} else if (existingProjection) {
-			setErrorMessage(
-				'The selected hall is already occupied at the specified time.'
 			);
 			setErrorModal(true);
 			return;

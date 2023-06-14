@@ -19,30 +19,30 @@ public class UserDTO {
     private String userName;
 
     @NotEmpty
-    @Email 
+    @Email
     private String eMail;
 
-    @Size(min=2)
+    @Size(min = 2)
     @Pattern(regexp = "^[A-Za-z][a-z']{2,30}(( |-)[a-zA-Z']{2,30}){0,3}$", message = "The name must start with a letter and contain only letters and possibly an apostrophe and a hyphen")
     private String name;
 
-    @Size(min=2)
+    @Size(min = 2)
     @Pattern(regexp = "^[A-Za-z][a-z']{2,30}(( |-)[a-zA-Z']{2,30}){0,3}$", message = "The lastname must start with a letter and contain only letters and possibly an apostrophe and a hyphen")
     private String lastName;
-    
+
     private String role;
-    
+
     private List<TicketDTO> tickets;
 
     public String getRole() {
-		return role;
-	}
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -82,18 +82,18 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-	public List<TicketDTO> getTickets() {
-		return tickets;
-	}
+    public List<TicketDTO> getTickets() {
+        return tickets;
+    }
 
-	public void setTickets(List<TicketDTO> tickets) {
-		this.tickets = tickets;
-	}
+    public void setTickets(List<TicketDTO> tickets) {
+        this.tickets = tickets;
+    }
 
-	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", userName=" + userName + ", eMail=" + eMail + ", name=" + name + ", lastName="
-				+ lastName + ", role=" + role + "]";
-	}
+    @Override
+    public String toString() {
+        return "UserDTO [id=" + id + ", userName=" + userName + ", eMail=" + eMail + ", name=" + name + ", lastName="
+                + lastName + ", role=" + role + "]";
+    }
 
 }

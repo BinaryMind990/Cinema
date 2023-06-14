@@ -46,7 +46,7 @@ public class JpaProjectionService implements ProjectionService {
 			System.out.println("ne moze se kreirati projekcija jer je film obrisan");
 			return null;
 		}
-		// provera da li je odabrani tip podrzan u odabranoj sali
+
 		int hallId = dto.getHallId().intValue();
 		switch (dto.getTypeId().intValue()) {
 			case 1:
@@ -70,29 +70,7 @@ public class JpaProjectionService implements ProjectionService {
 		}
 
 		Projection projection = toProjection.convert(dto);
-		/*
-		 * if (!projection.getHall().getTypes().stream().map(t ->
-		 * t.getId()).collect(Collectors.toList()).contains(projection.getType().getId()
-		 * )) {
-		 * 
-		 * System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
-		 * return null;
-		 * }
-		 */
 
-		/*
-		 * System.out.println(projection.getHall().getTypes().contains(projection.
-		 * getType()));
-		 * System.out.println(projection.getHall().getTypes());
-		 * System.out.println(projection.getType());
-		 * if (!projection.getHall().getTypes().contains(projection.getType())) {
-		 * 
-		 * System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
-		 * return null;
-		 * }
-		 */
-
-		// ako je uneto vreme projekcije pre trenutnog vremena plus 2 sata
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now().plusHours(2))) {
 			System.out.println("Projekcija ne moze biti u proslosti ili manje od dva sata u buducnosti");
 			return null;
@@ -105,7 +83,7 @@ public class JpaProjectionService implements ProjectionService {
 			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
 		}
-		// projekcija pocinje pre nego sto se prethodna projekcija u toj sali zavrsila
+
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isBefore(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime()
 						.isBefore(p.getDateAndTime().plusMinutes(p.getMovie().getDuration())));
@@ -114,8 +92,7 @@ public class JpaProjectionService implements ProjectionService {
 			System.out.println("projekcija se poklapa sa postojecom projekcijom u odabranoj sali");
 			return null;
 		}
-		// postoji projekcija koja pocinje u istoj sali pre nego sto se uneta projekcija
-		// zavrsi
+
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isAfter(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime().plusMinutes(projection.getMovie().getDuration())
 						.isAfter(p.getDateAndTime()));

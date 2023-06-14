@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -32,16 +33,7 @@ public class MovieController {
     @Autowired
     private MovieDTOToMovieUpdate toMovieUpdate;
 
-    /*
-     * @GetMapping
-     * public ResponseEntity<List<MovieDTO>> getAll() {
-     * 
-     * List<Movie> movies = movieService.findAll();
-     * 
-     * return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
-     * }
-     */
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getList(
             @RequestParam(required = false) String name,
@@ -70,7 +62,7 @@ public class MovieController {
         }
     }
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDTO> create(@Valid @RequestBody MovieDTO movieDTO) {
         Movie newMovie = movieService.save(toMovieNew.convert(movieDTO));
@@ -78,7 +70,7 @@ public class MovieController {
         return new ResponseEntity<>(toDTO.convert(newMovie), HttpStatus.CREATED);
     }
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDTO> update(@PathVariable Long id, @Valid @RequestBody MovieDTO movieDTO) {
         if (!id.equals(movieDTO.getId())) {
@@ -97,7 +89,7 @@ public class MovieController {
         return new ResponseEntity<>(toDTO.convert(savedMovie), HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (movieService.findById(id) == null)
@@ -111,14 +103,4 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    /*
-     * private LocalDateTime getLocalDateTime(String datumIVreme) throws
-     * DateTimeParseException {
-     * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-     * LocalDate datum = LocalDate.parse(datumIVreme.substring(0, 10), formatter);
-     * LocalTime vreme = LocalTime.parse(datumIVreme.substring(11),
-     * DateTimeFormatter.ofPattern("HH:mm"));
-     * return LocalDateTime.of(datum, vreme);
-     * }
-     */
 }

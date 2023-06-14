@@ -92,7 +92,7 @@ public class ProjectionController {
 
 	}
 
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		Projection deletedProjection = projectionService.delete(id);
@@ -104,7 +104,7 @@ public class ProjectionController {
 		}
 	}
 
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProjectionDTO> create(@Valid @RequestBody ProjectionDTOCreate dto) {
 
@@ -115,14 +115,6 @@ public class ProjectionController {
 		return new ResponseEntity<>(toDto.convert(savedProjection), HttpStatus.CREATED);
 	}
 
-	/*
-	 * private LocalDateTime getLocalDateTime(String dateTime) throws
-	 * DateTimeParseException {
-	 * DateTimeFormatter formatter =
-	 * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-	 * return LocalDateTime.parse(dateTime, formatter);
-	 * }
-	 */
 	private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

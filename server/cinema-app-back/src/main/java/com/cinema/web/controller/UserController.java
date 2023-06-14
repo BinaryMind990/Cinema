@@ -86,7 +86,7 @@ public class UserController {
         return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.CREATED);
     }
 
-    // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
 
@@ -95,25 +95,18 @@ public class UserController {
         }
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         Users userToChange = userService.findOne(id).get();
-        /*
-         * //ogranicenje da obicni korisnik moze da menja samo svoje podatke i da ne
-         * moze da menja userName
-         * if(userName != userDTO.getUserName() ||
-         * !userDTO.getUserName().equals(userToChange.getUserName())) {
-         * return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-         * }
-         */
+
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            // Admin može mijenjati podatke korisnika
+
             Users user = toUser.convert(userDTO);
             return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
         } else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
-            // Obični korisnik može mijenjati samo svoje podatke
+
             Users user = toUser.convert(userDTO);
             return new ResponseEntity<>(toUserDTO.convert(userService.save(user)), HttpStatus.OK);
         } else {
-            // Korisnik nema ovlasti za ažuriranje podataka
+
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         }
 
@@ -136,15 +129,13 @@ public class UserController {
         return new ResponseEntity<UserDTO>(toUserDTO.convert(userChangedRole), HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> get(@PathVariable Long id) {
         Optional<Users> user = userService.findOne(id);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        // ogranicenje da ukoliko je ulogovan obican korisnik moze da vidi samo svoje
-        // podatke kao korisnika
         if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !auth.getName().equals(user.get().getUserName()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -166,7 +157,7 @@ public class UserController {
      * }
      */
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDtoForAdminView>> getUsers(
             @RequestParam(required = false) String userName,
@@ -241,14 +232,13 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @RequestMapping(path = "/auth", method = RequestMethod.POST)
     public ResponseEntity<String> authenticateUser(@RequestBody AuthUserDTO dto) {
-        // Perform the authentication
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 dto.getUsername(), dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         try {
-            // Reload user details so we can generate token
+
             UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
             return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
         } catch (UsernameNotFoundException e) {

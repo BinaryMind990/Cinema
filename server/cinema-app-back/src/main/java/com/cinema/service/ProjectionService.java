@@ -2,7 +2,6 @@ package com.cinema.service;
 
 import com.cinema.model.Projection;
 import com.cinema.web.dto.ProjectionDTOCreate;
-
 import java.time.LocalDate;
 import java.util.List;
 

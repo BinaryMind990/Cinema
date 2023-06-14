@@ -35,6 +35,5 @@ public class TicketDTOCreate {
 	public String toString() {
 		return "TicketDTOCreate [projectionId=" + projectionId + ", seatNumber=" + seatNumber + "]";
 	}
-	
-	
+
 }

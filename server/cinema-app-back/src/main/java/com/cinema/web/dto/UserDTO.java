@@ -15,17 +15,17 @@ public class UserDTO {
     private Long id;
 
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]+$")
+    @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$")
     private String userName;
 
     @NotEmpty
     @Email
     private String eMail;
 
-    @Size(min=3, max=50)
+    @Size(min=2, max=50)
     private String name;
 
-    @Size(min=3, max=50)
+    @Size(min=2, max=50)
     private String lastName;
     
     private String role;

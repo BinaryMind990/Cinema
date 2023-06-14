@@ -1,5 +1,8 @@
 package com.cinema.support;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.core.convert.converter.Converter;
@@ -16,9 +19,10 @@ public class TicketToTicketDtoForDispay implements Converter<Ticket, TicketDtoFo
 		dto.setId(source.getId());
 		dto.setUserId(source.getUser().getId());
 		dto.setUserName(source.getUser().getUserName());
-		String []dateTime = source.getDateAndTime().toString().split("T");
+		String []dateTime = getDateTimeStr(source.getDateAndTime()).split(" ");
 		dto.setTicketSellDate(dateTime[0]);
 		dto.setTicketSellTime(dateTime[1]);
+		dto.setSeatNumber(source.getSeat().getSeatNumber());
 				
 		return dto;
 	}
@@ -30,5 +34,10 @@ public class TicketToTicketDtoForDispay implements Converter<Ticket, TicketDtoFo
 		}
 		return dtos;
 	}
-
+	
+	public String getDateTimeStr(LocalDateTime dateTime) throws DateTimeParseException {
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+		return dtf.format(dateTime);			
+	}
 }

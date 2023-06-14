@@ -9,6 +9,8 @@ public class UserDtoForAdminView {
 	private String registrationDateTime;
 	
 	private String userRole;
+	
+	private String eMail;
 
 	public long getId() {
 		return id;
@@ -40,6 +42,15 @@ public class UserDtoForAdminView {
 
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
+	}
+	
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
 	}
 
 	@Override

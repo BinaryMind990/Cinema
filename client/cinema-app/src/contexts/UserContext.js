@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
 			window.localStorage.setItem('role', jwtDecoded.role.authority);
 			setUser(jwtDecoded);
 			setRole(jwtDecoded.role.authority);
-			navigate('/');
+			navigate('/projections');
 		} catch (error) {
 			alert('Login unsuccessful. Please try again!');
 			console.log(error);

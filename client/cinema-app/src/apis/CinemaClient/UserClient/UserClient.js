@@ -11,10 +11,13 @@ export const userClient = {
 			}
 		);
 	},
-	get: async () => {
+	get: async (conf) => {
 		try {
-			const response = await CinemaAxios.get('/users');
-			return response.data;
+			const response = await CinemaAxios.get('/users', conf);
+			return {
+				data: response.data,
+				headers: response.headers,
+			};
 		} catch (error) {
 			throw error;
 		}

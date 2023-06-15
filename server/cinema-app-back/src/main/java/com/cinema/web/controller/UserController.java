@@ -164,7 +164,10 @@ public class UserController {
 
         Page<Users> users = userService.searchUsers(userName, role, sortBy, sort, pageNo);
 
-        return new ResponseEntity<>(toDtoForView.convertAll(users.getContent()), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Total-Pages", Integer.toString(users.getTotalPages()));
+
+        return new ResponseEntity<>(toDtoForView.convertAll(users.getContent()), headers, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

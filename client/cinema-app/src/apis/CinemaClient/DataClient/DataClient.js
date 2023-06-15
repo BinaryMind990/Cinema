@@ -3,8 +3,19 @@ import CinemaAxios from 'apis/CinemaAxios';
 export const dataClient = {
 	getMovies: async () => {
 		try {
-			const response = await CinemaAxios.get('/movies');
+			const response = await CinemaAxios.get('/movies/all');
 			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	getMoviesPage: async (conf) => {
+		try {
+			const response = await CinemaAxios.get('/movies', conf);
+			return {
+				data: response.data,
+				headers: response.headers,
+			};
 		} catch (error) {
 			throw error;
 		}

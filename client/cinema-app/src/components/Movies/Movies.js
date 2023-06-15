@@ -1,35 +1,51 @@
 import { useContext, useEffect, useState } from 'react';
-import Button from '../UI/Button/Button';
-import styles from './Movies.module.css';
 import { Link } from 'react-router-dom';
-import { NavigateContext } from 'contexts/NavigateContext';
-import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
-import Loader from 'components/UI/Loader/Loader';
+import styles from './Movies.module.css';
 import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 import { movieClient } from 'apis/CinemaClient/MovieClient/MovieClient';
+import { NavigateContext } from 'contexts/NavigateContext';
+import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
+import Button from '../UI/Button/Button';
+import Loader from 'components/UI/Loader/Loader';
+import { Pagination } from 'antd';
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);
+	const [pageNo, setPageNo] = useState(1);
+	const [totalPages, setTotalPages] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const { getMovieUrl, goToAddHandler, goToEditHandler } =
 		useContext(NavigateContext);
 
 	useEffect(() => {
-		const getMovies = async () => {
-			try {
-				const res = await dataClient.getMovies();
-				setMovies(res);
-				setLoading(false);
-			} catch (error) {
-				setLoading(false);
-			}
-		};
-		getMovies();
-	}, []);
+		getMovies(pageNo - 1);
+	}, [pageNo]);
+
+	const getMovies = async (newPageNo) => {
+		try {
+			const conf = {
+				params: {
+					pageNo: newPageNo,
+				},
+			};
+
+			const response = await dataClient.getMoviesPage(conf);
+			setMovies(response.data);
+			setTotalPages(response.headers['total-pages'] + 0);
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
+	};
 
 	const deleteMovie = async (movieId) => {
 		await movieClient.deleteMovie(movieId);
 		setMovies(movies.filter((movie) => movie.id !== movieId));
+	};
+
+	const handlePageChange = (newPageNo) => {
+		setPageNo(newPageNo);
 	};
 
 	if (loading) {
@@ -94,6 +110,11 @@ const Movies = () => {
 							))}
 						</tbody>
 					</table>
+					<Pagination
+						defaultCurrent={pageNo}
+						total={totalPages}
+						onChange={handlePageChange}
+					/>
 				</div>
 			</div>
 		</div>

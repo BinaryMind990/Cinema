@@ -1,21 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Users.module.css';
-import { NavigateContext } from 'contexts/NavigateContext';
-import { Input } from 'antd';
+import { Input, Pagination } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { searchUsers } from 'utils/SearchUtils/SearchHelper';
-
-import { UserContext } from 'contexts/UserContext';
-import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
-import Loader from 'components/UI/Loader/Loader';
+import styles from './Users.module.css';
 import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
+import { UserContext } from 'contexts/UserContext';
+import { NavigateContext } from 'contexts/NavigateContext';
+import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
+import { searchUsers } from 'utils/SearchUtils/SearchHelper';
+import Loader from 'components/UI/Loader/Loader';
 
 const Users = () => {
 	const { user, role } = useContext(UserContext);
-
 	const { getUserUrl } = useContext(NavigateContext);
 	const [users, setUsers] = useState([]);
+	const [pageNo, setPageNo] = useState(1);
+	const [totalPages, setTotalPages] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [search, setSearch] = useState('');
 
@@ -23,18 +23,25 @@ const Users = () => {
 	const userId = user ? user.id : undefined;
 
 	useEffect(() => {
-		const getUsers = async () => {
-			try {
-				const res = await userClient.get('/users');
-				setUsers(res);
-				setLoading(false);
-			} catch (error) {
-				setLoading(false);
-				console.log(error);
-			}
-		};
-		getUsers();
-	}, []);
+		getUsers(pageNo - 1);
+	}, [pageNo]);
+	const getUsers = async (newPageNo) => {
+		try {
+			const conf = {
+				params: {
+					pageNo: newPageNo,
+				},
+			};
+			const response = await userClient.get(conf);
+			setUsers(response.data);
+			console.log(response.headers);
+			setTotalPages(response.headers['total-pages'] + 0);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			console.log(error);
+		}
+	};
 
 	const deleteUser = async (userId) => {
 		await userClient.delete(userId);
@@ -43,6 +50,10 @@ const Users = () => {
 
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
+	};
+
+	const handlePageChange = (newPageNo) => {
+		setPageNo(newPageNo);
 	};
 
 	if (loading) {
@@ -109,6 +120,11 @@ const Users = () => {
 						})}
 					</tbody>
 				</table>
+				<Pagination
+					defaultCurrent={pageNo}
+					total={totalPages}
+					onChange={handlePageChange}
+				/>
 			</div>
 		</div>
 	);

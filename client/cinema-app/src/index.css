@@ -176,6 +176,38 @@ input:focus-visible {
   background-color: #b22222 !important;
 }
 
+.ant-pagination .ant-pagination-item,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active {
+  background: #051d31;
+  border-color: #fab702;
+}
+
+.ant-pagination .ant-pagination-item a,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active a {
+  color: #fab702;
+}
+
+
+.ant-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover,
+.ant-pagination .ant-pagination-prev.ant-pagination-disabled:hover .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active:hover a {
+  color: #fab702;
+  background-color: #051d31;
+}
+
+.ant-pagination .ant-pagination-prev:hover,
+
+.ant-pagination .ant-pagination-item-active:hover {
+  border-color: #051d31;
+}
+
+
+
 @media screen and (min-width: 420px) {
   .title-wrapper {
     flex-direction: row;

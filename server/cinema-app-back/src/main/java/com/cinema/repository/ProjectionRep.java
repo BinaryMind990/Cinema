@@ -4,6 +4,7 @@ import com.cinema.model.Projection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,12 +35,19 @@ public interface ProjectionRep extends JpaRepository<Projection, Long> {
 			+ "(:hallId = NULL OR p.hall.id = :hallId) AND "
 			+ "(p.ticketPrice BETWEEN :minPrice AND :maxPrice) AND "
 			+ "p.deleted = false")
-	List<Projection> findByParameters(@Param("movieId") Long movieId, @Param("localDate") LocalDate localDate,
-			@Param("typeId") Long typeId, @Param("hallId") Long hallId, @Param("minPrice") Double minPrice,
-			@Param("maxPrice") Double maxPrice, Sort sort);
+	List<Projection> findByParameters(@Param("movieId")Long movieId, @Param("localDate") LocalDate localDate, @Param("typeId") Long typeId, @Param("hallId") Long hallId, @Param("minPrice") Double minPrice,
+	@Param("maxPrice")	Double maxPrice, Sort sort);
 
 	@Query("SELECT p FROM Projection p WHERE "
 			+ " date(p.dateAndTime) BETWEEN date(:dateFrom) and date(:dateTo)")
 	List<Projection> findByDateAndTimeBetween(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
+	@Query("SELECT p FROM Projection p WHERE "
+			+ "(p.dateAndTime) > CURRENT_TIMESTAMP")
+	List<Projection> findByDateAndTimeAfter();
+
+	@Query("SELECT DISTINCT date(p.dateAndTime) FROM Projection p "
+			+ "WHERE p.dateAndTime > CURRENT_TIMESTAMP "
+			+ "ORDER BY p.dateAndTime")
+	List<String> findDates();
 }

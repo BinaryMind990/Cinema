@@ -5,6 +5,7 @@ import com.cinema.repository.MovieRep;
 import com.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -35,8 +36,8 @@ public class JpaMovieService implements MovieService {
 
     @Override
     public Movie save(Movie movie) {
-        movie.setDeleted(false);
-        movie.setVersion(0);
+    	movie.setDeleted(false);
+    	movie.setVersion(0);
         return movieRep.save(movie);
     }
 
@@ -48,20 +49,21 @@ public class JpaMovieService implements MovieService {
     @Override
     public Movie delete(Long id) {
         Optional<Movie> movie = movieRep.findById(id);
-        if (!movie.isPresent()) {
-            return null;
-        }
-        if (movie.isPresent() && movie.get().getProjections().isEmpty()) {
+       
+        if (movie.get().getProjections().isEmpty()) {
             movieRep.deleteById(id);
             return movie.get();
         }
-
-        if (movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {
-            movie.get().setDeleted(true);
-
-            movieRep.save(movie.get());
-            return movie.get();
+//        if (movie.get().getProjections().stream().anyMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now())));{
+//        	return null;
+//        }
+        
+        if(movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {	
+        	movie.get().setDeleted(true);	
+        	movieRep.save(movie.get());
+        	return movie.get();
         }
+   
         return null;
     }
 
@@ -70,33 +72,39 @@ public class JpaMovieService implements MovieService {
         return null;
     }
 
-    @Override
-    public List<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country,
-            String distributor, Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc) {
+	@Override
+	public Page<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country,
+			String distributor, Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc, int pageNo) {
+		
+		if(durationMin == null)
+			durationMin = 0;
+		if(durationMax == null)
+			durationMax = Integer.MAX_VALUE;
+		if(yearMin == null)
+			yearMin = 1900;
+		if(yearMax == null)
+			yearMax = LocalDate.now().getYear() +1;
+		if(sortAscOrDesc == null ||(!sortAscOrDesc.equalsIgnoreCase("asc") && !sortAscOrDesc.equalsIgnoreCase("desc")))
+			sortAscOrDesc = "ASC";
+		if(sortBy == null) {
+			sortBy = "name";
+		} else if( !sortBy.equals("name") && !sortBy.equals("duration") && !sortBy.equals("year") 
+				&& !sortBy.equals("country") && !sortBy.equals("distributor"))
+			sortBy = "name";
+		
+		if(sortAscOrDesc.equalsIgnoreCase("desc")) {
+		 return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).descending()));
+		}
+		else 
+			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).ascending()));
+		}
 
-        if (durationMin == null)
-            durationMin = 0;
-        if (durationMax == null)
-            durationMax = Integer.MAX_VALUE;
-        if (yearMin == null)
-            yearMin = 1900;
-        if (yearMax == null)
-            yearMax = LocalDate.now().getYear() + 1;
-        if (sortAscOrDesc == null
-                || (!sortAscOrDesc.equalsIgnoreCase("asc") && !sortAscOrDesc.equalsIgnoreCase("desc")))
-            sortAscOrDesc = "ASC";
-        if (sortBy == null) {
-            sortBy = "name";
-        } else if (!sortBy.equals("name") && !sortBy.equals("duration") && !sortBy.equals("year")
-                && !sortBy.equals("country") && !sortBy.equals("distributor"))
-            sortBy = "name";
-
-        if (sortAscOrDesc.equalsIgnoreCase("desc")) {
-            return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax,
-                    Sort.by(sortBy).descending());
-        } else
-            return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax,
-                    Sort.by(sortBy).ascending());
-    }
-
+    /*
+     * private LocalDateTime getDateConverted(String dateTime) throws
+     * DateTimeParseException {
+     * DateTimeFormatter formatter =
+     * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+     * return LocalDateTime.parse(dateTime, formatter);
+     * }
+     */
 }

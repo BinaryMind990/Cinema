@@ -42,25 +42,27 @@ public class JpaTicketService implements TicketService {
 	}
 
 	@Override
-	public Ticket save(TicketDTOCreate dto, String userName) {
+	public String save(TicketDTOCreate dto, String userName) {
 		Projection projection = projectionService.findOne(dto.getProjectionId());
 		if (projection == null)
-			return null;
+			return "Projection doesn't exist";
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now()))
-			return null;
+			return "Projection already started";
 		if (projection.getHall().getSeats().size() < dto.getSeatNumber())
-			return null;
+			return "Chosen seat doesn't exist";
 		
 
 		if (projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList())
 				.contains(dto.getSeatNumber()))
-			return null;
+			return "Ticket has been sold";
 		Users user = userService.findbyUserName(userName).get();
 		
 		
 		Ticket ticket = toTicket.convert(dto);
 		ticket.setUser(user);
-		return ticketRep.save(ticket);
+		ticketRep.save(ticket);
+		
+		return "success";
 	}
 
 	@Override

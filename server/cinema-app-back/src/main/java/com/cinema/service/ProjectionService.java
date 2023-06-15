@@ -4,7 +4,6 @@ import com.cinema.model.Projection;
 import com.cinema.web.dto.ProjectionDTOCreate;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProjectionService {
@@ -14,7 +13,7 @@ public interface ProjectionService {
     
     List<Projection> findAllAfterNow();
 
-    Projection save(ProjectionDTOCreate dto);
+    String save(ProjectionDTOCreate dto);
 
     Projection update(Projection projection);
 

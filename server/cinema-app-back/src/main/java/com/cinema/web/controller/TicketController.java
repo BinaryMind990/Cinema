@@ -52,7 +52,7 @@ public class TicketController {
 	@Autowired
 	private UserService userService;
 
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value = "/projection/{id}") //metoda vraca prodate karte za odabranu projekciju koje moze da vidi samo admin
 	public ResponseEntity<List<TicketDtoForDisplay>> getByProjection(@PathVariable Long id) {
 		Projection projection = projectionService.findOne(id);
@@ -65,7 +65,7 @@ public class TicketController {
 		return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
 	}
 
-	// @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<TicketDTO> getOne(@PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -83,7 +83,7 @@ public class TicketController {
         return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
 
     }
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/user/{id}")   //ova metoda vraca karte za korisnika
     public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id){
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -102,20 +102,21 @@ public class TicketController {
     	return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);	
     }
 
-    // @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TicketDTO> create(@Valid @RequestBody TicketDTOCreate dto) {
+    public ResponseEntity<String> create(@Valid @RequestBody TicketDTOCreate dto) {
 
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	String userName = auth.getName();
 
-    	Ticket savedTicket = ticketService.save(dto, userName);
-    	if (savedTicket == null)
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-    	return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.CREATED);
+    	String message = ticketService.save(dto, userName);
+    	if (message.equals("success")) {
+    		return new ResponseEntity<>("You buy ticket successfully", HttpStatus.CREATED);
+    	}else {
+    	return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    	}
     }
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 

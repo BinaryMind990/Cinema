@@ -10,7 +10,7 @@ public interface TicketService {
 
     Ticket findOne(Long id);
 
-    Ticket save(TicketDTOCreate dto, String userName);
+    String save(TicketDTOCreate dto, String userName);
 
     Ticket delete(Long id);
 }

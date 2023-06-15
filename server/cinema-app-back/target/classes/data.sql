@@ -41,7 +41,7 @@ INSERT INTO projection (date_and_time, ticket_price, hall_id, movie_id, type_id,
 ('2023-06-21 15:45', 350, 3, 8, 1, 0),
 ('2023-06-25 18:30', 400, 2, 7, 2, 0),
 ('2023-06-20 20:00', 450, 4, 7, 2, 0),
-('2023-06-21 20:00', 600, 5, 7, 3, 0);
+('2023-06-21 20:00', 600, 5, 6, 3, 0);
 
 
 INSERT INTO seat (seat_number, hall_id) VALUES 

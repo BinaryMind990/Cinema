@@ -135,8 +135,8 @@ public class JpaUserService implements UserService {
 	}
 
 	@Override
-	public List<Users> searchUsers(String userName, String role, String sortBy, String sort) {
-		List<Users> users = new ArrayList<Users>();
+	public Page<Users> searchUsers(String userName, String role, String sortBy, String sort, int pageNo) {
+		Page<Users> users;
 		UserRole userRole = null;
 		if (role != null) {
 		switch (role.toUpperCase()) {
@@ -160,9 +160,9 @@ public class JpaUserService implements UserService {
 			sort = "asc";
 		}
 		if (sort.equalsIgnoreCase("asc"))
-		 users = userRepository.search(userName, userRole, Sort.by(sortBy ).ascending());
+		 users = userRepository.search(userName, userRole, PageRequest.of(pageNo, 3, Sort.by(sortBy ).ascending()));
 		else {
-			users = userRepository.search(userName, userRole, Sort.by(sortBy).descending());
+			users = userRepository.search(userName, userRole, PageRequest.of(pageNo, 3, Sort.by(sortBy).descending()));
 		}
 		return users;
 	}

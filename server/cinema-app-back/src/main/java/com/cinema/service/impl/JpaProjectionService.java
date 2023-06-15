@@ -174,4 +174,15 @@ public class JpaProjectionService implements ProjectionService {
 			}
 			
 		}
+
+	@Override
+	public List<Projection> findAllAfterNow() {
+			return projectionRep.findByDateAndTimeAfter();
+	}
+
+	@Override
+	public List<String> findDates() {
+			
+		return projectionRep.findDates();
+	}
 }

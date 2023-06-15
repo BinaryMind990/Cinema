@@ -99,7 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.allowedOrigins("*")
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
 					.allowCredentials(true)
-					.exposedHeaders("Total-Pages")
+					.exposedHeaders("Total-Pages", "error")
 					.maxAge(3600);
 		}
 	}

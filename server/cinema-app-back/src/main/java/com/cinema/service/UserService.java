@@ -29,5 +29,5 @@ public interface UserService {
     
     Users changeRole(Users user, String role);
 
-	List<Users> searchUsers(String userName, String role, String sortBy, String sort);
+	Page<Users> searchUsers(String userName, String role, String sortBy, String sort, int pageNo);
 }

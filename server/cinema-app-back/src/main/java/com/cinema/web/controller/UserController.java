@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import javax.persistence.EntityNotFoundException;
@@ -75,10 +76,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody @Validated UserRegistrationDTO dto) {
     	
+    	
+    	
         if (dto.getId() != null || !dto.getPassword().equals(dto.getConfirmPassword()) || !userService.findbyUserName(dto.getUserName()).isEmpty()) {	
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        
         Users user = toUser.convert(dto);
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
@@ -114,14 +118,14 @@ public class UserController {
        } else {
            // Korisnik nema ovlasti za ažuriranje podataka
            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-       }
-    		   
-     
+       } 
     }
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/changeRole/{id}/{role}")
     public ResponseEntity<UserDTO> changeRole(@PathVariable Long id, @PathVariable String role){
     	Optional<Users> user= userService.findOne(id);
+    	
     	if(!user.isPresent()) {
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	}
@@ -139,8 +143,13 @@ public class UserController {
     // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> get(@PathVariable Long id) {
+    	
         Optional<Users> user = userService.findOne(id);
-        
+        if(!user.isPresent()) {
+        HttpHeaders headers = new HttpHeaders();
+    	headers.add("error", "There is some errors, I will tell you later what is it");
+    	return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
               
         //ogranicenje da ukoliko je ulogovan obican korisnik moze da vidi samo svoje podatke kao korisnika
@@ -168,12 +177,14 @@ public class UserController {
     		@RequestParam(required = false) String userName,
     		@RequestParam(required = false) String role,
     		@RequestParam(required = false) String sortBy,
-    		@RequestParam(required = false) String sort
+    		@RequestParam(required = false) String sort,
+    		@RequestParam(value = "pageNo", defaultValue = "0") int pageNo
     		){
-    	List<Users> users2 = userService.searchUsers(userName, role, sortBy, sort);
+    //  List<Users> users2 = userService.searchUsers(userName, role, sortBy, sort);
+    	Page<Users> users = userService.searchUsers(userName, role, sortBy, sort, pageNo);
     	
-    	List<Users> users = userService.findAll();
-    	return new ResponseEntity<>(toDtoForView.convertAll(users2), HttpStatus.OK);
+    //	List<Users> users = userService.findAll();
+    	return new ResponseEntity<>(toDtoForView.convertAll(users.getContent()), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

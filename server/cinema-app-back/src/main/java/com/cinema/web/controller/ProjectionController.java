@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -51,11 +52,21 @@ public class ProjectionController {
 			}
 			projections = projectionService.search(localDate);
 		} else {
-			projections = projectionService.findAll();
+			projections = projectionService.findAllAfterNow();
 		}
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
 	}
-	 @PreAuthorize("permitAll()")
+	
+	@GetMapping("/dates")
+	public ResponseEntity<List<String>> getProjectionDates(){
+		List<String> dates = projectionService.findDates();
+		return new ResponseEntity<>(dates, HttpStatus.OK);
+		
+	}
+	
+	
+	
+	@PreAuthorize("permitAll()")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProjectionDTO> getOne(@PathVariable Long id) {
 		Projection projection = projectionService.findOne(id);

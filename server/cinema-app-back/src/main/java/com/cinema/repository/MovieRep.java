@@ -4,6 +4,8 @@ import com.cinema.model.Movie;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,7 +30,7 @@ public interface MovieRep extends JpaRepository<Movie, Long> {
 			+ "(m.year BETWEEN :yearMin AND :yearMax) AND "
 			+ "m.deleted = false")
 			
-	List<Movie> search(@Param("name") String name,@Param("durationMin") int durationMin,@Param("durationMax") int durationMax,@Param("country") String country,@Param("distributor") String distributor,@Param("yearMin") int yearMin,
-			@Param ("yearMax") int yearMax, Sort sort);
+	Page<Movie> search(@Param("name") String name,@Param("durationMin") int durationMin,@Param("durationMax") int durationMax,@Param("country") String country,@Param("distributor") String distributor,@Param("yearMin") int yearMin,
+			@Param ("yearMax") int yearMax,Pageable pageable);
 
 }

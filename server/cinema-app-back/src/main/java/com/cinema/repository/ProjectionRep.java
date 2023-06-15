@@ -41,5 +41,13 @@ public interface ProjectionRep extends JpaRepository<Projection, Long> {
 	@Query("SELECT p FROM Projection p WHERE "
 			+ " date(p.dateAndTime) BETWEEN date(:dateFrom) and date(:dateTo)")
 	List<Projection> findByDateAndTimeBetween(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
-	
+
+	@Query("SELECT p FROM Projection p WHERE "
+			+ "(p.dateAndTime) > CURRENT_TIMESTAMP")
+	List<Projection> findByDateAndTimeAfter();
+
+	@Query("SELECT DISTINCT date(p.dateAndTime) FROM Projection p "
+			+ "WHERE p.dateAndTime > CURRENT_TIMESTAMP "
+			+ "ORDER BY p.dateAndTime")
+	List<String> findDates();
 }

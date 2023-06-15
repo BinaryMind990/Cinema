@@ -3,6 +3,8 @@ package com.cinema.repository;
 import com.cinema.enumeration.UserRole;
 import com.cinema.model.Users;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +27,5 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 			+ "(:userName = NULL OR u.userName LIKE :userName%) AND "
 			+ "(:role = NULL OR u.role = :role) AND "
 			+ " deleted = 0")
-	List<Users> search(@Param("userName") String userName,@Param("role") UserRole role, Sort sort);
+	Page<Users> search(@Param("userName") String userName,@Param("role") UserRole role, Pageable pageable);
 }

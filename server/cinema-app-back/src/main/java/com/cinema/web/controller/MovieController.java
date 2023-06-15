@@ -7,6 +7,8 @@ import com.cinema.support.MovieDTOToMovieUpdate;
 import com.cinema.support.MovieToMovieDTO;
 import com.cinema.web.dto.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,16 @@ public class MovieController {
 
         return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
     }
-   */ 
+    */
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieDTO>> getAllMovies(){
+    	
+    	List<Movie> movies = movieService.findAll();
+    	return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
+    }
+    
+    
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getList(
@@ -52,12 +63,17 @@ public class MovieController {
     		@RequestParam(required = false) Integer yearMin,
     		@RequestParam(required = false) Integer yearMax,
     		@RequestParam(required = false) String sortBy,
-    		@RequestParam(required = false) String sortAscOrDesc
+    		@RequestParam(required = false) String sortAscOrDesc,
+    		@RequestParam(value = "pageNo", defaultValue = "0") int pageNo
     		){
         	
-    	List<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor,yearMin, yearMax, sortBy, sortAscOrDesc);
-    	movies.forEach(m -> System.out.println(m));
-    	return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK); 
+    //	List<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor,yearMin, yearMax, sortBy, sortAscOrDesc);
+    	Page<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor, yearMin, yearMax, sortBy, sortAscOrDesc, pageNo);
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Total-Pages", Integer.toString(movies.getTotalPages()));
+    	
+    	return new ResponseEntity<>(toDTO.convertAll(movies.getContent()), headers, HttpStatus.OK); 
     }
 
     @GetMapping(value = "/{id}")
@@ -101,6 +117,7 @@ public class MovieController {
     		 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     	
         Movie deleted = movieService.delete(id);
+        System.out.println(deleted);
 
         if (deleted != null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

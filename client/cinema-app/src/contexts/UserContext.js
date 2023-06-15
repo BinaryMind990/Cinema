@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-
+import jwt_decode from 'jwt-decode';
 import Loader from 'components/UI/Loader/Loader';
 import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
 
@@ -30,7 +29,6 @@ export const UserProvider = ({ children }) => {
 			navigate('/projections');
 		} catch (error) {
 			alert('Login unsuccessful. Please try again!');
-			console.log(error);
 		}
 	};
 

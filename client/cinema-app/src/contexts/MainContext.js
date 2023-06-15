@@ -1,6 +1,6 @@
+import { createContext, useEffect, useState } from 'react';
 import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 import Loader from 'components/UI/Loader/Loader';
-import { createContext, useEffect, useState } from 'react';
 
 export const DataContext = createContext();
 

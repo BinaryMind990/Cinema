@@ -1,21 +1,21 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
 import HomePage from 'components/HomePage';
+import Login from 'components/Authorization/Login';
 import Movies from 'components/Movies/Movies';
-import Projections from '../components/Repertoire/Projections/Projections';
 import Movie from 'components/Movies/Movie/Movie';
 import CreateMovie from '../components/Movies/CreateMovie/CreateMovie';
 import EditMovie from 'components/Movies/EditMovie/EditMovie';
+import Projections from '../components/Repertoire/Projections/Projections';
 import CreateProjection from 'components/Repertoire/CreateProjection/CreateProjection';
 import Users from 'components/Users/Users';
 import User from '../components/Users/User/User';
-import EditUser from 'components/Users/EditUser/EditUser';
 import RegisterUser from '../components/Users/RegisterUser/RegisterUser';
-import Login from 'components/Authorization/Login';
+import EditUser from 'components/Users/EditUser/EditUser';
 import Report from 'components/Report/Report';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from 'contexts/UserContext';
 import TicketsList from 'components/Tickets/TicketList/TicketsList';
 import BuyTicket from 'components/Tickets/BuyTicket/BuyTicket';
+import { UserContext } from 'contexts/UserContext';
 
 export const AppRoutes = () => {
 	const { role } = useContext(UserContext);

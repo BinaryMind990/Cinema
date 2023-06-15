@@ -9,17 +9,10 @@ export const movieClient = {
 		});
 	},
 	editMovie: async (id, formData) => {
-		try {
-			await CinemaAxios.put(`/movies/${id}`, formData);
-			toast.success(`${formData.name} was edited successfully!`, {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to update the movie. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			throw error;
-		}
+		await CinemaAxios.put(`/movies/${id}`, formData);
+		toast.success(`${formData.name} was edited successfully!`, {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	},
 	deleteMovie: async (movieId) => {
 		try {

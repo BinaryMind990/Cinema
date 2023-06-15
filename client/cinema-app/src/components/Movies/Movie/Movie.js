@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './Movie.module.css';
-import { dataClient } from 'apis/CinemaClient';
 import { FaImdb } from 'react-icons/fa';
 import Loader from 'components/UI/Loader/Loader';
+import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 
 const Movie = () => {
 	const [movie, setMovie] = useState({});

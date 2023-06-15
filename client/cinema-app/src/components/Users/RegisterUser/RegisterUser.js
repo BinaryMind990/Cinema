@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { userClient } from 'apis/CinemaClient';
+
 import RegistrationForm from './RegistrationForm/RegistrationForm';
+import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
 
 const RegisterUser = () => {
 	const navigate = useNavigate();

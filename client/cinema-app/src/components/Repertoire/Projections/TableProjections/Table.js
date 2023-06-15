@@ -29,7 +29,10 @@ const Table = (props) => {
 								<td className={styles.cell}>
 									<div className={styles['movie-info']}>
 										<div className={styles['movie-poster']}>
-											<img src={movie?.posterLink} alt='' />
+											<img
+												src={movie?.posterLink}
+												alt='Movie poster'
+											/>
 										</div>
 										<div className={styles['movie-details']}>
 											<h2>
@@ -67,7 +70,7 @@ const Table = (props) => {
 												<div className={styles['button-wrapper']}>
 													<ConfirmationModal
 														title='Delete projection'
-														message={`Are you sure you want to delete the projection for movie ${movie.name}?`}
+														message={`Are you sure you want to delete the projection for movie ${movie?.name}?`}
 														onConfirm={() =>
 															props.delete(item.id)
 														}

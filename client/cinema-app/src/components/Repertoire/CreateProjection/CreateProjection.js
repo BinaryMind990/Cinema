@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from 'contexts/MainContext';
-import { projectionClient } from 'apis/CinemaClient';
 import ProjectionForm from './ProjectionForm/ProjectionForm';
 import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
 import ErrorModal from 'components/UI/Modals/ErrorModal';
+import { projectionClient } from 'apis/CinemaClient/ProjectionClient/ProjectionClient';
 
 const CreateProjection = () => {
 	const { movies, types, halls } = useContext(DataContext);
@@ -19,13 +19,6 @@ const CreateProjection = () => {
 			navigate('/projections');
 		} catch (error) {
 			console.log(error);
-			// const errorMessage = error.message
-			// 	? error.message
-			// 	: 'Unknown error occurred';
-			// const formattedMessage = formatErrorMessage(errorMessage);
-			// setErrorMessage(formattedMessage);
-			// setErrorModal(true);
-			// return;
 		}
 	};
 

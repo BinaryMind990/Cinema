@@ -1,4 +1,4 @@
-import { dataClient } from 'apis/CinemaClient';
+import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 import Loader from 'components/UI/Loader/Loader';
 import { createContext, useEffect, useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { userClient } from 'apis/CinemaClient';
+import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
 import Button from 'components/UI/Button/Button';
 import ErrorModal from 'components/UI/Modals/ErrorModal';
 import { useEffect, useState } from 'react';

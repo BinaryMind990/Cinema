@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Button from '../../UI/Button/Button';
 import './BuyTicket.css';
-import { dataClient, ticketClient } from 'apis/CinemaClient';
 import Loader from 'components/UI/Loader/Loader';
+import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
+import { ticketClient } from 'apis/CinemaClient/TicketClient/TicketClient';
 
 const BuyTicket = () => {
 	const [projections, setProjection] = useState({});
@@ -34,8 +35,12 @@ const BuyTicket = () => {
 
 	const buyTicketHandler = async (e) => {
 		e.preventDefault();
-		await ticketClient.buyTicket(ticketData);
-		navigate(`/projections`);
+		try {
+			await ticketClient.buyTicket(ticketData);
+			navigate(`/projections`);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	if (loading) {

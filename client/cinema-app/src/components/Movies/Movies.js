@@ -3,9 +3,10 @@ import Button from '../UI/Button/Button';
 import styles from './Movies.module.css';
 import { Link } from 'react-router-dom';
 import { NavigateContext } from 'contexts/NavigateContext';
-import { dataClient, movieClient } from 'apis/CinemaClient';
 import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
 import Loader from 'components/UI/Loader/Loader';
+import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
+import { movieClient } from 'apis/CinemaClient/MovieClient/MovieClient';
 
 const Movies = () => {
 	const [movies, setMovies] = useState([]);

@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { movieClient } from 'apis/CinemaClient';
 import MovieForm from '../MovieForm/MovieForm';
 import { useState } from 'react';
 import ErrorModal from 'components/UI/Modals/ErrorModal';
 import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
+import { movieClient } from 'apis/CinemaClient/MovieClient/MovieClient';
 
 const CreateMovie = () => {
 	const [errorModal, setErrorModal] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const navigate = useNavigate();
+
 	const handleFormSubmit = async (formData) => {
 		try {
 			await movieClient.createMovie(formData);

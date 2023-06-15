@@ -9,22 +9,27 @@ const EditUserForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 			</p>
 			<label htmlFor='name'>Name</label>
 			<input
+				required
 				type='text'
 				name='name'
 				id='name'
+				min={2}
 				value={editUserData.name}
 				onChange={handleFormChange}
 			/>
 			<label htmlFor='lastName'>Last name</label>
 			<input
+				required
 				type='text'
 				name='lastName'
 				id='lastName'
+				min={2}
 				value={editUserData.lastName}
 				onChange={handleFormChange}
 			/>
 			<label htmlFor='eMail'>Last name</label>
 			<input
+				required
 				type='email'
 				name='eMail'
 				id='eMail'

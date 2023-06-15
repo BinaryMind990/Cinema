@@ -8,6 +8,7 @@ const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 				<label>Role</label>
 				<label>
 					<input
+						required
 						className='radio-button'
 						type='radio'
 						name='role'
@@ -19,6 +20,7 @@ const ChangeRoleForm = ({ editUserData, handleFormChange, handleSubmit }) => {
 				</label>
 				<label>
 					<input
+						required
 						className='radio-button'
 						type='radio'
 						name='role'

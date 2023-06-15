@@ -5,10 +5,11 @@ import { NavigateContext } from 'contexts/NavigateContext';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { searchUsers } from 'utils/SearchUtils/SearchHelper';
-import { userClient } from 'apis/CinemaClient';
+
 import { UserContext } from 'contexts/UserContext';
 import ConfirmationModal from 'components/UI/Modals/ConfirmationModal';
 import Loader from 'components/UI/Loader/Loader';
+import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
 
 const Users = () => {
 	const { user, role } = useContext(UserContext);

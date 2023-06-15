@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 public class UserDTO {
 
-    @Positive(message = "Id mora biti pozitivan broj.")
+    @Positive
     private Long id;
 
     @NotBlank

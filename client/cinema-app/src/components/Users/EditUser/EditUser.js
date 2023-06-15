@@ -6,9 +6,12 @@ import { UserContext } from 'contexts/UserContext';
 import EditUserForm from './EditForms/EditUserForm';
 import ChangePasswordForm from './EditForms/ChangePasswordForm';
 import ChangeRoleForm from './EditForms/ChangeRoleForm';
-import { userClient } from 'apis/CinemaClient';
+
 import Loader from 'components/UI/Loader/Loader';
 import AdminChangePasswordForm from './EditForms/AdminChangePasswordForm';
+import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
+import ErrorModal from 'components/UI/Modals/ErrorModal';
+import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
 
 const EditUser = () => {
 	const { user, role } = useContext(UserContext);
@@ -22,6 +25,8 @@ const EditUser = () => {
 		confirmPassword: '',
 		role: '',
 	});
+	const [errorModal, setErrorModal] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [loading, setLoading] = useState(true);
 
 	const { id } = useParams();
@@ -58,21 +63,52 @@ const EditUser = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await userClient.edit(id, editUserData);
+		try {
+			await userClient.edit(id, editUserData);
+		} catch (error) {
+			console.log(error);
+			// const errorMessage =
+			// 	error.response.data.errors[0]?.defaultMessage ||
+			// 	error.response.data.errors[1]?.defaultMessage ||
+			// 	'Unknown error occurred';
+			// const formattedMessage = formatErrorMessage(errorMessage);
+
+			// setErrorMessage(formattedMessage);
+
+			// setErrorModal(true);
+			// return;
+		}
 	};
 
 	const handlePasswordChange = async (e) => {
 		e.preventDefault();
-		await userClient.editPassword(id, editUserData);
+		try {
+			await userClient.editPassword(id, editUserData);
+		} catch (error) {
+			console.log(error);
+			const errorMessage =
+				error.response.data.errors[0]?.defaultMessage ||
+				error.response.data.errors[1]?.defaultMessage ||
+				'Unknown error occurred';
+			const formattedMessage = formatErrorMessage(errorMessage);
+
+			setErrorMessage(formattedMessage);
+
+			setErrorModal(true);
+			return;
+		}
 	};
 	const handleAdminPasswordChange = async (e) => {
 		e.preventDefault();
-		await userClient.adminEditPassword(id, editUserData);
+		try {
+			await userClient.adminEditPassword(id, editUserData);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleRoleChange = async (e) => {
 		e.preventDefault();
-
 		await userClient.editRole(id, editUserData);
 	};
 
@@ -86,6 +122,13 @@ const EditUser = () => {
 
 	return (
 		<div className={styles['edit-user-container']}>
+			{errorModal && (
+				<ErrorModal
+					title='Error'
+					message={errorMessage}
+					onClose={() => setErrorModal(false)}
+				/>
+			)}
 			<div className='title-wrapper'>
 				<h1>Edit user</h1>
 			</div>

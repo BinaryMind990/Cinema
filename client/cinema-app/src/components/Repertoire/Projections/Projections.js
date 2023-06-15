@@ -10,9 +10,9 @@ import styles from './Projections.module.css';
 import { UserContext } from '../../../contexts/UserContext';
 import { searchRepertoir } from 'utils/SearchUtils/SearchHelper';
 import { DataContext } from 'contexts/MainContext';
-import { projectionClient } from 'apis/CinemaClient';
 import { NavigateContext } from 'contexts/NavigateContext';
 import Loader from 'components/UI/Loader/Loader';
+import { projectionClient } from 'apis/CinemaClient/ProjectionClient/ProjectionClient';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);

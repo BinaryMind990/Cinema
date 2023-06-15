@@ -9,6 +9,7 @@ const ChangePasswordForm = ({
 		<form className='form' onSubmit={handleSubmit}>
 			<label htmlFor='oldPassword'>Old password</label>
 			<input
+				required
 				type='password'
 				name='oldPassword'
 				id='oldPassword'
@@ -17,6 +18,7 @@ const ChangePasswordForm = ({
 			/>
 			<label htmlFor='password'>New password</label>
 			<input
+				required
 				type='password'
 				name='password'
 				id='password'
@@ -25,6 +27,7 @@ const ChangePasswordForm = ({
 			/>
 			<label htmlFor='confirmPassword'>Confirm password</label>
 			<input
+				required
 				type='password'
 				name='confirmPassword'
 				id='confirmPassword'

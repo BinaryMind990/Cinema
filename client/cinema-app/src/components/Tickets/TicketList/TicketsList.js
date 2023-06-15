@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { dataClient } from 'apis/CinemaClient';
 import styles from './TicketsList.module.css';
 import Loader from 'components/UI/Loader/Loader';
+import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 
 const TicketsList = () => {
 	const [ticketsList, setTicketsList] = useState([]);

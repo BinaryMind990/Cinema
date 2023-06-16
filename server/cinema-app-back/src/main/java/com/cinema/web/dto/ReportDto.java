@@ -1,16 +1,23 @@
 package com.cinema.web.dto;
 
-public class ReportDto {
-
+public class ReportDto{
+	
+	
 	private Long movieId;
-
+	
+	
 	private String name;
-
+	
+	
 	private int numberOfProjections;
-
+	
+	
 	private double sum;
-
+	
+	
 	private int soldTicketsForMovie;
+	
+	
 
 	public ReportDto() {
 		super();
@@ -70,5 +77,7 @@ public class ReportDto {
 		return "ReportDto [movieId=" + movieId + ", name=" + name + ", numberOfProjections=" + numberOfProjections
 				+ ", sum=" + sum + ", soldTicketsForMovie=" + soldTicketsForMovie + "]";
 	}
+	
+	
 
 }

@@ -3,10 +3,20 @@ package com.cinema.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.persistence.*;
 
-@Entity
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+@Entity
+//@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
+//@FilterDef(name = "deletedMovieFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+//@Filter(name = "deletedMovieFilter", condition = "deleted = :isDeleted")
 public class Movie {
 
 	@Id

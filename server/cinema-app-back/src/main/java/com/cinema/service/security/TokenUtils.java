@@ -3,12 +3,15 @@ package com.cinema.service.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import com.cinema.model.Users;
 import com.cinema.service.UserService;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +19,7 @@ import java.util.Optional;
 
 @Component
 public class TokenUtils {
-
+	
 	@Autowired
 	private UserService userService;
 
@@ -61,34 +64,39 @@ public class TokenUtils {
 
 	private boolean isTokenExpired(String token) {
 		final Date expirationDate = this.getExpirationDateFromToken(token);
-		return expirationDate != null && expirationDate.before(new Date());
+		return expirationDate.before(new Date(System.currentTimeMillis()));
 	}
 
 	public boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return username != null && username.equals(userDetails.getUsername())
+		return username.equals(userDetails.getUsername())
 				&& !isTokenExpired(token);
 	}
 
 	public String generateToken(UserDetails userDetails) {
 		String username = userDetails.getUsername();
 
+		// Dohvatite korisnika na osnovu korisničkog imena
 		Optional<Users> optionalUser = userService.findbyUserName(username);
 		if (optionalUser.isPresent()) {
 			Users loggedInUser = optionalUser.get();
 			Long userId = loggedInUser.getId();
 
+			// Dodajte ID korisnika u JWT token
 			Map<String, Object> claims = new HashMap<>();
 			claims.put("sub", userDetails.getUsername());
 			claims.put("id", userId);
 			claims.put("role", userDetails.getAuthorities().toArray()[0]);
 			claims.put("created", new Date());
 
+			// Generišite token kao i prethodno
 			return Jwts.builder().setClaims(claims)
 					.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
 					.signWith(SignatureAlgorithm.HS512, secret).compact();
 		}
 
+		// Ukoliko korisnik nije pronađen, možete baciti odgovarajući exception ili
+		// vratiti null, zavisno od zahteva
 		return null;
 	}
 }

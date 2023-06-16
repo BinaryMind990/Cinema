@@ -3,6 +3,7 @@ package com.cinema.support;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import com.cinema.model.Hall;

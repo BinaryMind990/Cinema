@@ -2,6 +2,7 @@ package com.cinema.web.controller;
 
 import com.cinema.model.Projection;
 import com.cinema.service.ProjectionService;
+import com.cinema.support.ProjectionDTOtoProjectionNew;
 import com.cinema.support.ProjectionToProjectionDTO;
 import com.cinema.web.dto.ProjectionDTO;
 import com.cinema.web.dto.ProjectionDTOCreate;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -36,7 +38,8 @@ public class ProjectionController {
 	@Autowired
 	private ProjectionToProjectionDTO toDto;
 
-	@PreAuthorize("permitAll()")
+
+	// @PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<List<ProjectionDTO>> search(@RequestParam(required = false) String date) {
 		List<Projection> projections;
@@ -53,14 +56,16 @@ public class ProjectionController {
 		}
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/dates")
-	public ResponseEntity<List<String>> getProjectionDates() {
+	public ResponseEntity<List<String>> getProjectionDates(){
 		List<String> dates = projectionService.findDates();
 		return new ResponseEntity<>(dates, HttpStatus.OK);
-
+		
 	}
-
+	
+	
+	
 	@PreAuthorize("permitAll()")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProjectionDTO> getOne(@PathVariable Long id) {
@@ -71,8 +76,7 @@ public class ProjectionController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
-	@PreAuthorize("permitAll()")
+	 @PreAuthorize("permitAll()")
 	@GetMapping("/search")
 	public ResponseEntity<List<ProjectionDTO>> getList(
 			@RequestParam(required = false) Long movieId,
@@ -82,11 +86,12 @@ public class ProjectionController {
 			@RequestParam(required = false) Double minPrice,
 			@RequestParam(required = false) Double maxPrice,
 			@RequestParam(required = false) String sortBy,
-			@RequestParam(required = false) String sortAscOrDesc) {
+			@RequestParam(required = false) String sortAscOrDesc
+			){
 		LocalDate localDate;
-		if (date == null) {
+		if(date == null) {
 			localDate = null;
-		} else {
+		}else {
 			try {
 				localDate = getLocalDate(date);
 			} catch (DateTimeParseException e) {
@@ -94,12 +99,11 @@ public class ProjectionController {
 			}
 		}
 
-		List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice,
-				sortBy, sortAscOrDesc);
+		List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice, sortBy, sortAscOrDesc);
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
 	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	 
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		Projection deletedProjection = projectionService.delete(id);
@@ -110,18 +114,23 @@ public class ProjectionController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProjectionDTO> create(@Valid @RequestBody ProjectionDTOCreate dto) {
 
+		
 		Projection savedProjection = projectionService.save(dto);
 		if (savedProjection == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<>(toDto.convert(savedProjection), HttpStatus.CREATED);
 	}
-
+	/*
+    private LocalDateTime getLocalDateTime(String dateTime) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(dateTime, formatter);
+    }
+	 */
 	private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

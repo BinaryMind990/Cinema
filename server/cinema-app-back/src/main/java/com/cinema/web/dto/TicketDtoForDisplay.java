@@ -3,17 +3,17 @@ package com.cinema.web.dto;
 import java.util.Objects;
 
 public class TicketDtoForDisplay {
-
+	
 	private Long id;
-
+	
 	private String ticketSellDate;
-
+	
 	private String ticketSellTime;
-
+	
 	private String userName;
-
+	
 	private Long userId;
-
+	
 	private Long seatNumber;
 
 	public String getTicketSellDate() {
@@ -51,6 +51,7 @@ public class TicketDtoForDisplay {
 	public Long getId() {
 		return id;
 	}
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -88,5 +89,7 @@ public class TicketDtoForDisplay {
 		return "TicketDtoForAdmin [id=" + id + ", ticketSellDate=" + ticketSellDate + ", ticketSellTime="
 				+ ticketSellTime + ", userName=" + userName + ", userId=" + userId + "]";
 	}
+	
+	
 
 }

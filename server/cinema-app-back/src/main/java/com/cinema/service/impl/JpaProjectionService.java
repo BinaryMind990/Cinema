@@ -1,8 +1,6 @@
 package com.cinema.service.impl;
 
-import com.cinema.model.Hall;
 import com.cinema.model.Projection;
-import com.cinema.model.Type;
 import com.cinema.repository.MovieRep;
 import com.cinema.repository.ProjectionRep;
 import com.cinema.service.ProjectionService;
@@ -16,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class JpaProjectionService implements ProjectionService {
@@ -51,7 +48,7 @@ public class JpaProjectionService implements ProjectionService {
 		if(movieRep.findOneById(dto.getMovieId()).isDeleted()) {
 			return "Movie is deleted";
 		}	
-		// provera da li je odabrani tip podrzan u odabranoj sali
+	
 		int hallId = dto.getHallId().intValue();
 		switch (dto.getTypeId().intValue()) {
 		case 1:
@@ -74,38 +71,19 @@ public class JpaProjectionService implements ProjectionService {
 		}
 		
 		Projection projection = toProjection.convert(dto);
-		/*	
-		if (!projection.getHall().getTypes().stream().map(t -> t.getId()).collect(Collectors.toList()).contains(projection.getType().getId())) {
-
-			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
-			return null;
-		}
-		 */
 		
-		/*
-		System.out.println(projection.getHall().getTypes().contains(projection.getType()));
-		System.out.println(projection.getHall().getTypes());
-		System.out.println(projection.getType());
-		if (!projection.getHall().getTypes().contains(projection.getType())) {
-	
-			System.out.println("odabrani tip projeckije nije podrzan u odabranoj sali");
-			return null;
-		}
-		 */
-	
-			// ako je uneto vreme projekcije pre trenutnog vremena plus 2 sata
 		if (projection.getDateAndTime().isBefore(LocalDateTime.now().plusHours(2))) {
 			return "New projection must be at least 2 hours in future";
 		}
 		List<Projection> projections = projectionRep.findList(projection.getHall().getId(),
 				projection.getDateAndTime());
 		boolean occupiedTime = false;
-			// ako ima projekcija u isto vreme 
+			
 		if (projections.stream().anyMatch(p -> p.getDateAndTime().equals(projection.getDateAndTime()))) {
 			
 			return projection.getHall().getName() + " is not available in chosen time";
 		}
-		//projekcija pocinje pre nego sto se prethodna projekcija u toj sali zavrsila
+		
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isBefore(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime()
 						.isBefore(p.getDateAndTime().plusMinutes(p.getMovie().getDuration())));
@@ -114,7 +92,7 @@ public class JpaProjectionService implements ProjectionService {
 			String [] dateTimestr = projection.getDateAndTime().toString().split("T");
 			return projection.getHall().getName() + " has projection that is not ended chosen date at " + dateTimestr[1];
 		}
-			// postoji projekcija koja pocinje u istoj sali pre nego sto se uneta projekcija zavrsi
+			
 		occupiedTime = projections.stream().filter(p -> p.getDateAndTime().isAfter(projection.getDateAndTime()))
 				.anyMatch(p -> projection.getDateAndTime().plusMinutes(projection.getMovie().getDuration())
 						.isAfter(p.getDateAndTime()));
@@ -123,6 +101,9 @@ public class JpaProjectionService implements ProjectionService {
 		}
 		
 		Projection savedProjection = projectionRep.save(projection);
+		if(savedProjection == null) {
+			return "Projection is not saved";
+		}
 		return "success";
 	}
 

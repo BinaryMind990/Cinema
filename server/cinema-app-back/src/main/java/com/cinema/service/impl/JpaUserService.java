@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,27 +84,24 @@ public class JpaUserService implements UserService {
         Optional<Users> result = userRepository.findById(id);
 
         if (!result.isPresent()) {
-            throw new EntityNotFoundException();
+        	throw new EntityNotFoundException();
         }
 
         Users user = result.get();
 
         boolean passwordsMatch = BCrypt.checkpw(userChangePasswordDTO.getOldPassword(), user.getPassword());
         if (!user.getUserName().equals(userChangePasswordDTO.getUserName()) || !passwordsMatch) {
-            return false;
+        	return false;
         }
 
         String password = userChangePasswordDTO.getPassword();
-    //    if (!userChangePasswordDTO.getPassword().equals("")) {
-            password = passwordEncoder.encode(userChangePasswordDTO.getPassword());
-    //    }
-
+        password = passwordEncoder.encode(userChangePasswordDTO.getPassword());
         user.setPassword(password);
-
         userRepository.save(user);
 
         return true;
     }
+    
     @Override
 	public boolean changePasswordByAdmin(Long id, UserChangePasswordByAdminDto dto) {
 		
@@ -165,5 +161,11 @@ public class JpaUserService implements UserService {
 			users = userRepository.search(userName, userRole, PageRequest.of(pageNo, 3, Sort.by(sortBy).descending()));
 		}
 		return users;
+	}
+
+	@Override
+	public Optional<Users> findByEmail(String email) {
+			Optional<Users> user = userRepository.findFirstByEmail(email);
+		return user;
 	}
 }

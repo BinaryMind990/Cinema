@@ -92,8 +92,6 @@ public class TicketDTO {
 		this.price = price;
 	}
 	
-	
-
 	public String getProjectionDate() {
 		return projectionDate;
 	}

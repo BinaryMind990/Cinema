@@ -34,23 +34,13 @@ public class MovieController {
 
     @Autowired
     private MovieDTOToMovieUpdate toMovieUpdate;
-/*
-    @GetMapping
-    public ResponseEntity<List<MovieDTO>> getAll() {
-
-        List<Movie> movies = movieService.findAll();
-
-        return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
-    }
-    */
-    
+  
     @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAllMovies(){
     	
     	List<Movie> movies = movieService.findAll();
     	return new ResponseEntity<>(toDTO.convertAll(movies), HttpStatus.OK);
     }
-    
     
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -67,7 +57,6 @@ public class MovieController {
     		@RequestParam(value = "pageNo", defaultValue = "0") int pageNo
     		){
         	
-    //	List<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor,yearMin, yearMax, sortBy, sortAscOrDesc);
     	Page<Movie> movies = movieService.findByParameters(name, durationMin, durationMax, country, distributor, yearMin, yearMax, sortBy, sortAscOrDesc, pageNo);
     	
     	HttpHeaders headers = new HttpHeaders();
@@ -128,14 +117,4 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    /*
-     * private LocalDateTime getLocalDateTime(String datumIVreme) throws
-     * DateTimeParseException {
-     * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-     * LocalDate datum = LocalDate.parse(datumIVreme.substring(0, 10), formatter);
-     * LocalTime vreme = LocalTime.parse(datumIVreme.substring(11),
-     * DateTimeFormatter.ofPattern("HH:mm"));
-     * return LocalDateTime.of(datum, vreme);
-     * }
-     */
 }

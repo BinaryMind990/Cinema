@@ -14,6 +14,18 @@ public class TicketDTOCreate {
 	@NotNull
 	@Positive
 	private Long seatNumber;
+	
+	
+
+	public TicketDTOCreate() {
+		super();
+	}
+
+	public TicketDTOCreate(@NotNull @Positive Long projectionId, @NotNull @Positive Long seatNumber) {
+		super();
+		this.projectionId = projectionId;
+		this.seatNumber = seatNumber;
+	}
 
 	public Long getProjectionId() {
 		return projectionId;
@@ -35,6 +47,4 @@ public class TicketDTOCreate {
 	public String toString() {
 		return "TicketDTOCreate [projectionId=" + projectionId + ", seatNumber=" + seatNumber + "]";
 	}
-	
-	
 }

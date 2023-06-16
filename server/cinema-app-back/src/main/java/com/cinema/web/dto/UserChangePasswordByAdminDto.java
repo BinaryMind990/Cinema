@@ -45,6 +45,4 @@ public class UserChangePasswordByAdminDto {
 		return "UserChangePasswordByAdminDto [userName=" + userName + ", password=" + password + ", confirmPassword="
 				+ confirmPassword + "]";
 	}
-	
-
 }

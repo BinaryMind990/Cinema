@@ -9,6 +9,8 @@ import com.cinema.service.TicketService;
 import com.cinema.service.UserService;
 import com.cinema.support.TicketDTOToTicket;
 import com.cinema.web.dto.TicketDTOCreate;
+import com.cinema.web.dto.TicketsListDtoCreate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -60,10 +62,43 @@ public class JpaTicketService implements TicketService {
 		
 		Ticket ticket = toTicket.convert(dto);
 		ticket.setUser(user);
-		ticketRep.save(ticket);
+		
+		Ticket savedTticket = ticketRep.save(ticket);
+		if(savedTticket == null) {
+			return "Ticket is not saved";
+		}
 		
 		return "success";
 	}
+
+	@Override
+	public String saveList(TicketsListDtoCreate dto, String userName) {
+		Projection projection = projectionService.findOne(dto.getProjectionId());
+		if(projection == null)
+			return "Projection doesn't exist";
+		if(projection.getDateAndTime().isBefore(LocalDateTime.now()))
+			return "Projection already started";
+		if(dto.getSeatNumbers().stream().anyMatch(s ->s <1 || s > projection.getHall().getSeats().size()))
+			return "Some chosen seat doesn't exist in this hall";
+		List<Long> chosenSeats = dto.getSeatNumbers();
+		List<Long> soldSeats = projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList());
+
+		List<Long> list = soldSeats.stream().filter(cs -> chosenSeats.stream().anyMatch(ss -> ss == cs)).collect(Collectors.toList());
+		list.forEach(t -> System.out.println(t));
+		Users user = userService.findbyUserName(userName).get();
+		if(!list.isEmpty()) {
+			return "Some chosen seat is no more available";
+		}else {
+			for(Long t : dto.getSeatNumbers()) {
+				TicketDTOCreate ticketDto = new TicketDTOCreate(dto.getProjectionId(), t);
+				Ticket ticket = toTicket.convert(ticketDto);
+				ticket.setUser(user);
+				ticketRep.save(ticket);
+			}
+		}
+		return "success";
+	}
+
 
 	@Override
 	public Ticket delete(Long id) {

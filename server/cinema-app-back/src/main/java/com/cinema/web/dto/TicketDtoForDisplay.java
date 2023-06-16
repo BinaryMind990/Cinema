@@ -89,7 +89,4 @@ public class TicketDtoForDisplay {
 		return "TicketDtoForAdmin [id=" + id + ", ticketSellDate=" + ticketSellDate + ", ticketSellTime="
 				+ ticketSellTime + ", userName=" + userName + ", userId=" + userId + "]";
 	}
-	
-	
-
 }

@@ -29,7 +29,7 @@ public class JpaTicketService implements TicketService {
 
 	@Autowired
 	private ProjectionService projectionService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -52,44 +52,44 @@ public class JpaTicketService implements TicketService {
 			return "Projection already started";
 		if (projection.getHall().getSeats().size() < dto.getSeatNumber())
 			return "Chosen seat doesn't exist";
-		
 
 		if (projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList())
 				.contains(dto.getSeatNumber()))
 			return "Ticket has been sold";
 		Users user = userService.findbyUserName(userName).get();
-		
-		
+
 		Ticket ticket = toTicket.convert(dto);
 		ticket.setUser(user);
-		
+
 		Ticket savedTticket = ticketRep.save(ticket);
-		if(savedTticket == null) {
+		if (savedTticket == null) {
 			return "Ticket is not saved";
 		}
-		
+
 		return "success";
 	}
 
 	@Override
 	public String saveList(TicketsListDtoCreate dto, String userName) {
 		Projection projection = projectionService.findOne(dto.getProjectionId());
-		if(projection == null)
+		if (projection == null)
 			return "Projection doesn't exist";
-		if(projection.getDateAndTime().isBefore(LocalDateTime.now()))
+		if (projection.getDateAndTime().isBefore(LocalDateTime.now()))
 			return "Projection already started";
-		if(dto.getSeatNumbers().stream().anyMatch(s ->s <1 || s > projection.getHall().getSeats().size()))
+		if (dto.getSeatNumbers().stream().anyMatch(s -> s < 1 || s > projection.getHall().getSeats().size()))
 			return "Some chosen seat doesn't exist in this hall";
 		List<Long> chosenSeats = dto.getSeatNumbers();
-		List<Long> soldSeats = projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber()).collect(Collectors.toList());
+		List<Long> soldSeats = projection.getTickets().stream().map(t -> t.getSeat().getSeatNumber())
+				.collect(Collectors.toList());
 
-		List<Long> list = soldSeats.stream().filter(cs -> chosenSeats.stream().anyMatch(ss -> ss == cs)).collect(Collectors.toList());
+		List<Long> list = soldSeats.stream().filter(cs -> chosenSeats.stream().anyMatch(ss -> ss == cs))
+				.collect(Collectors.toList());
 		list.forEach(t -> System.out.println(t));
 		Users user = userService.findbyUserName(userName).get();
-		if(!list.isEmpty()) {
+		if (!list.isEmpty()) {
 			return "Some chosen seat is no more available";
-		}else {
-			for(Long t : dto.getSeatNumbers()) {
+		} else {
+			for (Long t : dto.getSeatNumbers()) {
 				TicketDTOCreate ticketDto = new TicketDTOCreate(dto.getProjectionId(), t);
 				Ticket ticket = toTicket.convert(ticketDto);
 				ticket.setUser(user);
@@ -98,7 +98,6 @@ public class JpaTicketService implements TicketService {
 		}
 		return "success";
 	}
-
 
 	@Override
 	public Ticket delete(Long id) {

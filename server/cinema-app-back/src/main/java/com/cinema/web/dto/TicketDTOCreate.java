@@ -14,8 +14,6 @@ public class TicketDTOCreate {
 	@NotNull
 	@Positive
 	private Long seatNumber;
-	
-	
 
 	public TicketDTOCreate() {
 		super();

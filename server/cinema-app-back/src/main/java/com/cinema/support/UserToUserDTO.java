@@ -26,7 +26,6 @@ public class UserToUserDTO implements Converter<Users, UserDTO> {
         userDTO.setLastName(user.getLastName());
         userDTO.setUserName(user.getUserName());
         userDTO.setRole(user.getRole().toString());
-        
         userDTO.setTickets(toDto.convertAll(user.getTickets()));
 
         return userDTO;

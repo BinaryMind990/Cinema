@@ -20,6 +20,8 @@ public interface UserService {
     Users update(Users user);
 
     Users delete(Long id);
+    
+    Optional<Users> findByEmail(String email);
 
     Optional<Users> findbyUserName(String userName);
 

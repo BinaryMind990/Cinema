@@ -66,19 +66,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().authorizeRequests()
-				// .antMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
 				.anyRequest().permitAll();
-		/*
-		 * .and()
-		 * .authorizeRequests()
-		 * .antMatchers(HttpMethod.POST, "/api/users/auth")
-		 * .permitAll()
-		 * .antMatchers(HttpMethod.GET, "/api/moives")
-		 * .permitAll()
-		 * .anyRequest().authenticated();
-		 */
-
-		// Custom JWT based authentication
+		
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
 				UsernamePasswordAuthenticationFilter.class);
 	}
@@ -87,14 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public static class WebConfig implements WebMvcConfigurer {
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
-			/*
-			 * registry.addMapping("/api/moves")
-			 * .allowedOrigins("http://localhost:3000")
-			 * .allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
-			 * .allowCredentials(true)
-			 * .maxAge(3600);
-			 */
-
+			
 			registry.addMapping("/**")
 					.allowedOrigins("*")
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")

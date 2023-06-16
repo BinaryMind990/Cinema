@@ -16,66 +16,63 @@ import java.util.Optional;
 @Service
 public class JpaMovieService implements MovieService {
 
-    @Autowired
-    private MovieRep movieRep;
+	@Autowired
+	private MovieRep movieRep;
 
-    @Override
-    public Optional<Movie> findOne(Long id) {
-        return Optional.empty();
-    }
+	@Override
+	public Optional<Movie> findOne(Long id) {
+		return Optional.empty();
+	}
 
-    @Override
-    public Movie findById(Long id) {
-        return movieRep.findOneById(id);
-    }
+	@Override
+	public Movie findById(Long id) {
+		return movieRep.findOneById(id);
+	}
 
-    @Override
-    public List<Movie> findAll() {
-        return movieRep.findByDeleted(false);
-    }
+	@Override
+	public List<Movie> findAll() {
+		return movieRep.findByDeleted(false);
+	}
 
-    @Override
-    public Movie save(Movie movie) {
-    	movie.setDeleted(false);
-    	movie.setVersion(0);
-        return movieRep.save(movie);
-    }
+	@Override
+	public Movie save(Movie movie) {
+		movie.setDeleted(false);
+		movie.setVersion(0);
+		return movieRep.save(movie);
+	}
 
-    @Override
-    public Movie update(Movie movie) {
-        return movieRep.save(movie);
-    }
+	@Override
+	public Movie update(Movie movie) {
+		return movieRep.save(movie);
+	}
 
-    @Override
-    public Movie delete(Long id) {
-        Optional<Movie> movie = movieRep.findById(id);
-       
-        if (movie.get().getProjections().isEmpty()) {
-            movieRep.deleteById(id);
-            return movie.get();
-        }
-//        if (movie.get().getProjections().stream().anyMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now())));{
-//        	return null;
-//        }
-        
-        if(movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {	
-        	movie.get().setDeleted(true);	
-        	movieRep.save(movie.get());
-        	return movie.get();
-        }
-   
-        return null;
-    }
+	@Override
+	public Movie delete(Long id) {
+		Optional<Movie> movie = movieRep.findById(id);
 
-    @Override
-    public Page<Movie> search() {
-        return null;
-    }
+		if (movie.get().getProjections().isEmpty()) {
+			movieRep.deleteById(id);
+			return movie.get();
+		}
+
+		if(movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {	
+			movie.get().setDeleted(true);	
+			movieRep.save(movie.get());
+			return movie.get();
+		}
+
+		return null;
+	}
+
+	@Override
+	public Page<Movie> search() {
+		return null;
+	}
 
 	@Override
 	public Page<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country,
 			String distributor, Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc, int pageNo) {
-		
+
 		if(durationMin == null)
 			durationMin = 0;
 		if(durationMax == null)
@@ -91,20 +88,12 @@ public class JpaMovieService implements MovieService {
 		} else if( !sortBy.equals("name") && !sortBy.equals("duration") && !sortBy.equals("year") 
 				&& !sortBy.equals("country") && !sortBy.equals("distributor"))
 			sortBy = "name";
-		
+
 		if(sortAscOrDesc.equalsIgnoreCase("desc")) {
-		 return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).descending()));
+			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).descending()));
 		}
 		else 
 			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).ascending()));
-		}
+	}
 
-    /*
-     * private LocalDateTime getDateConverted(String dateTime) throws
-     * DateTimeParseException {
-     * DateTimeFormatter formatter =
-     * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-     * return LocalDateTime.parse(dateTime, formatter);
-     * }
-     */
 }

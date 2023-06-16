@@ -27,7 +27,7 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 
-	//metoda za uzimanje izvestaja direktno iz baze
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<ReportDtoInterface>> getReport(
@@ -57,7 +57,7 @@ public class ReportController {
 
 	}
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping (value = "/1")  // metoda za uzimanje izvestaja preko servisnog sloja
+	@GetMapping (value = "/1")  
 	public ResponseEntity<List<ReportDto>> getProjectionsBetween(
 			@RequestParam(required = false) String dateFrom, 
 			@RequestParam(required = false) String dateTo,

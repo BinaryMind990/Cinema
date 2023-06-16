@@ -87,9 +87,5 @@ public class JpaReportService implements ReportService {
 				reportList.sort(Comparator.comparing(ReportDto :: getSoldTicketsForMovie, Collections.reverseOrder()));
 			}
 		return reportList;
-		}
-		
-		
+		}	
 }
-
-

@@ -11,6 +11,7 @@ import com.cinema.support.TicketToTicketDtoForDispay;
 import com.cinema.web.dto.TicketDTO;
 import com.cinema.web.dto.TicketDTOCreate;
 import com.cinema.web.dto.TicketDtoForDisplay;
+import com.cinema.web.dto.TicketsListDtoCreate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,8 +53,8 @@ public class TicketController {
 	@Autowired
 	private UserService userService;
 
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(value = "/projection/{id}") //metoda vraca prodate karte za odabranu projekciju koje moze da vidi samo admin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/projection/{id}") 
 	public ResponseEntity<List<TicketDtoForDisplay>> getByProjection(@PathVariable Long id) {
 		Projection projection = projectionService.findOne(id);
 		if(projection == null) {
@@ -61,11 +62,11 @@ public class TicketController {
 		}
 		List<Ticket> tickets = projection.getTickets();
 
-		//    List<Ticket> tickets = ticketService.findAll();
+	
 		return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
 	}
 
-	// @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<TicketDTO> getOne(@PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -76,15 +77,15 @@ public class TicketController {
 		if(ticket == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        //metoda ogranicava da korisnik moze da vidi samo svoje karte
+       
         if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(ticket.getUser().getUserName())) { 	
         	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }  
         return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
 
     }
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping(value = "/user/{id}")   //ova metoda vraca karte za korisnika
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping(value = "/user/{id}")   
     public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id){
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	String userName = auth.getName();
@@ -93,7 +94,7 @@ public class TicketController {
     	if(!user.isPresent()) {
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	}
-    	//metoda ogranicava da korisnik moze da vidi samo svoje karte
+   
     	if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) { 	
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	} 
@@ -102,20 +103,36 @@ public class TicketController {
     	return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);	
     }
 
-    // @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TicketDTO> create(@Valid @RequestBody TicketDTOCreate dto) {
+    public ResponseEntity<String> create(@Valid @RequestBody TicketDTOCreate dto) {
 
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	String userName = auth.getName();
 
-    	Ticket savedTicket = ticketService.save(dto, userName);
-    	if (savedTicket == null)
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-    	return new ResponseEntity<>(toDto.convert(savedTicket), HttpStatus.CREATED);
+    	String message = ticketService.save(dto, userName);
+    	if (message.equals("success")) {
+    		return new ResponseEntity<>("You buy ticket successfully", HttpStatus.CREATED);
+    	}else {
+    	return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    	}
     }
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping(value = "/buy", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createList(@Valid @RequestBody TicketsListDtoCreate dto){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String userName = auth.getName();
+    	String message = ticketService.saveList(dto, userName);
+    	if(message.equals("success")) {
+    		return new ResponseEntity<>("You buy tickets successfully", HttpStatus.CREATED);
+    	}else {
+    		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    	}
+    	
+    }
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 

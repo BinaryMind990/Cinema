@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Noto Sans JP', sans-serif;
+  height: 100%;
+}
+
+body {
+  background-color: #222;
+  color: #ddd;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-image: url('../public/assets/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0;
+}
+
+h2 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.credits {
+  display: none;
+}
+
+.loader-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.link:hover,
+.link.active {
+  color: #fab702;
+}
+
+.yellow-text {
+  color: #fab702;
+  font-weight: bold;
+}
+
+.red-text {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #151515;
+  padding: 20px 5%;
+}
+
+.search {
+  margin-top: 10px;
+}
+
+.page-wrapper {
+  padding: 20px 5%;
+}
+
+.table-wrapper {
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+table caption {
+  text-align: left;
+  padding: 0 10px;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #fab702;
+  color: #fab702;
+}
+
+tr {
+  background-color: rgba(5, 29, 49, 0.7);
+}
+
+td {
+  padding: 10px;
+}
+
+input[type='radio'] {
+  vertical-align: middle;
+  margin-top: 0;
+  width: 10px;
+  height: 10px;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(5, 29, 49, 0.7);
+  border-radius: 5px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form select,
+.form textarea,
+.form input:not(.radio-button) {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+select:focus-visible,
+input:focus-visible {
+  outline: none;
+}
+
+.form-button {
+  margin-top: 20px;
+}
+
+.form+.form {
+  margin-top: 20px;
+}
+
+.form .not-editable-value {
+  margin-bottom: 20px;
+}
+
+.ant-btn-primary:not(:disabled):hover {
+  background-color: #b22222;
+}
+
+.ant-btn-primary.ant-btn-dangerous {
+  background-color: #ff0000;
+}
+
+.ant-btn-primary.ant-btn-dangerous:hover {
+  background-color: #b22222 !important;
+}
+
+.ant-pagination .ant-pagination-item,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active {
+  background: #051d31;
+  border-color: #fab702;
+}
+
+.ant-pagination .ant-pagination-item a,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active a {
+  color: #fab702;
+}
+
+
+.ant-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover,
+.ant-pagination .ant-pagination-prev.ant-pagination-disabled:hover .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next.ant-pagination-disabled:hover .ant-pagination-item-link,
+.ant-pagination .ant-pagination-item-active:hover a {
+  color: #fab702;
+  background-color: #051d31;
+}
+
+.ant-pagination .ant-pagination-prev:hover,
+
+.ant-pagination .ant-pagination-item-active:hover {
+  border-color: #051d31;
+}
+
+
+
+@media screen and (min-width: 420px) {
+  .title-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search {
+    margin-top: 0px;
+    max-width: 200px;
+  }
+}
+
+
+
+@media screen and (min-width: 768px) {
+  body {
+    padding-top: 80px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .title-wrapper {
+    padding: 20px 10%;
+  }
+
+  .page-wrapper {
+    padding: 20px 20%;
+  }
+
+  .form {
+    width: 400px;
+  }
+
+  table caption {
+    text-align: center
+  }
+}

@@ -1,0 +1,46 @@
+.moviePoster {
+    width: 80px;
+    height: auto;
+}
+
+.moviePoster img {
+    width: 100%;
+    display: block;
+}
+
+
+.cell {
+    display: flex;
+    align-items: center;
+}
+
+.cell h2 {
+    margin-bottom: 0;
+    margin-left: 30px;
+}
+
+.link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #fab702;
+}
+
+.actions {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.button-wrapper+.button-wrapper {
+    margin-left: 10px;
+}
+
+
+.add-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,38 @@
+.movie-container {
+    padding: 10px;
+    background-color: rgba(5, 30, 51, 0.7);
+}
+
+.movie-image {
+    max-width: 150px;
+}
+
+.movie-description {
+    margin-top: 20px;
+
+}
+
+.imdb-link {
+    display: inline-block;
+}
+
+.icon {
+    color: #fab702;
+}
+
+@media screen and (min-width: 768px) {
+    .movie-container {
+        display: flex;
+    }
+
+    .movie-image {
+        width: 40%;
+        max-width: 300px;
+        align-self: flex-start;
+    }
+
+    .movie-details {
+        width: 60%;
+        margin-left: 40px;
+    }
+}

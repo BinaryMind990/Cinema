@@ -1,0 +1,17 @@
+.link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #fab702;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+th:last-child {
+    text-align: right;
+}

@@ -1,0 +1,52 @@
+.link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #fab702;
+}
+
+.movie-info {
+    display: flex;
+}
+
+.movie-poster {
+    width: 190px;
+    height: auto;
+}
+
+.movie-poster img {
+    width: 100%;
+    display: block;
+}
+
+.movie-poster+.movie-details {
+    margin-left: 30px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.button-sets {
+    display: flex;
+}
+
+.button-wrapper+.button-wrapper {
+    margin-left: 10px;
+}
+
+@media screen and (min-width: 500px) {
+    .cell {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+}

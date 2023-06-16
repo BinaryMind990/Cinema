@@ -1,0 +1,21 @@
+.reports-table td:last-child {
+  text-align: right;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.date-picker label {
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.date-picker label input {
+  margin-left: 5px;
+  padding: 5px;
+  border-color: #051d31;
+  border-style: solid;
+}

@@ -1,0 +1,20 @@
+.user-info {
+    margin-bottom: 30px;
+}
+
+.user-info span {
+    margin-right: 10px;
+}
+
+.purchased-tickets caption {
+    background-color: #051d31;
+    ;
+}
+
+.purchased-tickets td:last-child {
+    text-align: right;
+}
+
+.button-wrapper {
+    margin-top: 20px;
+}

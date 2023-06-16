@@ -1,0 +1,49 @@
+.date-picker-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.date-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(5, 30, 51, 0.7);
+    border: 1px solid #051d31;
+    cursor: pointer;
+}
+
+.date-item.active {
+    color: #051d31;
+    background-color: #FAB702;
+}
+
+.calendar-icon {
+    margin-right: 5px;
+}
+
+.sort-radio-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.sort-radio {
+    display: flex;
+    background-color: rgba(5, 30, 51, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.sort-radio span,
+.sort-radio label {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.add-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}

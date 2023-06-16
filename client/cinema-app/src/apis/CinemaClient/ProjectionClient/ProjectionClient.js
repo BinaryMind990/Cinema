@@ -3,17 +3,10 @@ import { toast } from 'react-toastify';
 
 export const projectionClient = {
 	createProjection: async (projectionData) => {
-		try {
-			await CinemaAxios.post('/projections', projectionData);
-			toast.success('Projection was added successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to add projection. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			throw error;
-		}
+		await CinemaAxios.post('/projections', projectionData);
+		toast.success('Projection was added successfully!', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	},
 	deleteProjection: async (projectionId) => {
 		try {

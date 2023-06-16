@@ -1,7 +1,5 @@
-import Button from 'components/UI/Button/Button';
-import ErrorModal from 'components/UI/Modals/ErrorModal';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Button from 'components/UI/Button/Button';
 
 const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 	const [projectionData, setProjectionData] = useState({
@@ -11,8 +9,6 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		dateTimeStr: '',
 		tiketPrice: '',
 	});
-	const [errorModal, setErrorModal] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
 
 	const checkType = projectionData.typeId;
 
@@ -32,41 +28,12 @@ const ProjectionForm = ({ movies, types, halls, onSubmit }) => {
 		}
 	};
 
-	const navigate = useNavigate();
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const selectedDateTime = new Date(projectionData.dateTimeStr);
-		const currentDateTime = new Date();
-		const allowedDateTime = new Date();
-		allowedDateTime.setHours(allowedDateTime.getHours() + 2);
-
-		if (
-			selectedDateTime < currentDateTime ||
-			selectedDateTime < allowedDateTime
-		) {
-			setErrorMessage(
-				'Projection cannot be in the past or less than 2 hours in the future.'
-			);
-			setErrorModal(true);
-			return;
-		} else {
-			onSubmit(projectionData);
-			navigate('/projections');
-		}
+		onSubmit(projectionData);
 	};
 	return (
 		<div>
-			<>
-				{errorModal && (
-					<ErrorModal
-						title='Error'
-						message={errorMessage}
-						onClose={() => setErrorModal(false)}
-					/>
-				)}
-			</>
 			<form className='form' onSubmit={handleSubmit}>
 				<label htmlFor='movieName'>Movie</label>
 				<select

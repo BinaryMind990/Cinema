@@ -5,6 +5,7 @@ const ErrorModal = ({ title, message, onClose }) => {
 		<Modal
 			title={title}
 			open={true}
+			centered
 			onCancel={onClose}
 			footer={[
 				<Button key='close' onClick={onClose}>
@@ -12,7 +13,7 @@ const ErrorModal = ({ title, message, onClose }) => {
 				</Button>,
 			]}
 		>
-			<p>{message}</p>
+			<h3>{message}</h3>
 		</Modal>
 	);
 };

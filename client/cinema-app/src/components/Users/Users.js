@@ -34,7 +34,6 @@ const Users = () => {
 			};
 			const response = await userClient.get(conf);
 			setUsers(response.data);
-			console.log(response.headers);
 			setTotalPages(response.headers['total-pages'] + 0);
 			setLoading(false);
 		} catch (error) {

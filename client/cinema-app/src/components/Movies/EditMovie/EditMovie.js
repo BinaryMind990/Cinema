@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import MovieForm from '../MovieForm/MovieForm';
-import Loader from 'components/UI/Loader/Loader';
-import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
-import ErrorModal from 'components/UI/Modals/ErrorModal';
 import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 import { movieClient } from 'apis/CinemaClient/MovieClient/MovieClient';
+import MovieForm from '../MovieForm/MovieForm';
+import Loader from 'components/UI/Loader/Loader';
+import ErrorModal from 'components/UI/Modals/ErrorModal';
 
 const EditMovie = () => {
 	const [editMovieData, setEditMovieData] = useState({});
@@ -38,10 +37,8 @@ const EditMovie = () => {
 				error.response.data.errors[0]?.defaultMessage ||
 				error.response.data.errors[1]?.defaultMessage ||
 				'Unknown error occurred';
-			const formattedMessage = formatErrorMessage(errorMessage);
 
-			setErrorMessage(formattedMessage);
-
+			setErrorMessage(errorMessage);
 			setErrorModal(true);
 			return;
 		}

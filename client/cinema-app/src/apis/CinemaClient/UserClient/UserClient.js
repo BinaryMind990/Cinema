@@ -31,58 +31,31 @@ export const userClient = {
 		}
 	},
 	edit: async (id, editUserData) => {
-		try {
-			await CinemaAxios.put(`/users/${id}`, editUserData);
-			toast.success(
-				`User ${editUserData.userName} has been updated successfully!`,
-				{
-					position: toast.POSITION.TOP_RIGHT,
-				}
-			);
-		} catch (error) {
-			toast.error('Failed to update user. Please try again!', {
+		await CinemaAxios.put(`/users/${id}`, editUserData);
+		toast.success(
+			`User ${editUserData.userName} has been updated successfully!`,
+			{
 				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+			}
+		);
 	},
 	editRole: async (id, editUserData) => {
-		try {
-			await CinemaAxios.put(`/users/changeRole/${id}/${editUserData.role}`);
-			toast.success('User role changed successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to change user role. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await CinemaAxios.put(`/users/changeRole/${id}/${editUserData.role}`);
+		toast.success('User role changed successfully!', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	},
 	editPassword: async (id, editUserData) => {
-		try {
-			await CinemaAxios.put(`/users/changePassword/${id}`, editUserData);
-			toast.success('User password changed successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to change user password. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await CinemaAxios.put(`/users/changePassword/${id}`, editUserData);
+		toast.success('User password changed successfully!', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	},
 	adminEditPassword: async (id, editUserData) => {
-		try {
-			await CinemaAxios.put(
-				`/users/adminChangePassword/${id}`,
-				editUserData
-			);
-			toast.success('User password changed successfully!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		} catch (error) {
-			toast.error('Failed to change user password. Please try again!', {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-		}
+		await CinemaAxios.put(`/users/adminChangePassword/${id}`, editUserData);
+		toast.success('User password changed successfully!', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	},
 	delete: async (userId) => {
 		try {

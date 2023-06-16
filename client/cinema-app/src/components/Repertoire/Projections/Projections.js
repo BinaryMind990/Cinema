@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
-import { FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
 import CinemaAxios from '../../../apis/CinemaAxios';
+import { projectionClient } from 'apis/CinemaClient/ProjectionClient/ProjectionClient';
+import { DataContext } from 'contexts/MainContext';
+import { UserContext } from '../../../contexts/UserContext';
+import { NavigateContext } from 'contexts/NavigateContext';
+import styles from './Projections.module.css';
 import Table from './TableProjections/Table';
 import Button from '../../UI/Button/Button';
-import styles from './Projections.module.css';
-import { UserContext } from '../../../contexts/UserContext';
-import { searchRepertoir } from 'utils/SearchUtils/SearchHelper';
-import { DataContext } from 'contexts/MainContext';
-import { NavigateContext } from 'contexts/NavigateContext';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { FaCalendarAlt } from 'react-icons/fa';
 import Loader from 'components/UI/Loader/Loader';
-import { projectionClient } from 'apis/CinemaClient/ProjectionClient/ProjectionClient';
+import { searchRepertoir } from 'utils/SearchUtils/SearchHelper';
 
 const Projections = () => {
 	const { user, role } = useContext(UserContext);

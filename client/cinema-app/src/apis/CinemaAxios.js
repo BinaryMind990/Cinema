@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const baseURL =
+	process.env.NODE_ENV === 'production'
+		? process.env.REACT_APP_BACKEND_URL_LIVE
+		: process.env.REACT_APP_BACKEND_URL_LOCAL;
+
 const CinemaAxios = axios.create({
-	baseURL: 'http://localhost:8080/api',
+	baseURL: baseURL,
 });
 
 CinemaAxios.interceptors.request.use(

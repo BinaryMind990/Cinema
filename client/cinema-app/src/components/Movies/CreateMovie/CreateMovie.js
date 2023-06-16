@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import MovieForm from '../MovieForm/MovieForm';
 import { useState } from 'react';
 import ErrorModal from 'components/UI/Modals/ErrorModal';
-import { formatErrorMessage } from 'utils/ErrorUtils/ErrorUtils';
 import { movieClient } from 'apis/CinemaClient/MovieClient/MovieClient';
 
 const CreateMovie = () => {
@@ -19,10 +18,7 @@ const CreateMovie = () => {
 				error.response.data.errors[0]?.defaultMessage ||
 				error.response.data.errors[1]?.defaultMessage ||
 				'Unknown error occurred';
-			const formattedMessage = formatErrorMessage(errorMessage);
-
-			setErrorMessage(formattedMessage);
-
+			setErrorMessage(errorMessage);
 			setErrorModal(true);
 			return;
 		}

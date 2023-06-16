@@ -6,6 +6,7 @@ import './BuyTicket.css';
 import Loader from 'components/UI/Loader/Loader';
 import { dataClient } from 'apis/CinemaClient/DataClient/DataClient';
 import { ticketClient } from 'apis/CinemaClient/TicketClient/TicketClient';
+import ErrorModal from 'components/UI/Modals/ErrorModal';
 
 const BuyTicket = () => {
 	const [projections, setProjection] = useState({});
@@ -13,7 +14,8 @@ const BuyTicket = () => {
 		projectionId: '',
 		seatNumber: '',
 	});
-	const [error, setError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [errorModal, setErrorModal] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	const { id } = useParams();
@@ -26,7 +28,6 @@ const BuyTicket = () => {
 				setProjection(res);
 				setLoading(false);
 			} catch (error) {
-				setError(true);
 				setLoading(false);
 			}
 		};
@@ -39,7 +40,9 @@ const BuyTicket = () => {
 			await ticketClient.buyTicket(ticketData);
 			navigate(`/projections`);
 		} catch (error) {
-			console.log(error);
+			setErrorMessage(error.response.data);
+			setErrorModal(true);
+			return;
 		}
 	};
 
@@ -51,12 +54,15 @@ const BuyTicket = () => {
 		);
 	}
 
-	if (error) {
-		return <p>Oops! Something went wrong. Please try again later</p>;
-	}
-
 	return (
 		<div>
+			{errorModal && (
+				<ErrorModal
+					title='Error'
+					message={errorMessage}
+					onClose={() => setErrorModal(false)}
+				/>
+			)}
 			<div className='title-wrapper'>
 				<h1>Projection: {projections?.movieName}</h1>
 			</div>

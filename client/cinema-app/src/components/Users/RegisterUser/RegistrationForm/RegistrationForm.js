@@ -1,8 +1,5 @@
-import { userClient } from 'apis/CinemaClient/UserClient/UserClient';
+import { useState } from 'react';
 import Button from 'components/UI/Button/Button';
-import ErrorModal from 'components/UI/Modals/ErrorModal';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = ({ onSubmit }) => {
 	const [userRegData, setUserRegData] = useState({
@@ -13,57 +10,14 @@ const RegistrationForm = ({ onSubmit }) => {
 		password: '',
 		confirmPassword: '',
 	});
-	const [users, setUsers] = useState([]);
-	const [errorModal, setErrorModal] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		getUsers();
-	}, []);
-
-	const getUsers = async () => {
-		try {
-			const res = await userClient.get('/users');
-			setUsers(res);
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const existingUsername = users.find(
-			(user) => user.username === userRegData.userName
-		);
-		const existingEmail = users.find(
-			(user) => user.eMail === userRegData.eMail
-		);
-		if (existingUsername) {
-			setErrorMessage('Username already exists.');
-			setErrorModal(true);
-			return;
-		} else if (existingEmail) {
-			setErrorMessage('User with that email already exists.');
-			setErrorModal(true);
-			return;
-		} else {
-			onSubmit(userRegData);
-			navigate('/projections');
-		}
+		onSubmit(userRegData);
 	};
 
 	return (
 		<div>
-			{errorModal && (
-				<ErrorModal
-					title='Error'
-					message={errorMessage}
-					onClose={() => setErrorModal(false)}
-				/>
-			)}
-
 			<form className={'form'} onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor='userName'>Username:</label>

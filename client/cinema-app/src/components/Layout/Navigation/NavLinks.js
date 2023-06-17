@@ -1,10 +1,5 @@
 export const navLinks = [
 	{
-		title: 'Home',
-		to: '/',
-		public: true,
-	},
-	{
 		title: 'Movies',
 		to: '/movies',
 		public: false,

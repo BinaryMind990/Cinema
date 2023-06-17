@@ -39,7 +39,7 @@
     margin-left: 10px;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 920px) {
     .cell {
         display: flex;
         justify-content: space-between;

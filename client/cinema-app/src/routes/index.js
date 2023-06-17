@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useContext } from 'react';
 import HomePage from 'components/HomePage';
-import Login from 'components/Authorization/Login';
 import Movies from 'components/Movies/Movies';
 import Movie from 'components/Movies/Movie/Movie';
 import CreateMovie from '../components/Movies/CreateMovie/CreateMovie';
@@ -16,17 +15,18 @@ import Report from 'components/Report/Report';
 import TicketsList from 'components/Tickets/TicketList/TicketsList';
 import BuyTicket from 'components/Tickets/BuyTicket/BuyTicket';
 import { UserContext } from 'contexts/UserContext';
+import NotFound from 'components/NotFound';
 
 export const AppRoutes = () => {
 	const { role } = useContext(UserContext);
 	return (
 		<Routes>
-			<Route path='/' element={<HomePage />} />
-			<Route path='/login' element={<Login />} />
 			<Route path='/movies/:id' element={<Movie />} />
 			<Route path='/projections' element={<Projections />} />
 			<Route path='/tickets/buy/projections/:id' element={<BuyTicket />} />
 			<Route path='/account/registration' element={<RegisterUser />} />
+			<Route path='/notfound' element={<NotFound />} />
+			{!role && <Route path='/' element={<HomePage />} />}
 			{role && (
 				<>
 					<Route path='/account/:id' element={<User />} />
@@ -48,6 +48,10 @@ export const AppRoutes = () => {
 				</>
 			) : (
 				<>
+					<Route
+						path='/'
+						element={<Navigate to='/projection' replace />}
+					/>
 					<Route path='/movies' element={<Navigate to='/' replace />} />
 					<Route
 						path='/movies/add'
@@ -69,6 +73,7 @@ export const AppRoutes = () => {
 					<Route path='/reports' element={<Navigate to='/' replace />} />
 				</>
 			)}
+			<Route path='*' element={<Navigate to='/notfound' replace />} />
 		</Routes>
 	);
 };

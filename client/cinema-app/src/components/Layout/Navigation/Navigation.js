@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import './Navigation.css';
 import { UserContext } from '../../../contexts/UserContext';
 import { Menu, Button, Drawer } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { guestLinks, navLinks } from '../Navigation/NavLinks';
 import { Link } from 'react-router-dom';
 
@@ -88,13 +88,9 @@ const Navigation = () => {
 			>
 				<div className='drawer-content'>
 					<div className='drawer-title'>
-						<div>
-							<h2 className='yellow-text'>Cinema El Capitano</h2>
-						</div>
-						<div className='drawer-footer'>
-							<Button className='red' onClick={toggleBurgerMenu}>
-								Close
-							</Button>
+						<h2 className='yellow-text'>Cinema El Capitano</h2>
+						<div className='close-btn'>
+							<CloseOutlined onClick={toggleBurgerMenu} />
 						</div>
 					</div>
 					<Menu onClick={toggleBurgerMenu}>

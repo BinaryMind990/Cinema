@@ -1,4 +1,5 @@
 import { Modal, Button } from 'antd';
+import './Modal.css';
 
 const ErrorModal = ({ title, message, onClose }) => {
 	return (
@@ -13,7 +14,7 @@ const ErrorModal = ({ title, message, onClose }) => {
 				</Button>,
 			]}
 		>
-			<h3>{message}</h3>
+			<p>{message}</p>
 		</Modal>
 	);
 };

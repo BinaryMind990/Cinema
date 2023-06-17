@@ -104,29 +104,37 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
 
-        if (!id.equals(userDTO.getId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-       String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-       Users userToChange = userService.findOne(id).get();
+    	if (!id.equals(userDTO.getId())) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
     
-       if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-               .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-          
-           Users user = toUser.convert(userDTO);
-           return new ResponseEntity<>(toUserDTO.convert(userService.update(user)), HttpStatus.OK);
-       } else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
-           
-           Users user = toUser.convert(userDTO);
-           return new ResponseEntity<>(toUserDTO.convert(userService.update(user)), HttpStatus.OK);
-       } else {
-           
-           return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-       } 
+    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    	Users userToChange = userService.findOne(id).get();
+    	
+    	if(!userDTO.geteMail().equals(userToChange.geteMail()) && userService.findByEmail(userDTO.geteMail()).isPresent()) {
+    		return new ResponseEntity<>("Email is not available", HttpStatus.BAD_REQUEST);
+    	}
+    	if(!userDTO.getUserName().equals(userToChange.getUserName())) {
+			return new ResponseEntity<>("Changing username is not allowed", HttpStatus.BAD_REQUEST);
+		}
+    	if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+    			.anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+    		
+    		Users user = toUser.convert(userDTO);
+    		userService.update(user);
+    		return new ResponseEntity<>("Users informations successfully changed", HttpStatus.OK);
+    	} else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
+
+    		Users user = toUser.convert(userDTO);
+    		userService.update(user);
+    		return new ResponseEntity<>("You have successfully changed your information", HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+    	} 
     }
-    
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/changeRole/{id}/{role}")
     public ResponseEntity<String> changeRole(@PathVariable Long id, @PathVariable String role){
@@ -209,25 +217,25 @@ public class UserController {
     		return new ResponseEntity<>("Passwords are not equal", HttpStatus.BAD_REQUEST);
     	}
 
-    	boolean result;
+    	String result;
     	try {
     		result = userService.changePassword(id, dto);
     	} catch (EntityNotFoundException e) {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     	}
 
-    	if (result) {
-    		return new ResponseEntity<>(HttpStatus.OK);
+    	if (result.equals("success")) {
+    		return new ResponseEntity<>("You have successfully changed your password ",HttpStatus.OK);
     	} else {
-    		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    		return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
     	}
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/adminChangePassword/{id}")
-    public ResponseEntity<Void> adminChangePassword(@PathVariable Long id,@Valid @RequestBody UserChangePasswordByAdminDto  dto){
+    public ResponseEntity<String> adminChangePassword(@PathVariable Long id,@Valid @RequestBody UserChangePasswordByAdminDto  dto){
     	if(!dto.getPassword().equals(dto.getConfirmPassword()))
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<>("New password and confirm password are not equal", HttpStatus.BAD_REQUEST);
     	boolean result;
 
     	try {
@@ -236,7 +244,7 @@ public class UserController {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     	}
     	if(result) {
-    		return new ResponseEntity<>(HttpStatus.OK);
+    		return new ResponseEntity<>("You have successfully changed the user's password",HttpStatus.OK);
     	} else {
     		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     	}	

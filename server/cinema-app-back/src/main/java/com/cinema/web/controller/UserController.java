@@ -211,7 +211,7 @@ public class UserController {
 	public ResponseEntity<String> changePassword(@PathVariable Long id, @Valid @RequestBody UserChangePasswordDTO dto) {
 
 		if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-			return new ResponseEntity<>("Passwords are not equal", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Passwords do NOT match!", HttpStatus.BAD_REQUEST);
 		}
 
 		String result;
@@ -233,7 +233,7 @@ public class UserController {
 	public ResponseEntity<String> adminChangePassword(@PathVariable Long id,
 			@Valid @RequestBody UserChangePasswordByAdminDto dto) {
 		if (!dto.getPassword().equals(dto.getConfirmPassword()))
-			return new ResponseEntity<>("New password and confirm password are not equal", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Passwords do NOT match!", HttpStatus.BAD_REQUEST);
 		boolean result;
 
 		try {

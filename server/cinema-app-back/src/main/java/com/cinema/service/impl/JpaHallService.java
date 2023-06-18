@@ -1,8 +1,10 @@
 package com.cinema.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.cinema.model.Hall;
 import com.cinema.repository.HallRep;
 import com.cinema.service.HallService;

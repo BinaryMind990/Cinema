@@ -79,7 +79,7 @@ public class JpaUserService implements UserService {
 	}
 
 	@Override
-	public boolean changePassword(Long id, UserChangePasswordDTO userChangePasswordDTO) {
+	public String changePassword(Long id, UserChangePasswordDTO userChangePasswordDTO) {
 		Optional<Users> result = userRepository.findById(id);
 
 		if (!result.isPresent()) {
@@ -89,8 +89,11 @@ public class JpaUserService implements UserService {
 		Users user = result.get();
 
 		boolean passwordsMatch = BCrypt.checkpw(userChangePasswordDTO.getOldPassword(), user.getPassword());
-		if (!user.getUserName().equals(userChangePasswordDTO.getUserName()) || !passwordsMatch) {
-			return false;
+		if (!passwordsMatch) {
+			return "The old password you entered is not correct";
+		}
+		if (!user.getUserName().equals(userChangePasswordDTO.getUserName())) {
+			return "You can't change other users password";
 		}
 
 		String password = userChangePasswordDTO.getPassword();
@@ -98,7 +101,7 @@ public class JpaUserService implements UserService {
 		user.setPassword(password);
 		userRepository.save(user);
 
-		return true;
+		return "success";
 	}
 
 	@Override

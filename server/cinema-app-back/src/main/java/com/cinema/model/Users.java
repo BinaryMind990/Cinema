@@ -1,6 +1,7 @@
 package com.cinema.model;
 
 import com.cinema.enumeration.UserRole;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

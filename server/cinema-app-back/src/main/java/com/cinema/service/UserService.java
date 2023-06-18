@@ -25,7 +25,7 @@ public interface UserService {
 
     Optional<Users> findbyUserName(String userName);
 
-    boolean changePassword(Long id, UserChangePasswordDTO userChangePasswordDto);
+    String changePassword(Long id, UserChangePasswordDTO userChangePasswordDto);
 
     boolean changePasswordByAdmin(Long id, UserChangePasswordByAdminDto dto);
 

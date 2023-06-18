@@ -1,6 +1,5 @@
 package com.cinema.support;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,7 +16,7 @@ import com.cinema.web.dto.UserDtoForAdminView;
 public class UserToUserDtoForView implements Converter<Users, UserDtoForAdminView> {
 
 	@Override
-	
+
 	public UserDtoForAdminView convert(Users source) {
 		UserDtoForAdminView dto = new UserDtoForAdminView();
 		dto.setId(source.getId());
@@ -25,20 +24,20 @@ public class UserToUserDtoForView implements Converter<Users, UserDtoForAdminVie
 		dto.setUserRole(source.getRole().toString());
 		dto.setRegistrationDateTime(getdateTimeStr(source.getRegistrationDateTime()));
 		dto.seteMail(source.geteMail());
-		
+
 		return dto;
 	}
-	
-	public  List<UserDtoForAdminView> convertAll (List<Users> users){
+
+	public List<UserDtoForAdminView> convertAll(List<Users> users) {
 		List<UserDtoForAdminView> dtos = new ArrayList<UserDtoForAdminView>();
-		
-		for(Users user : users) {
+
+		for (Users user : users) {
 			dtos.add(convert(user));
 		}
 		return dtos;
 	}
-		
-	private String getdateTimeStr (LocalDateTime dateTime) throws DateTimeParseException{
+
+	private String getdateTimeStr(LocalDateTime dateTime) throws DateTimeParseException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 		String dateTimeStr = dtf.format(dateTime);
 		return dateTimeStr;

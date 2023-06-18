@@ -1,15 +1,15 @@
 package com.cinema.web.dto;
 
 public class UserDtoForAdminView {
-	
+
 	private long id;
-	
+
 	private String username;
-	
+
 	private String registrationDateTime;
-	
+
 	private String userRole;
-	
+
 	private String eMail;
 
 	public long getId() {
@@ -43,7 +43,6 @@ public class UserDtoForAdminView {
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
-	
 
 	public String geteMail() {
 		return eMail;

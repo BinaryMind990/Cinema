@@ -23,28 +23,27 @@ import com.cinema.web.dto.ReportDto;
 @RestController
 @RequestMapping(value = "api/report", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportController {
-	
+
 	@Autowired
 	private ReportService reportService;
 
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<ReportDtoInterface>> getReport(
-			@RequestParam(required = false) String dateFrom, 
+			@RequestParam(required = false) String dateFrom,
 			@RequestParam(required = false) String dateTo,
 			@RequestParam(required = false, defaultValue = "numberOfProjections") String sortBy,
-			@RequestParam(required = false, defaultValue = "desc") String sort){
+			@RequestParam(required = false, defaultValue = "desc") String sort) {
 
 		LocalDate localDateFrom = LocalDate.of(1900, 01, 01);
-		LocalDate localDateTo = LocalDate.of(2300,01,01);
-		if(dateFrom != null) {
+		LocalDate localDateTo = LocalDate.of(2300, 01, 01);
+		if (dateFrom != null) {
 			try {
 				localDateFrom = getLocalDate(dateFrom);
 			} catch (Exception e) {
 			}
 		}
-		if(dateTo != null) {
+		if (dateTo != null) {
 			try {
 				localDateTo = getLocalDate(dateTo);
 			} catch (Exception e) {
@@ -56,37 +55,36 @@ public class ReportController {
 		return new ResponseEntity<>(reportList, HttpStatus.OK);
 
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping (value = "/1")  
+	@GetMapping(value = "/1")
 	public ResponseEntity<List<ReportDto>> getProjectionsBetween(
-			@RequestParam(required = false) String dateFrom, 
+			@RequestParam(required = false) String dateFrom,
 			@RequestParam(required = false) String dateTo,
 			@RequestParam(required = false, defaultValue = "numberOfProjections") String sortBy,
-			@RequestParam(required = false, defaultValue = "desc") String sort)
-	{
-		LocalDate localDateFrom =LocalDate.of(1900, 01, 01);
+			@RequestParam(required = false, defaultValue = "desc") String sort) {
+		LocalDate localDateFrom = LocalDate.of(1900, 01, 01);
 		LocalDate localDateTo = LocalDate.of(2300, 01, 01);
-		if(dateFrom != null) {
+		if (dateFrom != null) {
 			try {
 				localDateFrom = getLocalDate(dateFrom);
 			} catch (Exception e) {
 			}
 		}
-		if(dateTo != null) {
+		if (dateTo != null) {
 			try {
 				localDateTo = getLocalDate(dateTo);
 			} catch (Exception e) {
 			}
 		}
-		
+
 		List<ReportDto> reportList = reportService.reportInService(localDateFrom, localDateTo, sortBy, sort);
 		return new ResponseEntity<>(reportList, HttpStatus.OK);
 	}
-	
-	
-	 private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
-	        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	        return LocalDate.parse(dateStr, dtf);
-	    }
+	private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		return LocalDate.parse(dateStr, dtf);
+	}
 }

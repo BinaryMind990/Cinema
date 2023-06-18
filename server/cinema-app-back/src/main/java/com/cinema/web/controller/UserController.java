@@ -47,223 +47,221 @@ import java.util.Optional;
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private UserDTOToUser toUser;
+	@Autowired
+	private UserDTOToUser toUser;
 
-    @Autowired
-    private UserToUserDTO toUserDTO;
-    
-    @Autowired
-    private UserToUserDtoForView toDtoForView;
+	@Autowired
+	private UserToUserDTO toUserDTO;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private UserToUserDtoForView toDtoForView;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenUtils tokenUtils;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private TokenUtils tokenUtils;
 
-    @PreAuthorize("permitAll()")
-    @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Validated UserRegistrationDTO dto) {
-    	
-    	
-    	System.out.println(userService.findByEmail(dto.geteMail()));
-        if (dto.getId() != null ) {	
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        
-        if (!userService.findbyUserName(dto.getUserName()).isEmpty()) {
-        	return new ResponseEntity<>("Username is not available", HttpStatus.BAD_REQUEST);
-        }
-        
-        if(userService.findByEmail(dto.geteMail()).isPresent()) {
-        	
-        	return new ResponseEntity<>("Email is not available", HttpStatus.BAD_REQUEST);
-        }
-        
-        if(!dto.getPassword().equals(dto.getConfirmPassword())) {
-        	return new ResponseEntity<>("Passwords do not match", HttpStatus.BAD_REQUEST);
-        }
-                
-        Users user = toUser.convert(dto);
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        user.setPassword(encodedPassword);
-        userService.save(user);
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-        return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
-    }
+	@PreAuthorize("permitAll()")
+	@PostMapping
+	public ResponseEntity<String> create(@RequestBody @Validated UserRegistrationDTO dto) {
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+		System.out.println(userService.findByEmail(dto.geteMail()));
+		if (dto.getId() != null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
-    	if (!id.equals(userDTO.getId())) {
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	}
-    
-    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-    	Users userToChange = userService.findOne(id).get();
-    	
-    	if(!userDTO.geteMail().equals(userToChange.geteMail()) && userService.findByEmail(userDTO.geteMail()).isPresent()) {
-    		return new ResponseEntity<>("Email is not available", HttpStatus.BAD_REQUEST);
-    	}
-    	if(!userDTO.getUserName().equals(userToChange.getUserName())) {
+		if (!userService.findbyUserName(dto.getUserName()).isEmpty()) {
+			return new ResponseEntity<>("Username is not available", HttpStatus.BAD_REQUEST);
+		}
+
+		if (userService.findByEmail(dto.geteMail()).isPresent()) {
+
+			return new ResponseEntity<>("Email is not available", HttpStatus.BAD_REQUEST);
+		}
+
+		if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+			return new ResponseEntity<>("Passwords do not match", HttpStatus.BAD_REQUEST);
+		}
+
+		Users user = toUser.convert(dto);
+		String encodedPassword = passwordEncoder.encode(dto.getPassword());
+		user.setPassword(encodedPassword);
+		userService.save(user);
+
+		return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
+	}
+
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+
+		if (!id.equals(userDTO.getId())) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		Users userToChange = userService.findOne(id).get();
+
+		if (!userDTO.geteMail().equals(userToChange.geteMail())
+				&& userService.findByEmail(userDTO.geteMail()).isPresent()) {
+			return new ResponseEntity<>("Email is not available", HttpStatus.BAD_REQUEST);
+		}
+		if (!userDTO.getUserName().equals(userToChange.getUserName())) {
 			return new ResponseEntity<>("Changing username is not allowed", HttpStatus.BAD_REQUEST);
 		}
-    	if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-    			.anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-    		
-    		Users user = toUser.convert(userDTO);
-    		userService.update(user);
-    		return new ResponseEntity<>("Users informations successfully changed", HttpStatus.OK);
-    	} else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
+		if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+				.anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
 
-    		Users user = toUser.convert(userDTO);
-    		userService.update(user);
-    		return new ResponseEntity<>("You have successfully changed your information", HttpStatus.OK);
-    	} else {
-    		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-    	} 
-    }
+			Users user = toUser.convert(userDTO);
+			userService.update(user);
+			return new ResponseEntity<>("Users informations successfully changed", HttpStatus.OK);
+		} else if (userName.equals(userDTO.getUserName()) && userDTO.getUserName().equals(userToChange.getUserName())) {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping(value = "/changeRole/{id}/{role}")
-    public ResponseEntity<String> changeRole(@PathVariable Long id, @PathVariable String role){
-    	Optional<Users> user= userService.findOne(id);
-    	
-    	if(!user.isPresent()) {
-    		return new ResponseEntity<>("User doesn't exist", HttpStatus.BAD_REQUEST);
-    	}
-    	String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-    	if(user.get().getUserName().equals(loggedUser))
-    		return new ResponseEntity<>("Admin cannot change own role", HttpStatus.BAD_REQUEST);
-    	
-    	
-    	if(!role.equalsIgnoreCase("ADMIN") && !role.equalsIgnoreCase("USER"))
-    		return new ResponseEntity<>("Role must be ADMIN or USER", HttpStatus.BAD_REQUEST);
-    	userService.changeRole(user.get(), role.toUpperCase());
-    	return new ResponseEntity<>("Role changed successfully", HttpStatus.OK);
-    }
+			Users user = toUser.convert(userDTO);
+			userService.update(user);
+			return new ResponseEntity<>("You have successfully changed your information", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+		}
+	}
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> get(@PathVariable Long id) {
-    	
-        Optional<Users> user = userService.findOne(id);
-        if(!user.isPresent()) {
-    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-              
-        if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !auth.getName().equals(user.get().getUserName()))
-        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        	
-        if (user.isPresent()) {
-            return new ResponseEntity<>(toUserDTO.convert(user.get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping(value = "/changeRole/{id}/{role}")
+	public ResponseEntity<String> changeRole(@PathVariable Long id, @PathVariable String role) {
+		Optional<Users> user = userService.findOne(id);
 
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
-    public ResponseEntity<List<UserDtoForAdminView>> getUsers(
-    		@RequestParam(required = false) String userName,
-    		@RequestParam(required = false) String role,
-    		@RequestParam(required = false) String sortBy,
-    		@RequestParam(required = false) String sort,
-    		@RequestParam(value = "pageNo", defaultValue = "0") int pageNo
-    		){
+		if (!user.isPresent()) {
+			return new ResponseEntity<>("User doesn't exist", HttpStatus.BAD_REQUEST);
+		}
+		String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (user.get().getUserName().equals(loggedUser))
+			return new ResponseEntity<>("Admin cannot change own role", HttpStatus.BAD_REQUEST);
 
-    	Page<Users> users = userService.searchUsers(userName, role, sortBy, sort, pageNo);	
-    	HttpHeaders headers = new HttpHeaders();
-    	headers.add("Total-Pages", Integer.toString(users.getTotalPages()));
+		if (!role.equalsIgnoreCase("ADMIN") && !role.equalsIgnoreCase("USER"))
+			return new ResponseEntity<>("Role must be ADMIN or USER", HttpStatus.BAD_REQUEST);
+		userService.changeRole(user.get(), role.toUpperCase());
+		return new ResponseEntity<>("Role changed successfully", HttpStatus.OK);
+	}
 
-    	return new ResponseEntity<>(toDtoForView.convertAll(users.getContent()), headers, HttpStatus.OK);
-    }
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+	@GetMapping("/{id}")
+	public ResponseEntity<UserDTO> get(@PathVariable Long id) {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+		Optional<Users> user = userService.findOne(id);
+		if (!user.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-    	String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-    	Users user = userService.findbyUserName(userName).get();
-    	if(user.getId() == id) { 
-    		return new ResponseEntity<>("Admin cannot delete himself", HttpStatus.BAD_REQUEST);
-    	}
+		if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !auth.getName().equals(user.get().getUserName()))
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-    	Users deletedUser = userService.delete(id);
-    	if(deletedUser == null) {
-    		return new ResponseEntity<>("User isn't deleted" ,HttpStatus.BAD_REQUEST);
-    	}
-    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+		if (user.isPresent()) {
+			return new ResponseEntity<>(toUserDTO.convert(user.get()), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PutMapping(value = "/changePassword/{id}")
-    public ResponseEntity<String> changePassword(@PathVariable Long id, @Valid @RequestBody UserChangePasswordDTO dto) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping
+	public ResponseEntity<List<UserDtoForAdminView>> getUsers(
+			@RequestParam(required = false) String userName,
+			@RequestParam(required = false) String role,
+			@RequestParam(required = false) String sortBy,
+			@RequestParam(required = false) String sort,
+			@RequestParam(value = "pageNo", defaultValue = "0") int pageNo) {
 
-    	if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-    		return new ResponseEntity<>("Passwords are not equal", HttpStatus.BAD_REQUEST);
-    	}
+		Page<Users> users = userService.searchUsers(userName, role, sortBy, sort, pageNo);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Total-Pages", Integer.toString(users.getTotalPages()));
 
-    	String result;
-    	try {
-    		result = userService.changePassword(id, dto);
-    	} catch (EntityNotFoundException e) {
-    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    	}
+		return new ResponseEntity<>(toDtoForView.convertAll(users.getContent()), headers, HttpStatus.OK);
+	}
 
-    	if (result.equals("success")) {
-    		return new ResponseEntity<>("You have successfully changed your password ",HttpStatus.OK);
-    	} else {
-    		return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
-    	}
-    }
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<String> delete(@PathVariable Long id) {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping(value = "/adminChangePassword/{id}")
-    public ResponseEntity<String> adminChangePassword(@PathVariable Long id,@Valid @RequestBody UserChangePasswordByAdminDto  dto){
-    	if(!dto.getPassword().equals(dto.getConfirmPassword()))
-    		return new ResponseEntity<>("New password and confirm password are not equal", HttpStatus.BAD_REQUEST);
-    	boolean result;
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		Users user = userService.findbyUserName(userName).get();
+		if (user.getId() == id) {
+			return new ResponseEntity<>("Admin cannot delete himself", HttpStatus.BAD_REQUEST);
+		}
 
-    	try {
-    		result = userService.changePasswordByAdmin(id, dto);
-    	} catch (EntityNotFoundException e) {
-    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    	}
-    	if(result) {
-    		return new ResponseEntity<>("You have successfully changed the user's password",HttpStatus.OK);
-    	} else {
-    		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    	}	
-    }
+		Users deletedUser = userService.delete(id);
+		if (deletedUser == null) {
+			return new ResponseEntity<>("User isn't deleted", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 
-    @PreAuthorize("permitAll()")
-    @RequestMapping(path = "/auth", method = RequestMethod.POST)
-    public ResponseEntity authenticateUser(@RequestBody AuthUserDTO dto) {
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+	@PutMapping(value = "/changePassword/{id}")
+	public ResponseEntity<String> changePassword(@PathVariable Long id, @Valid @RequestBody UserChangePasswordDTO dto) {
 
-    	UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-    			dto.getUsername(), dto.getPassword());
-    	Authentication authentication = authenticationManager.authenticate(authenticationToken);
-    	SecurityContextHolder.getContext().setAuthentication(authentication);
-    	try {
+		if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+			return new ResponseEntity<>("Passwords are not equal", HttpStatus.BAD_REQUEST);
+		}
 
-    		UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
-    		return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
-    	} catch (UsernameNotFoundException e) {
-    		return ResponseEntity.notFound().build();
-    	}
-    }
+		String result;
+		try {
+			result = userService.changePassword(id, dto);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		if (result.equals("success")) {
+			return new ResponseEntity<>("You have successfully changed your password ", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+		}
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping(value = "/adminChangePassword/{id}")
+	public ResponseEntity<String> adminChangePassword(@PathVariable Long id,
+			@Valid @RequestBody UserChangePasswordByAdminDto dto) {
+		if (!dto.getPassword().equals(dto.getConfirmPassword()))
+			return new ResponseEntity<>("New password and confirm password are not equal", HttpStatus.BAD_REQUEST);
+		boolean result;
+
+		try {
+			result = userService.changePasswordByAdmin(id, dto);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if (result) {
+			return new ResponseEntity<>("You have successfully changed the user's password", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+	}
+
+	@PreAuthorize("permitAll()")
+	@RequestMapping(path = "/auth", method = RequestMethod.POST)
+	public ResponseEntity<String> authenticateUser(@RequestBody AuthUserDTO dto) {
+
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+				dto.getUsername(), dto.getPassword());
+		Authentication authentication = authenticationManager.authenticate(authenticationToken);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		try {
+
+			UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
+			return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
+		} catch (UsernameNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }

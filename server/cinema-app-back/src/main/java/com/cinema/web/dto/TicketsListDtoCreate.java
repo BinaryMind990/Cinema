@@ -10,17 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TicketsListDtoCreate {
-	
+
 	@NotNull
 	@Positive
 	private Long projectionId;
-	
+
 	@NotNull
 	@NotEmpty
 	private ArrayList<Long> seatNumbers;
-	
-	
-	
 
 	public Long getProjectionId() {
 		return projectionId;

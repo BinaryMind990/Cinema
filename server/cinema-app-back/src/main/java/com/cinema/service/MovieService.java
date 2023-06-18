@@ -20,6 +20,7 @@ public interface MovieService {
 
     Page<Movie> search();
 
-	Page<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country, String distributor,
-			Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc, int pageNo);
+    Page<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country,
+            String distributor,
+            Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc, int pageNo);
 }

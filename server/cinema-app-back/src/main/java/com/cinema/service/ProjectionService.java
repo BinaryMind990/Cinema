@@ -10,7 +10,7 @@ public interface ProjectionService {
     Projection findOne(Long id);
 
     List<Projection> findAll();
-    
+
     List<Projection> findAllAfterNow();
 
     String save(ProjectionDTOCreate dto);
@@ -21,9 +21,9 @@ public interface ProjectionService {
 
     List<Projection> search(LocalDate date);
 
-	List<Projection> findList(Long movieId, LocalDate localDate, Long typeId, Long hallId, Double minPrice,
-			Double maxPrice, String sortBy, String sortAscOrDesc);
+    List<Projection> findList(Long movieId, LocalDate localDate, Long typeId, Long hallId, Double minPrice,
+            Double maxPrice, String sortBy, String sortAscOrDesc);
 
-	List<String> findDates();
+    List<String> findDates();
 
 }

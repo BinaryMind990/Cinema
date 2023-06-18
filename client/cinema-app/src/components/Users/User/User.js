@@ -36,7 +36,7 @@ const User = () => {
 
 	useEffect(() => {
 		if (role !== 'ROLE_ADMIN' && Number(id) !== userId) {
-			navigate('/', { replace: true });
+			navigate('/notfound', { replace: true });
 		}
 	}, [role, userId, id, navigate]);
 

@@ -1,0 +1,15 @@
+.ant-modal .ant-modal-header {
+  margin-bottom: 10px;
+}
+
+.ant-modal .ant-modal-title {
+  font-size: 24px;
+}
+
+.ant-modal .ant-modal-body {
+  font-size: 16px;
+}
+
+.ant-modal .ant-modal-footer {
+  margin-top: 20px;
+}

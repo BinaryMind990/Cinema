@@ -1,7 +1,7 @@
 import { useState } from 'react';
-// import Button from '../Button/Button';
 import { FaTrash } from 'react-icons/fa';
 import { Modal, Button } from 'antd';
+import './Modal.css';
 
 const ConfirmationModal = ({ title, message, onConfirm, onCancel }) => {
 	const [modalOpen, setModalOpen] = useState(false);

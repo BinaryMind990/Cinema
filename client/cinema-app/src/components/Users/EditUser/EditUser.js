@@ -47,7 +47,7 @@ const EditUser = () => {
 
 	useEffect(() => {
 		if (role !== 'ROLE_ADMIN' && Number(id) !== userId) {
-			navigate('/', { replace: true });
+			navigate('/notfound', { replace: true });
 		}
 	}, [role, userId, id, navigate]);
 
@@ -65,7 +65,8 @@ const EditUser = () => {
 			await userClient.edit(id, editUserData);
 			navigate(`/account/${id}`);
 		} catch (error) {
-			console.log(error);
+			setErrorMessage(error.response.data);
+			setErrorModal(true);
 			return;
 		}
 	};
@@ -76,7 +77,6 @@ const EditUser = () => {
 			await userClient.editPassword(id, editUserData);
 			navigate(`/account/${id}`);
 		} catch (error) {
-			console.log(error.response);
 			setErrorMessage(error.response.data);
 			setErrorModal(true);
 			return;
@@ -88,7 +88,9 @@ const EditUser = () => {
 			await userClient.adminEditPassword(id, editUserData);
 			navigate(`/users`);
 		} catch (error) {
-			console.log(error);
+			setErrorMessage(error.response.data);
+			setErrorModal(true);
+			return;
 		}
 	};
 

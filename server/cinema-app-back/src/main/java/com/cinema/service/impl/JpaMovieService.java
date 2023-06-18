@@ -55,8 +55,8 @@ public class JpaMovieService implements MovieService {
 			return movie.get();
 		}
 
-		if (movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {
-			movie.get().setDeleted(true);
+		if(movie.get().getProjections().stream().noneMatch(p -> p.getDateAndTime().isAfter(LocalDateTime.now()))) {	
+			movie.get().setDeleted(true);	
 			movieRep.save(movie.get());
 			return movie.get();
 		}
@@ -73,28 +73,27 @@ public class JpaMovieService implements MovieService {
 	public Page<Movie> findByParameters(String name, Integer durationMin, Integer durationMax, String country,
 			String distributor, Integer yearMin, Integer yearMax, String sortBy, String sortAscOrDesc, int pageNo) {
 
-		if (durationMin == null)
+		if(durationMin == null)
 			durationMin = 0;
-		if (durationMax == null)
+		if(durationMax == null)
 			durationMax = Integer.MAX_VALUE;
-		if (yearMin == null)
+		if(yearMin == null)
 			yearMin = 1900;
-		if (yearMax == null)
-			yearMax = LocalDate.now().getYear() + 1;
-		if (sortAscOrDesc == null || (!sortAscOrDesc.equalsIgnoreCase("asc") && !sortAscOrDesc.equalsIgnoreCase("desc")))
+		if(yearMax == null)
+			yearMax = LocalDate.now().getYear() +1;
+		if(sortAscOrDesc == null ||(!sortAscOrDesc.equalsIgnoreCase("asc") && !sortAscOrDesc.equalsIgnoreCase("desc")))
 			sortAscOrDesc = "ASC";
-		if (sortBy == null) {
+		if(sortBy == null) {
 			sortBy = "name";
-		} else if (!sortBy.equals("name") && !sortBy.equals("duration") && !sortBy.equals("year")
+		} else if( !sortBy.equals("name") && !sortBy.equals("duration") && !sortBy.equals("year") 
 				&& !sortBy.equals("country") && !sortBy.equals("distributor"))
 			sortBy = "name";
 
-		if (sortAscOrDesc.equalsIgnoreCase("desc")) {
-			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax,
-					PageRequest.of(pageNo, 5, Sort.by(sortBy).descending()));
-		} else
-			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax,
-					PageRequest.of(pageNo, 5, Sort.by(sortBy).ascending()));
+		if(sortAscOrDesc.equalsIgnoreCase("desc")) {
+			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).descending()));
+		}
+		else 
+			return movieRep.search(name, durationMin, durationMax, country, distributor, yearMin, yearMax, PageRequest.of(pageNo, 5, Sort.by(sortBy).ascending()));
 	}
 
 }

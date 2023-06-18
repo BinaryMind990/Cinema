@@ -74,6 +74,8 @@ public class Ticket {
 		this.dateAndTime = dateAndTime;
 	}
 
+	
+
 	public Users getUser() {
 		return user;
 	}

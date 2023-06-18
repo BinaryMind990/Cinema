@@ -54,14 +54,15 @@ public class TicketController {
 	private UserService userService;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(value = "/projection/{id}")
+	@GetMapping(value = "/projection/{id}") 
 	public ResponseEntity<List<TicketDtoForDisplay>> getByProjection(@PathVariable Long id) {
 		Projection projection = projectionService.findOne(id);
-		if (projection == null) {
+		if(projection == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		List<Ticket> tickets = projection.getTickets();
 
+	
 		return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
 	}
 
@@ -73,74 +74,73 @@ public class TicketController {
 
 		Ticket ticket = ticketService.findOne(id);
 
-		if (ticket == null) {
+		if(ticket == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+        }
+       
+        if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(ticket.getUser().getUserName())) { 	
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }  
+        return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
 
-		if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(ticket.getUser().getUserName())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<TicketDTO>(toDto.convert(ticket), HttpStatus.OK);
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping(value = "/user/{id}")   
+    public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String userName = auth.getName();
 
-	}
+    	Optional<Users> user = userService.findOne(id);
+    	if(!user.isPresent()) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+   
+    	if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) { 	
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	} 
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	@GetMapping(value = "/user/{id}")
-	public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
+    	List<Ticket> tickets = user.get().getTickets();
+    	return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);	
+    }
 
-		Optional<Users> user = userService.findOne(id);
-		if (!user.isPresent()) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> create(@Valid @RequestBody TicketDTOCreate dto) {
 
-		if (auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String userName = auth.getName();
 
-		List<Ticket> tickets = user.get().getTickets();
-		return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);
-	}
+    	String message = ticketService.save(dto, userName);
+    	if (message.equals("success")) {
+    		return new ResponseEntity<>("You buy ticket successfully", HttpStatus.CREATED);
+    	}else {
+    	return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping(value = "/buy", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createList(@Valid @RequestBody TicketsListDtoCreate dto){
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String userName = auth.getName();
+    	String message = ticketService.saveList(dto, userName);
+    	if(message.equals("success")) {
+    		return new ResponseEntity<>("You buy tickets successfully", HttpStatus.CREATED);
+    	}else {
+    		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    	}
+    	
+    }
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> create(@Valid @RequestBody TicketDTOCreate dto) {
+    	Ticket deletedTicket = ticketService.delete(id);
+    	if (deletedTicket == null)
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
-
-		String message = ticketService.save(dto, userName);
-		if (message.equals("success")) {
-			return new ResponseEntity<>("You buy ticket successfully", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@PostMapping(value = "/buy", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> createList(@Valid @RequestBody TicketsListDtoCreate dto) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
-		String message = ticketService.saveList(dto, userName);
-		if (message.equals("success")) {
-			return new ResponseEntity<>("You buy tickets successfully", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-
-		Ticket deletedTicket = ticketService.delete(id);
-		if (deletedTicket == null)
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

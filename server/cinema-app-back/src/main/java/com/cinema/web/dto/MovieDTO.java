@@ -45,14 +45,14 @@ public class MovieDTO {
 	@NotBlank
 	@Pattern(regexp = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)", message = "Link is not valid")
 	private String posterLink;
-
+	
 	@NotNull
 	@NotBlank
 	@Pattern(regexp = "^https:\\/\\/www.imdb.com\\/title\\/[a-zA-Z0-9()]{1,15}.*", message = "Link is not valid imdb link")
 	private String imdbLink;
-
+	
 	private int version;
-
+	
 	@NotNull
 	@NotBlank
 	private String director;
@@ -176,6 +176,8 @@ public class MovieDTO {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	
 
 	public String getImdbLink() {
 		return imdbLink;

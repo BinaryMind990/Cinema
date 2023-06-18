@@ -4,14 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UserChangePasswordByAdminDto {
-
-	@NotBlank(message = "You must add username")
+	
+	@NotBlank (message = "You must add username")
 	private String userName;
-
+	
 	@NotBlank(message = "You must insert new password")
 	@Size(min = 5, max = 15)
 	private String password;
-
+	
 	@NotBlank(message = "You must insert confirmed password")
 	@Size(min = 5, max = 15)
 	private String confirmPassword;

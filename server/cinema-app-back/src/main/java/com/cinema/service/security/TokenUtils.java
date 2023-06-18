@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Component
 public class TokenUtils {
-
+	
 	@Autowired
 	private UserService userService;
 
@@ -75,7 +75,7 @@ public class TokenUtils {
 
 	public String generateToken(UserDetails userDetails) {
 		String username = userDetails.getUsername();
-
+	
 		Optional<Users> optionalUser = userService.findbyUserName(username);
 		if (optionalUser.isPresent()) {
 			Users loggedInUser = optionalUser.get();
@@ -86,7 +86,7 @@ public class TokenUtils {
 			claims.put("id", userId);
 			claims.put("role", userDetails.getAuthorities().toArray()[0]);
 			claims.put("created", new Date());
-
+	
 			return Jwts.builder().setClaims(claims)
 					.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
 					.signWith(SignatureAlgorithm.HS512, secret).compact();

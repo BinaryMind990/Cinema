@@ -37,6 +37,7 @@ public class ProjectionController {
 	@Autowired
 	private ProjectionToProjectionDTO toDto;
 
+
 	@PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<List<ProjectionDTO>> search(@RequestParam(required = false) String date) {
@@ -54,12 +55,11 @@ public class ProjectionController {
 		}
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
 	}
-
 	@PreAuthorize("permitAll()")
 	@GetMapping("/dates")
-	public ResponseEntity<List<String>> getProjectionDates() {
+	public ResponseEntity<List<String>> getProjectionDates(){
 		List<String> dates = projectionService.findDates();
-		return new ResponseEntity<>(dates, HttpStatus.OK);
+		return new ResponseEntity<>(dates, HttpStatus.OK);	
 	}
 
 	@PreAuthorize("permitAll()")
@@ -83,11 +83,12 @@ public class ProjectionController {
 			@RequestParam(required = false) Double minPrice,
 			@RequestParam(required = false) Double maxPrice,
 			@RequestParam(required = false) String sortBy,
-			@RequestParam(required = false) String sortAscOrDesc) {
+			@RequestParam(required = false) String sortAscOrDesc
+			){
 		LocalDate localDate;
-		if (date == null) {
+		if(date == null) {
 			localDate = null;
-		} else {
+		}else {
 			try {
 				localDate = getLocalDate(date);
 			} catch (DateTimeParseException e) {
@@ -95,8 +96,7 @@ public class ProjectionController {
 			}
 		}
 
-		List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice,
-				sortBy, sortAscOrDesc);
+		List<Projection> projections = projectionService.findList(movieId, localDate, typeId, hallId, minPrice, maxPrice, sortBy, sortAscOrDesc);
 		return new ResponseEntity<>(toDto.convertAll(projections), HttpStatus.OK);
 	}
 
@@ -117,12 +117,13 @@ public class ProjectionController {
 	public ResponseEntity<String> create(@Valid @RequestBody ProjectionDTOCreate dto) {
 
 		String message = projectionService.save(dto);
-		if (message.equals("success")) {
-			return new ResponseEntity<>("Projection is created", HttpStatus.CREATED);
-		} else {
+		if(message.equals("success")) {
+		return new ResponseEntity<>("Projection is created", HttpStatus.CREATED);
+		}else {
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
+
 
 	private LocalDate getLocalDate(String dateStr) throws DateTimeParseException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");

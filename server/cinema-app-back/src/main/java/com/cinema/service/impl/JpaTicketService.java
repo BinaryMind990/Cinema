@@ -12,6 +12,8 @@ import com.cinema.web.dto.TicketDTOCreate;
 import com.cinema.web.dto.TicketsListDtoCreate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -111,6 +113,12 @@ public class JpaTicketService implements TicketService {
 
 		ticketRep.delete(ticket.get());
 		return ticket.get();
+	}
+
+	@Override
+	public Page<Ticket> findByUser(Long id, int pageNo) {
+		
+		return ticketRep.findByUser(id, PageRequest.of(pageNo, 10));	
 	}
 
 }

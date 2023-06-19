@@ -14,6 +14,7 @@ import com.cinema.web.dto.TicketDtoForDisplay;
 import com.cinema.web.dto.TicketsListDtoCreate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +64,6 @@ public class TicketController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		List<Ticket> tickets = projection.getTickets();
-
 	
 		return new ResponseEntity<>(toDtoForDisplay.convertAll(tickets), HttpStatus.OK);
 	}
@@ -86,7 +88,8 @@ public class TicketController {
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/user/{id}")   
-    public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id){
+    public ResponseEntity<List<TicketDTO>> getByUser(@PathVariable Long id, 
+    												 @RequestParam (required = false, defaultValue = "0") int pageNo){
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	String userName = auth.getName();
 
@@ -98,9 +101,9 @@ public class TicketController {
     	if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) { 	
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	} 
-
-    	List<Ticket> tickets = user.get().getTickets();
-    	return new ResponseEntity<>(toDto.convertAll(tickets), HttpStatus.OK);	
+    	Page<Ticket> tickets = ticketService.findByUser(id, pageNo);
+    	
+    	return new ResponseEntity<>(toDto.convertAll(tickets.getContent()), HttpStatus.OK);	
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

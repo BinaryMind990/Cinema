@@ -104,17 +104,18 @@ public class MovieController {
     
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-    	 if(movieService.findById(id) == null)
-    		 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    	
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+    	Movie movie = movieService.findById(id);
+    	 if(movie == null)
+    		 return new ResponseEntity<>("Chosen id doesn't exist", HttpStatus.NOT_FOUND);
+    	 if(movie.isDeleted())
+    		 return new ResponseEntity<>("Chosen movie is already deleted", HttpStatus.BAD_REQUEST);    	
         Movie deleted = movieService.delete(id);
-        System.out.println(deleted);
 
         if (deleted != null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Movie deleted successfully", HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("You can't delete \"" + movie.getName() + "\" because there are projections that haven't started yet", HttpStatus.BAD_REQUEST);
         }
     }
 }

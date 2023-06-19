@@ -129,7 +129,6 @@ public class JpaProjectionService implements ProjectionService {
 
 	@Override
 	public List<Projection> search(LocalDate date) {
-		System.out.println("datum u servisu radi" + date);
 		return projectionRep.search(date);
 	}
 

@@ -6,6 +6,8 @@ import com.cinema.web.dto.TicketsListDtoCreate;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 public interface TicketService {
 
     List<Ticket> findAll();
@@ -17,4 +19,6 @@ public interface TicketService {
     Ticket delete(Long id);
 
 	String saveList(TicketsListDtoCreate dto, String userName);
+	
+	Page<Ticket> findByUser(Long id, int pageNo);
 }

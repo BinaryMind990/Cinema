@@ -95,7 +95,7 @@ public class UserController {
         }
                 
         Users user = toUser.convert(dto);
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(dto.getPassword().trim());
         user.setPassword(encodedPassword);
         userService.save(user);
 
@@ -255,12 +255,12 @@ public class UserController {
     public ResponseEntity authenticateUser(@RequestBody AuthUserDTO dto) {
 
     	UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-    			dto.getUsername(), dto.getPassword());
+    			dto.getUsername().trim(), dto.getPassword().trim());
     	Authentication authentication = authenticationManager.authenticate(authenticationToken);
     	SecurityContextHolder.getContext().setAuthentication(authentication);
     	try {
 
-    		UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
+    		UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername().trim());
     		return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
     	} catch (UsernameNotFoundException e) {
     		return ResponseEntity.notFound().build();

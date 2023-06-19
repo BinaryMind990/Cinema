@@ -3,6 +3,7 @@ package com.cinema.web.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,6 @@ public class ReportController {
 			} catch (Exception e) {
 			}
 		}
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		List<ReportDtoInterface> reportList = reportService.reportList(localDateFrom, localDateTo, sortBy, sort);
 		return new ResponseEntity<>(reportList, HttpStatus.OK);
@@ -80,6 +80,14 @@ public class ReportController {
 		}
 		
 		List<ReportDto> reportList = reportService.reportInService(localDateFrom, localDateTo, sortBy, sort);
+		ReportDto reportDtoInTotal = new ReportDto();
+		reportDtoInTotal.setMovieId(Long.MAX_VALUE);
+		reportDtoInTotal.setName("All movies");
+		reportDtoInTotal.setNumberOfProjections(reportList.stream().mapToInt(r -> r.getNumberOfProjections()).sum());
+		reportDtoInTotal.setSoldTicketsForMovie(reportList.stream().mapToInt(r -> r.getSoldTicketsForMovie()).sum());
+		reportDtoInTotal.setSum(reportList.stream().mapToDouble(r -> r.getSum()).sum());
+		reportList.add(reportDtoInTotal);
+		
 		return new ResponseEntity<>(reportList, HttpStatus.OK);
 	}
 	

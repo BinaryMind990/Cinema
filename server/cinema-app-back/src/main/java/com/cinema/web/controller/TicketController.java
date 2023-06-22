@@ -15,6 +15,7 @@ import com.cinema.web.dto.TicketsListDtoCreate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -101,9 +102,11 @@ public class TicketController {
     	if(auth.getAuthorities().toString().equals("[ROLE_USER]") && !userName.equals(user.get().getUserName())) { 	
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	} 
-    	Page<Ticket> tickets = ticketService.findByUser(id, pageNo);
     	
-    	return new ResponseEntity<>(toDto.convertAll(tickets.getContent()), HttpStatus.OK);	
+    	Page<Ticket> tickets = ticketService.findByUser(id, pageNo);
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Total-Pages", Integer.toString(tickets.getTotalPages()));
+    	return new ResponseEntity<>(toDto.convertAll(tickets.getContent()), headers, HttpStatus.OK);	
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

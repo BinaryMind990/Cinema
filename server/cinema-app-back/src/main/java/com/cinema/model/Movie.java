@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Movie {
 
@@ -28,7 +30,7 @@ public class Movie {
 	@Column
 	private int year;
 
-	@Column
+	@Type(type = "text")
 	private String description;
 
 	@Column

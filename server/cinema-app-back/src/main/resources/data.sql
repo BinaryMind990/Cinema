@@ -14,10 +14,10 @@ INSERT INTO type_hall (hall_id, type_id) VALUES (1, 1), (1,2), (2, 1), (3, 1), (
 
 INSERT INTO movie (country, distributor, description, duration, name, year, poster_link, deleted, version, director, imdb_link) 
 VALUES('Serbia','ART VISTA d.o.o', 'Biopic about Toma Zdravkovic, the man who is remembered not only for his songs and the unique way he sang them, but also as a bohemian, both in his behavior and his soul.', 140, 'Toma', 2021, 'https://m.media-amazon.com/images/M/MV5BNTBmZWVjMzEtZTY5Yy00ZGUxLWJhY2MtMjVlNGFlN2I0OTMxXkEyXkFqcGdeQXVyMjYyMDMxMDU@._V1_.jpg', 0, 0, 'Dragan Bjelogrlic, Zoran Lisinac', 'https://www.imdb.com/title/tt8737152/'),
-	  ('Serbia', 'unknown', 'The act of a woman with a broken nose, who suddenly jumps out of a taxi and throws herself off the bridge in Belgrade, connects the lives of three witnesses.', 105, 'The Woman with a Broken Nose', 2010, 'https://upload.wikimedia.org/wikipedia/sr/6/6c/Zena-sa-slomljenim-nosem-podloga-V1.jpg', 0, 0, 'Srdjan Koljevic', 'https://www.imdb.com/title/tt1324061/'),
-      ('Serbia', 'Yodi Movie Craftsman', 'Description for 3. movie''During one peculiar night, the lives of several interconnected people are changed, as they rapidly experience love, disappointment, joy, greed and remorse.', 92, 'When I Grow Up, I will Be a Kangaroo', 2004, 'https://cinesseum.com/img/auto/auto/movie/kadPorastemBicuKengur/kad-porastem-bicu-kengur-poster.jpg', 0, 0, 'Radivoje Andric', 'https://www.imdb.com/title/tt0383846/'),
-      ('Serbia', 'Vans','After the collapse of the Yugoslavian government, a former secret agent, now a taxi driver, enters the office of a former university professor, now a firm director.', 104, 'The Professional', 2003, 'https://prolog.rs/upload/article/2813_profesionalac.jpg', 0, 0, 'Dusan Kovacevic', 'https://www.imdb.com/title/tt0339535/'),
-	  ('Serbia', 'unknown', 'Convinced that his subtenant is a spy and an enemy of the state, a man falls into deep paranoia which leads to absurd and destructive chain of events.', 95, 'Balkan spy', 1984, 'https://upload.wikimedia.org/wikipedia/sh/a/ac/Balkanski_%C5%A1pijun.jpg', 0, 0, 'Dusan Kovacevic, Bozidar Bota Nikolic', 'https://www.imdb.com/title/tt0086935/'),
+	  ('France', 'MegaCom Film', 'It is said that every investigator has a crime that haunts them, a case that hurts him more than the others, without him necessarily knowing why. For Yohan that case is the murder of Clara.', 115, 'The Night of the 12th', 2022, 'http://www.arenacineplex.com/images/icons_66x96/1687335215U_no%C4%87i_12_oktobra_poster_(360X528).jpg', 0, 0, 'Dominik Moll', 'https://www.imdb.com/title/tt16953666/'),
+      ('Serbia', 'Digital Store doo', 'Sequel to Муње! (2001). After 20 years, follows some of the initial characters as they show they haven not changed and their lives are almost the same, while featuring a new generation of kids who are trying to make it through.', 95, 'Dudes: Again!', 2023, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS4LAgZ9jnTzqPjg63loz6DQ-H0E5VnbHf_R3DOHE4QJWMfcpOa', 0, 0, 'Radivoje Andric', 'https://www.imdb.com/title/tt22769974/'),
+      ('United States', 'Blitz Film Video doo','Barry Allen uses his super speed to change the past, but his attempt to save his family creates a world without super heroes, forcing him to race for his life in order to save the future.', 144, 'The Flash', 2023, 'http://www.arenacineplex.com/images/icons_66x96/1684747962flash.jpg', 0, 0, 'Andy Muschietti', 'https://www.imdb.com/title/tt0439572/'),
+	  ('United States', 'Sony Pictures', 'On the brink of losing her home, Maddie finds an intriguing job listing: helicopter parents looking for someone to bring their introverted 19-year-old son out of his shell before college. She has one summer to make him a man or die trying.', 103, 'No Hard Feelings', 2023, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnYC2rPxSLu9SXnN9x5udkaCmkDv2z3iMG2VEbQhbC8JhjHvrxHUN2DEhmg3qFbuCnviA&usqp=CAU', 0, 0, 'Gene Stupnitsky', 'https://www.imdb.com/title/tt15671028/'),
 	  ('United States', 'Taramount', 'American science fiction action film based on Hasbros Transformers toy line, and primarily influenced by the Beast Wars storyline.', 127, 'Transformers: Rise of the Beasts', 2023, 'http://www.arenacineplex.com/images/icons_66x96/1683398474trans.jpg', 0, 0, 'Steven Caple Jr.', 'https://www.imdb.com/title/tt5090568'),
 	  ('Finland', 'CON film', 'When an ex-soldier who discovers gold in the Lapland wilderness tries to take the loot into the city, Nazi soldiers led by a brutal SS officer battle him.', 91, 'Sisu', 2022, 'http://www.arenacineplex.com/images/icons_66x96/168569455217.5.2023_12_18_43_Sisu_SRB.jpg', 0, 0, '
 Jalmari Helander', 'https://www.imdb.com/title/tt14846026/' ),
@@ -25,23 +25,23 @@ Jalmari Helander', 'https://www.imdb.com/title/tt14846026/' ),
 	  83, 'Cats in the Museum', 2023, 'http://www.arenacineplex.com/images/icons_66x96/1678804278macke.jpg', 0, 0, 'Vasily Rovensky', 'https://www.imdb.com/title/tt24069962');
 	  
 INSERT INTO projection (date_and_time, ticket_price, hall_id, movie_id, type_id, deleted) VALUES 
-('2023-06-21 20:00', 400, 1, 1, 1, 0),
-('2023-06-15 20:00', 500, 1, 1, 2, 0),
-('2023-06-16 20:00', 450, 2, 1, 1, 0),
-('2023-06-20 20:00', 400, 3, 2, 1, 0),
+('2023-07-02 20:00', 400, 1, 1, 1, 0),
+('2023-07-01 20:00', 500, 1, 1, 2, 0),
+('2023-07-01 20:00', 450, 2, 1, 1, 0),
+('2023-07-02 20:00', 400, 3, 2, 1, 0),
 ('2023-07-12 20:00', 350, 4, 2, 2, 0),
 ('2023-07-09 20:00', 350, 5, 3, 3, 0),
 ('2023-07-08 20:00', 500, 4, 4, 2, 0),
 ('2023-06-25 20:00', 450, 3, 4, 1, 0),
 ('2023-07-12 18:00', 550, 2, 4, 1, 0),
-('2023-06-18 20:00', 600, 5, 5, 3, 0),
-('2023-04-14 20:00', 600, 4, 5, 3, 0),
-('2023-06-21 17:00', 600, 5, 7, 3, 0),
-('2023-06-21 13:30', 300, 3, 8, 1, 0),
-('2023-06-21 15:45', 350, 3, 8, 1, 0),
-('2023-06-25 18:30', 400, 2, 7, 2, 0),
-('2023-06-20 20:00', 450, 4, 7, 2, 0),
-('2023-06-21 20:00', 600, 5, 6, 3, 0);
+('2023-06-28 20:00', 600, 5, 5, 3, 0),
+('2023-06-28 20:00', 600, 4, 4, 3, 0),
+('2023-06-29 17:00', 600, 5, 7, 3, 0),
+('2023-06-29 13:30', 300, 3, 8, 1, 0),
+('2023-06-30 15:45', 350, 3, 8, 1, 0),
+('2023-07-03 18:30', 400, 2, 7, 2, 0),
+('2023-07-03 20:00', 450, 4, 7, 2, 0),
+('2023-07-03 20:00', 600, 5, 6, 3, 0);
 
 
 INSERT INTO seat (seat_number, hall_id) VALUES 

@@ -75,8 +75,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> create(@RequestBody @Validated UserRegistrationDTO dto) {
     	
-    	
-    	System.out.println(userService.findByEmail(dto.geteMail()));
         if (dto.getId() != null ) {	
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
